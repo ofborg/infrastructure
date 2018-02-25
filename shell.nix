@@ -1,9 +1,5 @@
 let
-  pkgs = import ./nix {
-    overlays = [
-      (import ./nix/overlay.nix)
-    ];
-  };
+  pkgs = import ./nix;
 
   inherit (pkgs) stdenv;
 
@@ -22,4 +18,5 @@ in stdenv.mkDerivation rec {
 
   HISTFILE = "${toString ./.}/.bash_hist";
   NIXOPS_DEPLOYMENT = "ofborg-production";
+  NIX_PATH = "nixpkgs=${pkgs.path}";
 }
