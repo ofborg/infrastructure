@@ -32,6 +32,7 @@ in {
 
       hardware.enableAllFirmware = true;
       nix.maxJobs = 4;
+      nix.gc_free_gb = 50;
     })
   ];
 }
