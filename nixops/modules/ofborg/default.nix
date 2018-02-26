@@ -15,6 +15,7 @@ in {
 
       config_static = lib.mkOption {
         default = {
+          log_storage.path = "/var/log/ofborg";
           checkout.root = "/var/lib/ofborg/checkout";
           runner.identity = "${config.networking.hostName}";
         };
@@ -46,5 +47,6 @@ in {
   imports = [
     ./user.nix
     ./administration.nix
+    ./log-collector.nix
   ];
 }

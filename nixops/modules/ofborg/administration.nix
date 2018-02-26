@@ -18,17 +18,15 @@ in {
   config = mkIf cfg.enable rec {
     systemd = {
       services = {
-        "ofborg-github-comment-filter" =
+        ofborg-github-comment-filter =
           helpers.rustborgservice "github_comment_filter";
 
-        "ofborg-github-comment-poster" =
+        ofborg-github-comment-poster =
           helpers.rustborgservice "github_comment_poster";
 
-        "ofborg-evaluation-filter" =
+        ofborg-evaluation-filter =
           helpers.rustborgservice "evaluation_filter";
 
-        # "ofborg-log-message-collector" =
-        #  helpers.rustborgservice "log_message_collector";
         # "ofborg-stats" =
         #  helpers.rustborgservice "stats";
       };
