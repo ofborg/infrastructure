@@ -48,5 +48,7 @@ in {
     ./user.nix
     ./administration.nix
     ./log-collector.nix
+    ./builder.nix
+    ./evaluator.nix
   ];
 }
