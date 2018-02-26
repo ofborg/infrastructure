@@ -1,6 +1,6 @@
 {
   config = {
-    users.users.of1borg = {
+    users.users.ofborg = {
       description = "OfBorg Workers";
       home = "/var/lib/ofborg";
       createHome = true;

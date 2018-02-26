@@ -13,5 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable rec {
+    services.ofborg.administrative.enable = true;
   };
 }
