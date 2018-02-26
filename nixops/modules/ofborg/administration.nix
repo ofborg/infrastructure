@@ -20,6 +20,17 @@ in {
       services = {
         "ofborg-github-comment-filter" =
           helpers.rustborgservice "github_comment_filter";
+
+        "ofborg-github-comment-poster" =
+          helpers.rustborgservice "github_comment_poster";
+
+        "ofborg-evaluation-filter" =
+          helpers.rustborgservice "evaluation_filter";
+
+        # "ofborg-log-message-collector" =
+        #  helpers.rustborgservice "log_message_collector";
+        # "ofborg-stats" =
+        #  helpers.rustborgservice "stats";
       };
     };
   };
