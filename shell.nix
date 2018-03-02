@@ -13,6 +13,9 @@ in stdenv.mkDerivation rec {
       terraform-provider-nixos
       plugins.packet
       plugins.local
+      plugins.aws
+      plugins.dns
+      plugins.rabbitmq
     ]))
  ];
 
