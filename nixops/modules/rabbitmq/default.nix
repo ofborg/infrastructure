@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ pkgs, config, lib, ... }:
 let
   cfg = config.services.ofborg.rabbitmq;
 in {
@@ -14,6 +14,14 @@ in {
       domain = lib.mkOption {
         type = lib.types.string;
       };
+
+      monitoring_username = lib.mkOption {
+        type = lib.types.string;
+      };
+
+      monitoring_password = lib.mkOption {
+        type = lib.types.string;
+      };
     };
   };
 
@@ -24,12 +32,15 @@ in {
       allowKeysForGroup = true;
     };
 
+
+    services.phpfpm.enable_main = true;
     services.nginx = {
       enable = true;
-      virtualHosts."${cfg.domain}" = {
-        enableACME = true;
-        forceSSL = true;
-      };
+      virtualHosts."${cfg.domain}" = pkgs.nginxVhostPHP
+        (pkgs.mutate ./queue-monitor {
+          user = cfg.monitoring_username;
+          password = cfg.monitoring_password;
+        });
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];

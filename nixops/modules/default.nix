@@ -6,5 +6,6 @@
   ./terraform.nix
   ./packet.nix
   ./ofborg
-  ./rabbitmq.nix
+  ./rabbitmq
+  ./phpfpm.nix
 ]

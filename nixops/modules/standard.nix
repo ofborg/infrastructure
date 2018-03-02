@@ -9,7 +9,10 @@ in {
   };
 
   config = {
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs = {
+      overlays = [ (import ../../nix/overlay.nix) ];
+      config.allowUnfree = true;
+    };
 
     services.openssh.enable = true;
     networking = {
