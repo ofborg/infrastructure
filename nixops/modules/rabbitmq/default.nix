@@ -32,7 +32,6 @@ in {
       allowKeysForGroup = true;
     };
 
-
     services.phpfpm.enable_main = true;
     services.nginx = {
       enable = true;
