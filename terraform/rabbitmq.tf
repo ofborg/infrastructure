@@ -103,9 +103,9 @@ resource "rabbitmq_permissions" "webhook-access" {
   vhost = "${rabbitmq_vhost.ofborg.name}"
 
   permissions {
-    configure = "^(github-events)$"
-    write     = "^(github-events)$"
-    read      = "^$"
+    configure = "^(github-events|github-events-unknown)$"
+    write     = "^(github-events|github-events-unknown)$"
+    read      = "^(github-events)$"
   }
 }
 

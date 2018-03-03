@@ -50,7 +50,7 @@ resource "aws_route53_record" "events" {
   name    = "events.${data.aws_route53_zone.root.name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${packet_device.core-0.network.0.address}" ]
+  records = [ "${packet_device.core.*.access_public_ipv4}" ]
 }
 
 resource "aws_route53_record" "webhook" {
@@ -58,13 +58,14 @@ resource "aws_route53_record" "webhook" {
   name    = "webhook.${data.aws_route53_zone.root.name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${packet_device.core-0.network.0.address}" ]
+  records = [ "${packet_device.core.*.access_public_ipv4}" ]
 }
 
-resource "aws_route53_record" "core-0" {
+resource "aws_route53_record" "core" {
+  count = "${packet_device.core.count}"
   zone_id = "${data.aws_route53_zone.root.zone_id}"
-  name    = "${packet_device.core-0.hostname}"
+  name    = "${packet_device.core.*.hostname[count.index]}"
   type    = "A"
   ttl     = "300"
-  records = [ "${packet_device.core-0.network.2.address}" ]
+  records = [ "${packet_device.core.*.access_private_ipv4[count.index]}" ]
 }

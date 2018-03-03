@@ -30,6 +30,9 @@ in {
       plugins = [ "cert.pem" "fullchain.pem" "full.pem" "key.pem" "account_key.json" ];
       group = "rabbitmq";
       allowKeysForGroup = true;
+      postRun = ''
+        systemctl restart rabbitmq.service
+      '';
     };
 
     services.phpfpm.enable_main = true;
