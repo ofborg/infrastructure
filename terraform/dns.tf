@@ -53,6 +53,14 @@ resource "aws_route53_record" "events" {
   records = [ "${packet_device.core-0.network.0.address}" ]
 }
 
+resource "aws_route53_record" "webhook" {
+  zone_id = "${data.aws_route53_zone.root.zone_id}"
+  name    = "webhook.${data.aws_route53_zone.root.name}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${packet_device.core-0.network.0.address}" ]
+}
+
 resource "aws_route53_record" "core-0" {
   zone_id = "${data.aws_route53_zone.root.zone_id}"
   name    = "${packet_device.core-0.hostname}"

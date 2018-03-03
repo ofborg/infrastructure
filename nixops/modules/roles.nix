@@ -15,5 +15,7 @@ in {
   config = mkIf cfg.enable rec {
     services.ofborg.administrative.enable = true;
     services.ofborg.rabbitmq.enable = true;
+    services.ofborg.webhook.enable = true;
+    services.ofborg.builder.enable = true;
   };
 }

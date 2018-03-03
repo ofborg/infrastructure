@@ -28,6 +28,14 @@ variable "rabbitmq_monitoring_password" {
   type = "string"
 }
 
+variable "rabbitmq_webhook_username" {
+  type = "string"
+}
+
+variable "rabbitmq_webhook_password" {
+  type = "string"
+}
+
 variable "rabbitmq_ofborgservice_username" {
   type = "string"
 }
@@ -70,7 +78,7 @@ resource "rabbitmq_user" "monitoring" {
 resource "rabbitmq_user" "ofborgservice" {
   name     = "${var.rabbitmq_ofborgservice_username}"
   password = "${var.rabbitmq_ofborgservice_password}"
-  tags     = [ "management"]
+  tags     = [ ]
 }
 
 resource "rabbitmq_permissions" "ofborgservice-access" {
@@ -81,6 +89,23 @@ resource "rabbitmq_permissions" "ofborgservice-access" {
     configure = ".*"
     write     = ".*"
     read      = ".*"
+  }
+}
+
+resource "rabbitmq_user" "webhook" {
+  name     = "${var.rabbitmq_webhook_username}"
+  password = "${var.rabbitmq_webhook_password}"
+  tags     = [ ]
+}
+
+resource "rabbitmq_permissions" "webhook-access" {
+  user  = "${rabbitmq_user.webhook.name}"
+  vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = "^(github-events)$"
+    write     = "^(github-events)$"
+    read      = "^$"
   }
 }
 

@@ -27,7 +27,7 @@ in {
         ofborg-evaluation-filter =
           helpers.rustborgservice "evaluation_filter";
 
-        "ofborg-stats" =
+        ofborg-stats =
           helpers.rustborgservice "stats";
       };
     };

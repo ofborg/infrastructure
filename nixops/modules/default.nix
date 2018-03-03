@@ -7,5 +7,6 @@
   ./packet.nix
   ./ofborg
   ./rabbitmq
+  ./webhook
   ./phpfpm.nix
 ]
