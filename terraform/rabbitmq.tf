@@ -75,6 +75,17 @@ resource "rabbitmq_user" "monitoring" {
   tags     = [ "management"]
 }
 
+resource "rabbitmq_permissions" "monitoring-access" {
+  user  = "${rabbitmq_user.monitoring.name}"
+  vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = "^$"
+    write     = "^$"
+    read      = "^$"
+  }
+}
+
 resource "rabbitmq_user" "ofborgservice" {
   name     = "${var.rabbitmq_ofborgservice_username}"
   password = "${var.rabbitmq_ofborgservice_password}"

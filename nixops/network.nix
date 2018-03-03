@@ -22,7 +22,7 @@ Please exit and re-open the nix-shell
 " false;
   in diffTrace actual expected;
 {
-  defaults = {
+  defaults = { nodes, ... }: {
     imports = import ./modules;
   };
 } // (

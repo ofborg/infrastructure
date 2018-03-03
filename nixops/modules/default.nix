@@ -9,4 +9,5 @@
   ./rabbitmq
   ./webhook
   ./phpfpm.nix
+  ./monitoring.nix
 ]
