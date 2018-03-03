@@ -22,8 +22,24 @@ Please exit and re-open the nix-shell
 " false;
   in diffTrace actual expected;
 {
-  defaults = { nodes, ... }: {
+  defaults = { nodes, lib, ... }: {
     imports = import ./modules;
+
+    services.ofborg.monitoring = let
+        hostnameIf = f: nodes:
+          map (node: node.config.networking.hostName)
+              (lib.filter f (lib.attrValues nodes));
+      in {
+        monitoring_nodes = hostnameIf
+          (node: node.config.services.ofborg.monitoring.enable)
+          nodes;
+        builder_nodes = hostnameIf
+          (node: node.config.services.ofborg.builder.enable)
+          nodes;
+        administration_nodes = hostnameIf
+          (node: node.config.services.ofborg.administrative.enable)
+          nodes;
+      };
   };
 } // (
   let

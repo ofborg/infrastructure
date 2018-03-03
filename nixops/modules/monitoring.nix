@@ -11,6 +11,18 @@ in {
       domain = lib.mkOption {
         type = lib.types.string;
       };
+
+      monitoring_nodes = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
+
+      administration_nodes = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
+
+      builder_nodes = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
     };
   };
 
@@ -82,7 +94,7 @@ in {
           job_name = "prometheus";
           static_configs = [
             {
-              targets = [ ];
+              targets = cfg.monitoring_nodes;
             }
           ];
         }
@@ -92,7 +104,7 @@ in {
           honor_labels = true;
           static_configs = [
             {
-              targets = [ ];
+              targets = cfg.builder_nodes;
             }
           ];
         }
@@ -101,7 +113,7 @@ in {
           job_name = "node";
           static_configs = [
             {
-              targets = [ ];
+              targets = cfg.monitoring_nodes ++ cfg.builder_nodes ++ cfg.administration_nodes;
             }
           ];
         }
