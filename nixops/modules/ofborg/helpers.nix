@@ -29,7 +29,7 @@
       git config --global user.email "${config.services.ofborg.commit_email}"
       git config --global user.name "OfBorg"
       export RUST_BACKTRACE=1
-      ${pkgs.ofborg}/bin/${bin} ${config.services.ofborg.config_json}
+      exec ${pkgs.ofborg}/bin/${bin} ${config.services.ofborg.config_json}
     '';
   };
 }
