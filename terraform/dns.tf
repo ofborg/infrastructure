@@ -25,24 +25,20 @@ data "aws_route53_zone" "root" {
   name         = "${var.root_domain}"
 }
 
-data "dns_a_record_set" "gscio" {
-  host = "nix.gsc.io"
-}
-
 resource "aws_route53_record" "root" {
   zone_id = "${data.aws_route53_zone.root.zone_id}"
   name    = "${data.aws_route53_zone.root.name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${data.dns_a_record_set.gscio.addrs.0}" ]
+  records = [ "${packet_device.core.*.access_public_ipv4}" ]
 }
 
 resource "aws_route53_record" "logs" {
   zone_id = "${data.aws_route53_zone.root.zone_id}"
   name    = "logs.${data.aws_route53_zone.root.name}"
-  type    = "CNAME"
+  type    = "A"
   ttl     = "300"
-  records = [ "nix.gsc.io" ]
+  records = [ "${packet_device.core.*.access_public_ipv4}" ]
 }
 
 resource "aws_route53_record" "events" {
@@ -76,4 +72,31 @@ resource "aws_route53_record" "core" {
   type    = "A"
   ttl     = "300"
   records = [ "${packet_device.core.*.access_private_ipv4[count.index]}" ]
+}
+
+resource "aws_route53_record" "builder" {
+  count = "${packet_device.builder.count}"
+  zone_id = "${data.aws_route53_zone.root.zone_id}"
+  name    = "${packet_device.builder.*.hostname[count.index]}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${packet_device.builder.*.access_private_ipv4[count.index]}" ]
+}
+
+resource "aws_route53_record" "evaluator" {
+  count = "${hcloud_server.evaluator.count}"
+  zone_id = "${data.aws_route53_zone.root.zone_id}"
+  name    = "${hcloud_server.evaluator.*.name[count.index]}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${hcloud_server.evaluator.*.ipv4_address[count.index]}" ]
+}
+
+resource "aws_route53_record" "evaluator-packet" {
+  count = "${packet_device.evaluator.count}"
+  zone_id = "${data.aws_route53_zone.root.zone_id}"
+  name    = "${packet_device.evaluator.*.hostname[count.index]}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${packet_device.evaluator.*.access_private_ipv4[count.index]}" ]
 }

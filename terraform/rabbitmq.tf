@@ -44,6 +44,26 @@ variable "rabbitmq_ofborgservice_password" {
   type = "string"
 }
 
+variable "rabbitmq_logviewer_username" {
+  type = "string"
+}
+
+variable "rabbitmq_logviewer_password" {
+  type = "string"
+}
+
+variable "rabbitmq_builder_accounts" {
+  type = "map"
+}
+
+variable "rabbitmq_builder_grahamc_username" {
+  type = "string"
+}
+
+variable "rabbitmq_builder_grahamc_password" {
+  type = "string"
+}
+
 
 # Configure the RabbitMQ provider
 provider "rabbitmq" {
@@ -94,6 +114,60 @@ resource "rabbitmq_user" "ofborgservice" {
 
 resource "rabbitmq_permissions" "ofborgservice-access" {
   user  = "${rabbitmq_user.ofborgservice.name}"
+  vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = ".*"
+    write     = ".*"
+    read      = ".*"
+  }
+}
+
+
+resource "rabbitmq_user" "logviewer" {
+  name     = "${var.rabbitmq_logviewer_username}"
+  password = "${var.rabbitmq_logviewer_password}"
+  tags     = [ ]
+}
+
+resource "rabbitmq_permissions" "logviewer-access" {
+  user  = "${rabbitmq_user.logviewer.name}"
+  vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = "^(stomp-subscription-.*)"
+    write     = "^(stomp-subscription-.*)"
+    read      = "^(stomp-subscription-.*|logs)"
+  }
+}
+
+resource "rabbitmq_user" "builders" {
+  count    = "${length(keys(var.rabbitmq_builder_accounts))}"
+  name     = "builder-${element(keys(var.rabbitmq_builder_accounts), count.index)}"
+  password = "${element(values(var.rabbitmq_builder_accounts), count.index)}"
+  tags     = [ ]
+}
+
+resource "rabbitmq_permissions" "builders" {
+  count = "${rabbitmq_user.builders.count}"
+  user  = "${rabbitmq_user.builders.*.name[count.index]}"
+  vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = ".*"
+    write     = ".*"
+    read      = ".*"
+  }
+}
+
+resource "rabbitmq_user" "builder_grahamc" {
+  name     = "${var.rabbitmq_builder_grahamc_username}"
+  password = "${var.rabbitmq_builder_grahamc_password}"
+  tags     = [ ]
+}
+
+resource "rabbitmq_permissions" "builder_grahamc-access" {
+  user  = "${rabbitmq_user.builder_grahamc.name}"
   vhost = "${rabbitmq_vhost.ofborg.name}"
 
   permissions {
