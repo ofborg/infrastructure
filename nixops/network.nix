@@ -36,6 +36,9 @@ Please exit and re-open the nix-shell
         builder_nodes = hostnameIf
           (node: node.config.services.ofborg.builder.enable)
           nodes;
+        evaluator_nodes = hostnameIf
+          (node: node.config.services.ofborg.evaluator.enable)
+          nodes;
         administration_nodes = hostnameIf
           (node: node.config.services.ofborg.administrative.enable)
           nodes;

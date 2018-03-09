@@ -2,6 +2,8 @@
 let
   cfg = config.services.ofborg.monitoring;
   rabbitcfg = config.services.ofborg.rabbitmq;
+
+  add_port = port: hostname: "${hostname}:${toString port}";
 in {
   options = {
     services.ofborg.monitoring = {
@@ -21,6 +23,10 @@ in {
       };
 
       builder_nodes = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
+
+      evaluator_nodes = lib.mkOption {
         type = lib.types.listOf lib.types.string;
       };
     };
@@ -104,7 +110,10 @@ in {
           honor_labels = true;
           static_configs = [
             {
-              targets = cfg.builder_nodes;
+              targets = lib.unique
+                (map (add_port 9898)
+                  cfg.administration_nodes);
+
             }
           ];
         }
@@ -113,7 +122,12 @@ in {
           job_name = "node";
           static_configs = [
             {
-              targets = cfg.monitoring_nodes ++ cfg.builder_nodes ++ cfg.administration_nodes;
+              targets = lib.unique
+                (map (add_port 9100)
+                  (cfg.monitoring_nodes
+                    ++ cfg.builder_nodes
+                    ++ cfg.evaluator_nodes
+                    ++ cfg.administration_nodes));
             }
           ];
         }
