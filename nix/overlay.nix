@@ -47,4 +47,16 @@ self: super: {
   };
 
   terraform-provider-nixos = self.callPackage ./terraform-provider-nixos.nix {};
+
+  terraform-provider-hcloud = self.runCommand "terraform-provider-hcloud" {
+    src = self.fetchzip {
+      url = "https://github.com/hetznercloud/terraform-provider-hcloud/releases/download/v1.0.0/terraform-provider-hcloud_v1.0.0_linux_386.zip";
+      stripRoot = false;
+      sha256 = "0g7r52v56fdkfwzlxfhi00hjrxkpdgriccr7g1y5j4r7pyx1svkr";
+    };
+  } ''
+    mkdir -p $out/bin
+    cp $src/terraform-provider-hcloud $out/bin
+  '';
+
 }
