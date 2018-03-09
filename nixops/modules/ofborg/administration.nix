@@ -16,6 +16,9 @@ in {
   };
 
   config = mkIf cfg.enable rec {
+    # For the stats service:
+    networking.firewall.allowedTCPPorts = [ 9898 ];
+
     systemd = {
       services = {
         ofborg-github-comment-filter =
