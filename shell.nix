@@ -11,6 +11,7 @@ in stdenv.mkDerivation rec {
     nixops
     (terraform_0_11.withPlugins (plugins: [
       terraform-provider-nixos
+      terraform-provider-hcloud
       plugins.packet
       plugins.local
       plugins.aws

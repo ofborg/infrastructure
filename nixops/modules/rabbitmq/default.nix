@@ -45,7 +45,7 @@ in {
         });
     };
 
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    networking.firewall.allowedTCPPorts = [ 80 443 5671 15671 ];
 
     # Use FQDNs for resolving peers
     systemd.services.rabbitmq.environment.RABBITMQ_USE_LONGNAME = "true";
