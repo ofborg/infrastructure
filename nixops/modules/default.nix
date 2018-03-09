@@ -5,9 +5,12 @@
   ./roles.nix
   ./terraform.nix
   ./packet.nix
+  ./hetzner.nix
   ./ofborg
   ./rabbitmq
   ./webhook
   ./phpfpm.nix
   ./monitoring.nix
+  ./log-viewer.nix
+  ./website.nix
 ]
