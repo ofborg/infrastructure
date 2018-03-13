@@ -92,12 +92,23 @@ resource "rabbitmq_permissions" "terraform-access" {
 resource "rabbitmq_user" "monitoring" {
   name     = "${var.rabbitmq_monitoring_username}"
   password = "${var.rabbitmq_monitoring_password}"
-  tags     = [ "management"]
+  tags     = [ "monitoring" ]
 }
 
 resource "rabbitmq_permissions" "monitoring-access" {
   user  = "${rabbitmq_user.monitoring.name}"
   vhost = "${rabbitmq_vhost.ofborg.name}"
+
+  permissions {
+    configure = "^$"
+    write     = "^$"
+    read      = "^$"
+  }
+}
+
+resource "rabbitmq_permissions" "monitoring-access-root" {
+  user  = "${rabbitmq_user.monitoring.name}"
+  vhost = "/"
 
   permissions {
     configure = "^$"
