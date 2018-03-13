@@ -3,7 +3,7 @@ variable "linux_sponsors" {
 }
 
 resource "packet_device" "builder" {
-  count            = 2
+  count            = 1
   hostname         = "builder-${count.index}-${element(var.linux_sponsors, count.index)}.ewr1.nix.ci"
   plan             = "baremetal_0"
   facility         = "ewr1"
