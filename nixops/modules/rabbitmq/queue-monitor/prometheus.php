@@ -1,6 +1,7 @@
 <?php
 
 $queues = json_decode(file_get_contents('http://@user@:@password@@127.0.0.1:15672/api/queues/ofborg'), true);
+$connections = json_decode(file_get_contents('http://@user@:@password@@127.0.0.1:15672/api/connections'), true);
 
 $stats = array_map(
     function($queue) {
@@ -58,4 +59,36 @@ foreach ($stats['build-queues'] as $archstr => $stats) {
     echo 'ofborg_queue_builder_consumers{arch="' . $arch .'"} '. $stats['consumers'] . "\n";
     echo 'ofborg_queue_builder_waiting{arch="' . $arch .'"} '. $stats['messages']['waiting'] . "\n";
     echo 'ofborg_queue_builder_in_progress{arch="' . $arch .'"} '. $stats['messages']['in_progress'] . "\n";
+}
+
+
+
+
+$versions = array_map(
+    function($conn) {
+        echo '# ' . $conn['user'] . $conn['client_properties']['ofborg_version'] . "\n";
+        return $conn['client_properties']['ofborg_version'];
+    },
+    $connections
+);
+
+$filtered_versions = array_filter($versions,
+                                  function ($v) { return !is_null($v); }
+);
+
+sort($filtered_versions);
+$counted_versions = array_reduce($filtered_versions,
+             function($c, $v) {
+                 if (!isset($c[$v])) {
+                     $c[$v] = 0;
+                 }
+                 $c[$v]++;
+
+                 return $c;
+             },
+             []
+);
+
+foreach ($counted_versions as $version => $count) {
+    echo 'ofborg_version{version="'.$version.'"} ' . $count . "\n";
 }
