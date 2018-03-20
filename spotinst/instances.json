@@ -1,0 +1,656 @@
+[
+  {
+    "id": "bb855601-7e31-4a1b-b599-0bcc54a2cbb1",
+    "short_id": "bb855601",
+    "hostname": "sevaluator-1",
+    "description": "foobar",
+    "state": "active",
+    "tags": [
+      "evaluator"
+    ],
+    "image_url": null,
+    "billing_cycle": "hourly",
+    "user": "root",
+    "iqn": "iqn.2018-03.net.packet:device.bb855601",
+    "locked": false,
+    "bonding_mode": 4,
+    "created_at": "2018-03-20T01:38:05Z",
+    "updated_at": "2018-03-20T01:45:45Z",
+    "ipxe_script_url": null,
+    "always_pxe": false,
+    "storage": null,
+    "spot_instance": true,
+    "termination_time": null,
+    "operating_system": {
+      "id": "e2a6b05d-a46b-4e1f-90ae-bf511c41e5a1",
+      "slug": "nixos_17_03",
+      "name": "NixOS 17.03",
+      "distro": "nixos",
+      "version": "17.03",
+      "provisionable_on": [
+        "baremetal_0",
+        "baremetal_1",
+        "baremetal_2",
+        "baremetal_3"
+      ],
+      "default_cidr_size": 31
+    },
+    "facility": {
+      "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+      "name": "Parsippany, NJ",
+      "code": "ewr1",
+      "features": [
+        "baremetal",
+        "storage",
+        "backend_transfers",
+        "layer_2",
+        "global_ipv4"
+      ],
+      "address": null,
+      "ip_ranges": [
+        "2604:1380::/36",
+        "147.75.192.0/21",
+        "147.75.64.0/22",
+        "147.75.72.0/22",
+        "147.75.76.0/22",
+        "147.75.104.0/22",
+        "147.75.96.0/20"
+      ]
+    },
+    "project": {
+      "href": "/projects/ed99fc89-822f-4889-94f6-1fbcb803fef8"
+    },
+    "ssh_keys": [
+      {
+        "href": "/ssh-keys/0541819c-5680-4a3c-9bde-2104d6a2ff2f"
+      },
+      {
+        "href": "/ssh-keys/594a72d4-6d38-4952-a930-54ed5718f5d9"
+      },
+      {
+        "href": "/ssh-keys/70994ab3-9471-418a-a8c7-9418d52f2012"
+      },
+      {
+        "href": "/ssh-keys/de5b251a-7edc-431e-a003-e646ef8c0791"
+      }
+    ],
+    "project_lite": {
+      "href": "/projects/ed99fc89-822f-4889-94f6-1fbcb803fef8"
+    },
+    "volumes": [],
+    "ip_addresses": [
+      {
+        "id": "e26ea328-aeed-42e5-ba0e-0ee934c3c328",
+        "address_family": 4,
+        "netmask": "255.255.255.254",
+        "created_at": "2018-03-20T01:38:10Z",
+        "public": true,
+        "cidr": 31,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/bb855601-7e31-4a1b-b599-0bcc54a2cbb1"
+        },
+        "interface": {
+          "href": "/ports/03487973-e450-421d-bce5-8f19630ff3e9"
+        },
+        "network": "147.75.77.86",
+        "address": "147.75.77.87",
+        "gateway": "147.75.77.86",
+        "href": "/ips/e26ea328-aeed-42e5-ba0e-0ee934c3c328"
+      },
+      {
+        "id": "e02eff1a-2930-48a0-8e0a-46b1e965d46e",
+        "address_family": 6,
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe",
+        "created_at": "2018-03-20T01:38:10Z",
+        "public": true,
+        "cidr": 127,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/bb855601-7e31-4a1b-b599-0bcc54a2cbb1"
+        },
+        "interface": {
+          "href": "/ports/03487973-e450-421d-bce5-8f19630ff3e9"
+        },
+        "network": "2604:1380:0:3c00::4",
+        "address": "2604:1380:0:3c00::5",
+        "gateway": "2604:1380:0:3c00::4",
+        "href": "/ips/e02eff1a-2930-48a0-8e0a-46b1e965d46e"
+      },
+      {
+        "id": "9a816619-8bb4-43f0-9c83-4e29316c8b3c",
+        "address_family": 4,
+        "netmask": "255.255.255.254",
+        "created_at": "2018-03-20T01:38:10Z",
+        "public": false,
+        "cidr": 31,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/bb855601-7e31-4a1b-b599-0bcc54a2cbb1"
+        },
+        "interface": {
+          "href": "/ports/03487973-e450-421d-bce5-8f19630ff3e9"
+        },
+        "network": "10.99.147.132",
+        "address": "10.99.147.133",
+        "gateway": "10.99.147.132",
+        "href": "/ips/9a816619-8bb4-43f0-9c83-4e29316c8b3c"
+      }
+    ],
+    "plan": {
+      "id": "6d1f1ffa-7912-4b78-b50d-88cc7c8ab40f",
+      "slug": "baremetal_1",
+      "name": "Type 1",
+      "description": "Our Type 1 configuration is a zippy general use server, with an Intel E3-1240 v3 processor and 32GB of RAM.",
+      "line": "baremetal",
+      "specs": {
+        "cpus": [
+          {
+            "count": 1,
+            "type": "Intel E3-1240 v3"
+          }
+        ],
+        "memory": {
+          "total": "32GB"
+        },
+        "drives": [
+          {
+            "count": 2,
+            "size": "120GB",
+            "type": "SSD"
+          }
+        ],
+        "nics": [
+          {
+            "count": 2,
+            "type": "1Gbps"
+          }
+        ],
+        "features": {
+          "raid": true,
+          "txt": true
+        }
+      },
+      "available_in": [
+        {
+          "href": "/facilities/8ea03255-89f9-4e62-9d3f-8817db82ceed"
+        },
+        {
+          "href": "/facilities/2b70eb8f-fa18-47c0-aba7-222a842362fd"
+        },
+        {
+          "href": "/facilities/e1e9c52e-a0bc-4117-b996-0fc94843ea09"
+        },
+        {
+          "href": "/facilities/8e6470b3-b75e-47d1-bb93-45b225750975"
+        }
+      ]
+    },
+    "userdata": "",
+    "switch_uuid": "c7c8ee1d",
+    "network_ports": [
+      {
+        "id": "03487973-e450-421d-bce5-8f19630ff3e9",
+        "type": "NetworkBondPort",
+        "name": "bond0",
+        "data": {
+          "bonded": true
+        },
+        "hardware": {
+          "href": "/hardware/dff1e256-7df9-459a-b7b9-d2756f64f262"
+        },
+        "virtual_networks": [],
+        "connected_port": null,
+        "href": "/ports/03487973-e450-421d-bce5-8f19630ff3e9"
+      },
+      {
+        "id": "832ddc56-2875-4b54-82e5-cdbfbc5e7c47",
+        "type": "NetworkPort",
+        "name": "eth0",
+        "data": {
+          "bonded": true,
+          "mac": "0c:c4:7a:86:37:c4"
+        },
+        "bond": {
+          "id": "03487973-e450-421d-bce5-8f19630ff3e9",
+          "name": "bond0"
+        },
+        "hardware": {
+          "href": "/hardware/dff1e256-7df9-459a-b7b9-d2756f64f262"
+        },
+        "virtual_networks": [],
+        "connected_port": {
+          "href": "/ports/08af834f-3f85-4cf2-a60d-7aefc45f7fe4"
+        },
+        "href": "/ports/832ddc56-2875-4b54-82e5-cdbfbc5e7c47"
+      },
+      {
+        "id": "b7fe8771-2882-43d6-b126-12532194404a",
+        "type": "NetworkPort",
+        "name": "eth1",
+        "data": {
+          "bonded": true,
+          "mac": "0c:c4:7a:86:37:c5"
+        },
+        "bond": {
+          "id": "03487973-e450-421d-bce5-8f19630ff3e9",
+          "name": "bond0"
+        },
+        "hardware": {
+          "href": "/hardware/dff1e256-7df9-459a-b7b9-d2756f64f262"
+        },
+        "virtual_networks": [],
+        "connected_port": {
+          "href": "/ports/7dfb6551-d2a1-4033-8529-5790e67527a8"
+        },
+        "href": "/ports/b7fe8771-2882-43d6-b126-12532194404a"
+      }
+    ],
+    "href": "/devices/bb855601-7e31-4a1b-b599-0bcc54a2cbb1"
+  },
+  {
+    "id": "37a2a0ad-4e2e-4c43-a6f1-3f31b3f6c0b1",
+    "short_id": "37a2a0ad",
+    "hostname": "sbuilder-1",
+    "description": "foobar",
+    "state": "active",
+    "tags": [
+      "builder"
+    ],
+    "image_url": null,
+    "billing_cycle": "hourly",
+    "user": "root",
+    "iqn": "iqn.2018-03.net.packet:device.37a2a0ad",
+    "locked": false,
+    "bonding_mode": 5,
+    "created_at": "2018-03-20T00:58:39Z",
+    "updated_at": "2018-03-20T01:05:50Z",
+    "ipxe_script_url": null,
+    "always_pxe": false,
+    "storage": null,
+    "spot_instance": true,
+    "termination_time": null,
+    "operating_system": {
+      "id": "e2a6b05d-a46b-4e1f-90ae-bf511c41e5a1",
+      "slug": "nixos_17_03",
+      "name": "NixOS 17.03",
+      "distro": "nixos",
+      "version": "17.03",
+      "provisionable_on": [
+        "baremetal_0",
+        "baremetal_1",
+        "baremetal_2",
+        "baremetal_3"
+      ],
+      "default_cidr_size": 31
+    },
+    "facility": {
+      "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+      "name": "Parsippany, NJ",
+      "code": "ewr1",
+      "features": [
+        "baremetal",
+        "storage",
+        "backend_transfers",
+        "layer_2",
+        "global_ipv4"
+      ],
+      "address": null,
+      "ip_ranges": [
+        "2604:1380::/36",
+        "147.75.192.0/21",
+        "147.75.64.0/22",
+        "147.75.72.0/22",
+        "147.75.76.0/22",
+        "147.75.104.0/22",
+        "147.75.96.0/20"
+      ]
+    },
+    "project": {
+      "href": "/projects/ed99fc89-822f-4889-94f6-1fbcb803fef8"
+    },
+    "ssh_keys": [
+      {
+        "href": "/ssh-keys/0541819c-5680-4a3c-9bde-2104d6a2ff2f"
+      },
+      {
+        "href": "/ssh-keys/594a72d4-6d38-4952-a930-54ed5718f5d9"
+      },
+      {
+        "href": "/ssh-keys/70994ab3-9471-418a-a8c7-9418d52f2012"
+      },
+      {
+        "href": "/ssh-keys/de5b251a-7edc-431e-a003-e646ef8c0791"
+      }
+    ],
+    "project_lite": {
+      "href": "/projects/ed99fc89-822f-4889-94f6-1fbcb803fef8"
+    },
+    "volumes": [],
+    "ip_addresses": [
+      {
+        "id": "dcae9cf3-b006-4c4a-b35c-3a6b250c3077",
+        "address_family": 4,
+        "netmask": "255.255.255.254",
+        "created_at": "2018-03-20T00:58:42Z",
+        "public": true,
+        "cidr": 31,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/37a2a0ad-4e2e-4c43-a6f1-3f31b3f6c0b1"
+        },
+        "interface": {
+          "href": "/ports/f7601fba-bfa8-43db-b904-8aabb2874a58"
+        },
+        "network": "147.75.65.34",
+        "address": "147.75.65.35",
+        "gateway": "147.75.65.34",
+        "href": "/ips/dcae9cf3-b006-4c4a-b35c-3a6b250c3077"
+      },
+      {
+        "id": "1f1ddf59-ebb4-4aae-aebe-825b3a89954d",
+        "address_family": 6,
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:fffe",
+        "created_at": "2018-03-20T00:58:42Z",
+        "public": true,
+        "cidr": 127,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/37a2a0ad-4e2e-4c43-a6f1-3f31b3f6c0b1"
+        },
+        "interface": {
+          "href": "/ports/f7601fba-bfa8-43db-b904-8aabb2874a58"
+        },
+        "network": "2604:1380:0:3c00::8",
+        "address": "2604:1380:0:3c00::9",
+        "gateway": "2604:1380:0:3c00::8",
+        "href": "/ips/1f1ddf59-ebb4-4aae-aebe-825b3a89954d"
+      },
+      {
+        "id": "2a435b7c-ec1d-4edf-b539-eadc9dc738f4",
+        "address_family": 4,
+        "netmask": "255.255.255.254",
+        "created_at": "2018-03-20T00:58:42Z",
+        "public": false,
+        "cidr": 31,
+        "management": true,
+        "manageable": true,
+        "enabled": true,
+        "project": {},
+        "project_lite": {},
+        "facility": {
+          "id": "e1e9c52e-a0bc-4117-b996-0fc94843ea09",
+          "name": "Parsippany, NJ",
+          "code": "ewr1",
+          "features": [
+            "baremetal",
+            "storage",
+            "backend_transfers",
+            "layer_2",
+            "global_ipv4"
+          ],
+          "address": null,
+          "ip_ranges": [
+            "2604:1380::/36",
+            "147.75.192.0/21",
+            "147.75.64.0/22",
+            "147.75.72.0/22",
+            "147.75.76.0/22",
+            "147.75.104.0/22",
+            "147.75.96.0/20"
+          ]
+        },
+        "assigned_to": {
+          "href": "/devices/37a2a0ad-4e2e-4c43-a6f1-3f31b3f6c0b1"
+        },
+        "interface": {
+          "href": "/ports/f7601fba-bfa8-43db-b904-8aabb2874a58"
+        },
+        "network": "10.99.147.136",
+        "address": "10.99.147.137",
+        "gateway": "10.99.147.136",
+        "href": "/ips/2a435b7c-ec1d-4edf-b539-eadc9dc738f4"
+      }
+    ],
+    "plan": {
+      "id": "e69c0169-4726-46ea-98f1-939c9e8a3607",
+      "slug": "baremetal_0",
+      "name": "Type 0",
+      "description": "Our Type 0 configuration is a general use \"cloud killer\" server, with a Intel Atom 2.4Ghz processor and 8GB of RAM.",
+      "line": "baremetal",
+      "specs": {
+        "cpus": [
+          {
+            "count": 1,
+            "type": "Intel Atom C2550 @ 2.4Ghz"
+          }
+        ],
+        "memory": {
+          "total": "8GB"
+        },
+        "drives": [
+          {
+            "count": 1,
+            "size": "80GB",
+            "type": "SSD"
+          }
+        ],
+        "nics": [
+          {
+            "count": 2,
+            "type": "1Gbps"
+          }
+        ],
+        "features": {
+          "raid": false,
+          "txt": true
+        }
+      },
+      "available_in": [
+        {
+          "href": "/facilities/8ea03255-89f9-4e62-9d3f-8817db82ceed"
+        },
+        {
+          "href": "/facilities/2b70eb8f-fa18-47c0-aba7-222a842362fd"
+        },
+        {
+          "href": "/facilities/e1e9c52e-a0bc-4117-b996-0fc94843ea09"
+        },
+        {
+          "href": "/facilities/8e6470b3-b75e-47d1-bb93-45b225750975"
+        }
+      ]
+    },
+    "userdata": "",
+    "switch_uuid": "6ce8785a",
+    "network_ports": [
+      {
+        "id": "f7601fba-bfa8-43db-b904-8aabb2874a58",
+        "type": "NetworkBondPort",
+        "name": "bond0",
+        "data": {
+          "bonded": true
+        },
+        "hardware": {
+          "href": "/hardware/744ec272-ab05-4187-8dee-7936ced2cfdb"
+        },
+        "virtual_networks": [],
+        "connected_port": null,
+        "href": "/ports/f7601fba-bfa8-43db-b904-8aabb2874a58"
+      },
+      {
+        "id": "246ddca9-5db5-4587-ae14-6d4217f1b953",
+        "type": "NetworkPort",
+        "name": "eth0",
+        "data": {
+          "bonded": true,
+          "mac": "0c:c4:7a:54:07:e6"
+        },
+        "bond": {
+          "id": "f7601fba-bfa8-43db-b904-8aabb2874a58",
+          "name": "bond0"
+        },
+        "hardware": {
+          "href": "/hardware/744ec272-ab05-4187-8dee-7936ced2cfdb"
+        },
+        "virtual_networks": [],
+        "connected_port": {
+          "href": "/ports/e7bdbb58-aa0a-4fbf-a3b0-65d4591d6538"
+        },
+        "href": "/ports/246ddca9-5db5-4587-ae14-6d4217f1b953"
+      },
+      {
+        "id": "8951963b-8262-4dd5-b52f-21a354bd88d7",
+        "type": "NetworkPort",
+        "name": "eth1",
+        "data": {
+          "bonded": true,
+          "mac": "0c:c4:7a:54:07:e7"
+        },
+        "bond": {
+          "id": "f7601fba-bfa8-43db-b904-8aabb2874a58",
+          "name": "bond0"
+        },
+        "hardware": {
+          "href": "/hardware/744ec272-ab05-4187-8dee-7936ced2cfdb"
+        },
+        "virtual_networks": [],
+        "connected_port": {
+          "href": "/ports/53795e46-5108-46db-b32f-1451d113a989"
+        },
+        "href": "/ports/8951963b-8262-4dd5-b52f-21a354bd88d7"
+      }
+    ],
+    "href": "/devices/37a2a0ad-4e2e-4c43-a6f1-3f31b3f6c0b1"
+  }
+]

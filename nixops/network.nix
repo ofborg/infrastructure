@@ -100,3 +100,4 @@ Please exit and re-open the nix-shell
       {}
       nodes;
   in allImported)
+  // (import ../spotinst/interp.nix)
