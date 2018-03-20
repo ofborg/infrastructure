@@ -40,7 +40,7 @@ in {
   options = {
     packet = {
       plan = mkOption {
-        type = types.enum [ "none" "baremetal_0" ];
+        type = types.enum [ "none" "baremetal_0" "baremetal_1" ];
         default = "none";
       };
       network_data = mkOption {
@@ -76,6 +76,39 @@ in {
         bonds.bond0 = {
           driverOptions.mode = "balance-tlb";
           interfaces = [ "enp0s20f0" "enp0s20f1" ];
+        };
+      };
+    })
+    (mkIf ("${cfg.plan}" == "baremetal_1") {
+      boot = {
+        supportedFilesystems = [ "zfs" ];
+        initrd.availableKernelModules = [
+          "xhci_pci" "ehci_pci" "ahci" "usbhid" "sd_mod"
+        ];
+
+        kernelModules = [ "kvm-intel" ];
+        kernelParams =  [ "console=ttyS1,115200n8" ];
+        extraModulePackages = [ ];
+        loader.grub.zfsSupport = true;
+        loader.grub.devices = [ "/dev/sda" "/dev/sdb" ];
+      };
+
+      hardware.enableAllFirmware = true;
+
+      services.zfs.autoScrub.enable = true;
+      fileSystems."/" = {
+        device = "rpool/root/nixos";
+        fsType = "zfs";
+      };
+
+      nix.maxJobs = 8;
+      nix.gc_free_gb = 60;
+
+      networking = {
+        hostId = "aaaaaaaa";
+        bonds.bond0 = {
+          driverOptions.mode = "802.3ad";
+          interfaces = [ "enp1s0f0" "enp1s0f1" ];
         };
       };
     })
