@@ -11,12 +11,14 @@ let
 
       publicIPs = lib.filter (block: block.public == "1");
       gateways = map (block: block.gateway);
+      addresses = map (block: block.address);
 
       interfaceIPs = map (block: {
         address = block.address;
         prefixLength = lib.toInt block.cidr;
       });
     in {
+      deployment.targetHost = lib.mkForce (lib.head (addresses (publicIPs ipv4Blocks)));
       networking = {
         defaultGateway = {
           interface = "bond0";
