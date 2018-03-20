@@ -40,7 +40,7 @@ in {
 
       swapDevices = [ ];
 
-      nix.gc_free_gb = 60;
+      nix.gc_free_gb = 100;
       nix.maxJobs = lib.mkDefault 2;
       boot.loader.grub.enable = true;
       boot.loader.grub.version = 2;
