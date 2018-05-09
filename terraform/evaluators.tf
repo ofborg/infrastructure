@@ -15,7 +15,7 @@ resource "hcloud_ssh_key" "default" {
 }
 
 resource "hcloud_server" "evaluator" {
-  count        = 2
+  count        = 3
   name         = "eval-${count.index}-${element(var.evaluator_sponsors, count.index)}.ewr1.nix.ci"
   server_type  = "cx41"
   image        = "debian-9"
