@@ -21,7 +21,7 @@ let
     public = if ip_block.public then "1" else "0";
   };
   toInstance = { hostname, short_id, ip_addresses, plan, tags, ... } @ data: {
-    terraform.name = hostname;
+    terraform.name = "${hostname}-${short_id}";
     networking.hostName = "${short_id}.packethost.net";
     packet.plan = plan.slug;
     packet.network_data = builtins.toJSON
