@@ -25,6 +25,14 @@ Please exit and re-open the nix-shell
   defaults = { nodes, lib, ... }: {
     imports = import ./modules;
 
+    services.ofborg.rabbitmq.cluster_ips = let
+        ipIf = filter: nodes:
+          map (node: node.config.deployment.targetHost)
+              (lib.filter filter (lib.attrValues nodes));
+      in ipIf
+          (node: node.config.services.ofborg.rabbitmq.enable)
+          nodes;
+
     services.ofborg.monitoring = let
         hostnameIf = f: nodes:
           map (node: node.config.networking.hostName)

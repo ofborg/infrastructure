@@ -25,10 +25,16 @@ in {
         default = {};
       };
 
+      config_override = lib.mkOption {
+        default = {};
+      };
+
       config_merged = lib.mkOption {
-        default = (lib.attrsets.recursiveUpdate
-          (lib.attrsets.recursiveUpdate cfg.config_public cfg.config_static)
-          cfg.config_private);
+        default = let
+          stage1 = lib.attrsets.recursiveUpdate cfg.config_public cfg.config_static;
+          stage2 = lib.attrsets.recursiveUpdate stage1 cfg.config_private;
+          stage3 = lib.attrsets.recursiveUpdate stage2 cfg.config_override;
+        in stage3;
       };
 
       config_json = lib.mkOption {

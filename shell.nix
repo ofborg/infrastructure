@@ -8,6 +8,7 @@ in stdenv.mkDerivation rec {
   buildInputs = with pkgs; [
     nix-prefetch-git
     git
+    gitAndTools.git-crypt
     nixops
     (terraform_0_11.withPlugins (plugins: [
       terraform-provider-nixos
@@ -20,7 +21,8 @@ in stdenv.mkDerivation rec {
     ]))
  ];
 
+  NIXOPS_STATE = "${toString ./.}/private/nixops-state/deployments.nixops";
   HISTFILE = "${toString ./.}/.bash_hist";
   NIXOPS_DEPLOYMENT = "ofborg-production";
-  NIX_PATH = "nixpkgs=${pkgs.path}";
+  NIX_PATH = "nixpkgs=${pkgs.path}:ofborg-infra=${toString ./.}";
 }

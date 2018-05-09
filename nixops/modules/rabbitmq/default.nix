@@ -22,6 +22,10 @@ in {
       monitoring_password = lib.mkOption {
         type = lib.types.string;
       };
+
+      cluster_ips = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
     };
   };
 
@@ -46,6 +50,22 @@ in {
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 5671 15671 ];
+    networking.firewall.extraCommands = let
+      acceptPortFromPeer = peer: port:
+        ''
+          iptables -A nixos-fw -p tcp --source ${peer} --dport ${toString port} \
+            -j nixos-fw-accept
+        '';
+      acceptPortFromPeers = port:
+        lib.concatMapStrings
+          (peer: acceptPortFromPeer peer port)
+          cfg.cluster_ips;
+    in lib.concatStrings [
+      (lib.concatMapStrings acceptPortFromPeers [
+        4369 25672
+      ])
+    ];
+
 
     # Use FQDNs for resolving peers
     systemd.services.rabbitmq.environment.RABBITMQ_USE_LONGNAME = "true";

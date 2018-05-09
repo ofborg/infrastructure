@@ -2,9 +2,9 @@
 resource "packet_device" "evaluator" {
   count            = 0 # WARNING: THESE ARE EXPENSIVE
   hostname         = "p-eval-${count.index}.ewr1.nix.ci"
-  plan             = "baremetal_1"
-  facility         = "ewr1"
-  operating_system = "nixos_17_03"
+  plan             = "x1.small.x86"
+  facility         = "atl1"
+  operating_system = "nixos_18_03"
   billing_cycle    = "hourly"
   project_id       = "${packet_project.ofborg.id}"
 }
