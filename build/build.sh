@@ -8,6 +8,8 @@ if ! git-crypt unlock; then
     exit 1
 fi
 
+git-crypt status
+
 fetchrepo() {
     dest=$1
     src=$2
