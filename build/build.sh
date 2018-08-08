@@ -11,6 +11,7 @@ fetchrepo() {
     dest=$1
     src=$2
     branch=$3
+    remote=$(echo "$src" | md5sum | cut -d' ' -f1)
 
     if [ ! -d "$dest" ]; then
         git clone "$src" "$dest"
@@ -18,8 +19,13 @@ fetchrepo() {
 
     (
         cd "$dest"
-        git fetch --update-head-ok "$src" "$branch":up/rem
-        git checkout up/rem
+        if ! git remote | grep -q "$remote"; then
+            git remote add "$remote" "$src"
+        fi
+
+        git fetch "$remote"
+        git clean -dfx
+        git checkout "$remote/$branch"
     )
 }
 
