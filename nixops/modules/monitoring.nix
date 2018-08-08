@@ -53,7 +53,7 @@ in {
     services.prometheus = {
       enable = true;
 
-      extraFlags = [ "--web.external-url=https://${config.services.ofborg.website.domain}/" ];
+      extraFlags = [ "--web.external-url=https://${config.services.ofborg.website.domain}/prometheus/" ];
 
       alertmanagerURL = [ "http://127.0.0.1:9093" ];
       alertmanager = {

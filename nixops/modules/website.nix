@@ -20,8 +20,9 @@ in {
       virtualHosts."${cfg.domain}" = {
         enableACME = true;
         forceSSL = true;
+        root = ../../website;
         locations = {
-          "/".proxyPass = "http://127.0.0.1:9090/";
+          "/prometheus".proxyPass = "http://127.0.0.1:9090/";
         };
       };
 
