@@ -3,7 +3,10 @@
 
 set -eux
 
-git-crypt unlock
+if ! git-crypt unlock; then
+    echo "Failed to decrypt!"
+    exit 1
+fi
 
 fetchrepo() {
     dest=$1
