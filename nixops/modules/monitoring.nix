@@ -14,6 +14,11 @@ in {
         type = lib.types.string;
       };
 
+      alert_manager_receivers = lib.mkOption {
+        type = lib.types.listOf lib.types.attrs;
+        default = {};
+      };
+
       monitoring_nodes = lib.mkOption {
         type = lib.types.listOf lib.types.string;
       };
@@ -44,10 +49,24 @@ in {
       auth.anonymous.enable = true;
     };
 
+
     services.prometheus = {
       enable = true;
 
       alertmanagerURL = [ "http://127.0.0.1:9093" ];
+      alertmanager = {
+        enable = true;
+        configuration = {
+          global = {};
+          route = {
+            receiver = "default_receiver";
+            group_by = ["cluster" "alertname"];
+          };
+
+          receivers = cfg.alert_manager_receivers;
+        };
+      };
+
       rules = [
         ''
           ALERT MissingOfBorgData

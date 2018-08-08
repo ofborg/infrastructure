@@ -1,5 +1,5 @@
 [
-  ./../local.nix
+  ./../../private/local.nix
   ./standard.nix
   ./secrets.nix
   ./roles.nix

@@ -1,0 +1,1 @@
+. ../private/spotinst-config.sh

@@ -11,12 +11,12 @@ function make_spot() {
     TYPE="$3"
     PRICE="$4"
     curl -v --data '{
-	"facility": "ewr1",
+	"facility": "any",
 	"plan": "'"$PLAN"'",
 	"hostname": "'"$HOSTNAME"'",
-	"description": "Spot instance for $3",
+	"description": "Spot instance for '"$TYPE"'",
 	"billing_cycle": "hourly",
-	"operating_system": "e2a6b05d-a46b-4e1f-90ae-bf511c41e5a1",
+	"operating_system": "nixos_18_03",
 	"userdata": "",
 	"locked": "false",
 	"spot_instance": true,
@@ -39,4 +39,4 @@ function make_spot() {
 }
 
 # want to make not-spot builders? use terraform!
-make_spot spot-builder-1 baremetal_0 builder 0.07
+make_spot spot-evaluator-3 x1.small.x86 evaluator 0.10

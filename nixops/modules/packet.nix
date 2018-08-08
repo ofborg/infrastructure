@@ -9,6 +9,7 @@ let
       ipv4Blocks = lib.filter (block: block.family == "4") conf;
       ipv6Blocks = lib.filter (block: block.family == "6") conf;
 
+      privateIPs = lib.filter (block: block.public == "0");
       publicIPs = lib.filter (block: block.public == "1");
       gateways = map (block: block.gateway);
       addresses = map (block: block.address);
@@ -40,7 +41,7 @@ in {
   options = {
     packet = {
       plan = mkOption {
-        type = types.enum [ "none" "baremetal_0" "baremetal_1" ];
+        type = types.enum [ "none" "baremetal_0" "baremetal_1" "x1.small.x86" ];
         default = "none";
       };
       network_data = mkOption {
@@ -111,6 +112,57 @@ in {
           interfaces = [ "enp1s0f0" "enp1s0f1" ];
         };
       };
+    })
+    (mkIf ("${cfg.plan}" == "x1.small.x86") {
+      boot.kernelModules = [ "kvm-intel" "dm_multipath" "dm_round_robin" ];
+      boot.initrd.availableKernelModules = [
+        "xhci_pci" "ahci" "usbhid" "sd_mod"
+      ];
+      boot.kernelParams =  [ "console=ttyS1,115200n8" ];
+      boot.extraModulePackages = [ ];
+      boot.loader.grub.devices = [ "/dev/sda" ];
+      boot.loader.grub.extraConfig = ''
+        serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
+        terminal_output serial console
+        terminal_input serial console
+      '';
+
+      hardware.enableAllFirmware = true
+        ;
+      nix.maxJobs = 8;
+      nix.gc_free_gb = 50;
+      networking.dhcpcd.enable = false;
+      networking.bonds.bond0 = {
+        driverOptions = {
+          mode = "balance-tlb";
+          xmit_hash_policy = "layer3+4";
+          downdelay = "200";
+          updelay = "200";
+          miimon = "100";
+        };
+
+        interfaces = [
+          "eno1"
+        ];
+      };
+
+      networking.interfaces.bond0 = {
+        useDHCP = false;
+      };
+
+
+      fileSystems = {
+        "/" = {
+          label = "nixos";
+          fsType = "ext4";
+        };
+      };
+
+      swapDevices = [
+        {
+          label = "swap";
+        }
+      ];
     })
   ];
 }

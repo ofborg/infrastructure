@@ -41,6 +41,9 @@ in {
     })
     (mkIf cfg.evaluator.enable rec {
       services.ofborg.evaluator.enable = true;
+      services.ofborg.config_override = {
+        nix.initial_heap_size = "10g";
+      };
     })
   ];
 }
