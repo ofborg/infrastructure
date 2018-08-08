@@ -3,10 +3,7 @@
 
 set -eux
 
-if ! strace git-crypt unlock; then
-    echo "Failed to decrypt!"
-    exit 1
-fi
+git-crypt unlock
 
 git-crypt status
 
