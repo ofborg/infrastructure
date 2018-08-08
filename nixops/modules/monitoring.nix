@@ -14,6 +14,11 @@ in {
         type = lib.types.string;
       };
 
+      alert_manager_receivers = lib.mkOption {
+        type = lib.types.attrs;
+        default = {};
+      };
+
       monitoring_nodes = lib.mkOption {
         type = lib.types.listOf lib.types.string;
       };
@@ -42,6 +47,19 @@ in {
     services.grafana = {
       enable = true;
       auth.anonymous.enable = true;
+    };
+
+    services.alertmanager = {
+      enable = true;
+      configuration = {
+        global = {};
+        route = {
+          receiver = "default_receiver";
+          group_by = ["cluster" "alertname"];
+        };
+
+        receivers = cfg.alert_manager_receivers;
+      };
     };
 
     services.prometheus = {
