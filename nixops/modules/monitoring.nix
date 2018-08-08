@@ -15,7 +15,7 @@ in {
       };
 
       alert_manager_receivers = lib.mkOption {
-        type = lib.types.attrs;
+        type = lib.types.listOf lib.types.attrs;
         default = {};
       };
 
