@@ -110,7 +110,7 @@ foreach ($counted_versions as $version => $count) {
 }
 
 echo "# HELP ofborg_per_user_version Number of connections by user and version.\n";
-echo "# TYPE ofborg_per_user_version gauge";
+echo "# TYPE ofborg_per_user_version gauge\n";
 foreach ($versions_by_user as $user => $details) {
     foreach ($details as $version => $count) {
         echo 'ofborg_per_user_version{user="'.$user.'",version="'.$version.'"} ' . $count . "\n";
