@@ -61,12 +61,28 @@ foreach ($stats['build-queues'] as $archstr => $stats) {
     echo 'ofborg_queue_builder_in_progress{arch="' . $arch .'"} '. $stats['messages']['in_progress'] . "\n";
 }
 
+$versions_by_user = array_reduce(
+    $connections,
+    function($collector, $conn) {
+        $user = $conn['user'];
+    $version = $conn['client_properties']['ofborg_version'];
 
+        if (!isset($collector[$user])) {
+            $collector[$user] = array();
+    }
+        if (!isset($collector[$user][$version])) {
+            $collector[$user][$version] = 0;
+    }
 
+    $collector[$user][$version]++;
+
+    return $collector;
+    },
+    []
+);
 
 $versions = array_map(
     function($conn) {
-        echo '# ' . $conn['user'] . $conn['client_properties']['ofborg_version'] . "\n";
         return $conn['client_properties']['ofborg_version'];
     },
     $connections
@@ -91,4 +107,12 @@ $counted_versions = array_reduce($filtered_versions,
 
 foreach ($counted_versions as $version => $count) {
     echo 'ofborg_version{version="'.$version.'"} ' . $count . "\n";
+}
+
+echo "# HELP ofborg_per_user_version Number of connections by user and version.\n";
+echo "# TYPE ofborg_per_user_version gauge\n";
+foreach ($versions_by_user as $user => $details) {
+    foreach ($details as $version => $count) {
+        echo 'ofborg_per_user_version{user="'.$user.'",version="'.$version.'"} ' . $count . "\n";
+    }
 }
