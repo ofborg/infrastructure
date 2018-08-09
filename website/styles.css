@@ -1,0 +1,123 @@
+/* Just Enough Boot Strap to look fine within nixos designs. */
+
+html {
+	font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 20px;
+	color: #333;
+	background-color: #fff;
+	padding-top: 0;
+	margin-top:    4em;
+	margin-bottom: 4em;
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #fff;
+}
+
+p {
+    margin: 0 0 10px;
+}
+
+code, pre {
+    padding: 0 3px 2px;
+    font-family: Monaco,Menlo,Consolas,"Courier New",monospace;
+    font-size: 12px;
+    color: #333;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+code {
+    padding: 2px 4px;
+    color: #d14;
+    white-space: nowrap;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+}
+
+a {
+    color: #08c;
+    text-decoration: none;
+}
+
+object, img {
+    width: auto\9;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+
+object, object * {
+	user-select: none;
+	pointer-events: none;
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.lead {
+    margin-bottom: 20px;
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 30px;
+}
+
+h1.lead {
+	text-align: center;
+    margin-bottom: 20px;
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 30px;
+    padding-left: 1em;
+    padding-right: 1.4em;
+}
+
+/* custom stuff for a splash page */
+
+p, h1, h2, ul {
+	text-align: center;
+}
+
+.cache {
+	font-style: italic;
+}
+
+body > div {
+	max-width: 800px;
+}
+
+.links h2 {
+	margin-bottom: 0.3em;
+}
+.links ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.links ul li {
+	max-width: 300px;
+	margin: 0 auto;
+}
+.links ul li a {
+	display: block;
+	padding: 0.3em;
+}
+.links ul li a:hover {
+	background: #eee;
+}
