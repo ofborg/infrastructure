@@ -14,15 +14,6 @@ in {
       config = {
         allowUnfree = true;
         packageOverrides = pkgs: {
-          prometheus-node-exporter = pkgs.prometheus-node-exporter.overrideAttrs (x: {
-            # Update from 17.09's 0.14.0 because it lacked CPU metric support
-            src = pkgs.fetchFromGitHub {
-              rev = "v0.15.0";
-              owner = "prometheus";
-              repo = "node_exporter";
-              sha256 = "0v1m6m9fmlw66s9v50y2rfr5kbpb9mxbwpcab4cmgcjs1y7wcn49";
-            };
-          });
         };
       };
     };
@@ -65,16 +56,6 @@ in {
       )
 
     '';
-
-    # Ugh, delete this garbage!
-    systemd.services.prometheus-node-exporter.script = lib.mkForce (let
-        cfg = config.services.prometheus.nodeExporter;
-      in ''
-        exec ${pkgs.prometheus-node-exporter}/bin/node_exporter \
-          ${lib.concatMapStringsSep " " (x: "--collector." + x) cfg.enabledCollectors} \
-          --web.listen-address ${cfg.listenAddress}:${toString cfg.port} \
-          ${lib.concatStringsSep " \\\n  " cfg.extraFlags}
-      '');
 
     users = {
       mutableUsers = false;
