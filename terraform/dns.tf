@@ -119,6 +119,30 @@ resource "aws_route53_record" "evaluator-packet" {
   records = [ "${packet_device.evaluator.*.access_private_ipv4[count.index]}" ]
 }
 
+
+resource "aws_iam_user" "acme-dns01" {
+  name = "ofborg-acme-dns01"
+  path = "/ofborg/"
+}
+
+resource "aws_iam_access_key" "acme-dns01" {
+  user    = "${aws_iam_user.acme-dns01.name}"
+}
+
+resource "local_file" "acme-dns01-secrets" {
+    content     = <<EOF
+AWS_ACCESS_KEY_ID=${aws_iam_access_key.acme-dns01.id}
+AWS_SECRET_ACCESS_KEY=${aws_iam_access_key.acme-dns01.secret}
+EOF
+    filename = "../private/route53-secret-creds"
+}
+
+resource "aws_iam_policy_attachment" "acme-dns01-policy-attach" {
+  name       = "acme-dns01-policy-attach"
+  users      = ["${aws_iam_user.acme-dns01.name}"]
+  policy_arn = "${aws_iam_policy.acme-dns01.arn}"
+}
+
 resource "aws_iam_policy" "acme-dns01" {
   name        = "certbot-dns-route53"
   path        = "/"
@@ -132,6 +156,7 @@ resource "aws_iam_policy" "acme-dns01" {
             "Effect": "Allow",
             "Action": [
                 "route53:ListHostedZones",
+                "route53:ListHostedZonesByName",
                 "route53:GetChange"
             ],
             "Resource": [
