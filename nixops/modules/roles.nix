@@ -11,6 +11,13 @@ in {
       };
     };
 
+    roles.core-v2 = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+      };
+    };
+
     roles.builder = {
       enable = mkOption {
         type = types.bool;
@@ -34,6 +41,9 @@ in {
       services.ofborg.webhook.enable = true;
       services.ofborg.monitoring.enable = true;
       services.ofborg.log-viewer.enable = true;
+      services.ofborg.website.enable = true;
+    })
+    (mkIf cfg.core-v2.enable rec {
       services.ofborg.website.enable = true;
     })
     (mkIf cfg.builder.enable rec {
