@@ -44,7 +44,7 @@ in {
       services.ofborg.website.enable = true;
     })
     (mkIf cfg.core-v2.enable rec {
-      services.ofborg.website.enable = true;
+      services.ofborg.acme-dns01.enable = true;
     })
     (mkIf cfg.builder.enable rec {
       services.ofborg.builder.enable = true;

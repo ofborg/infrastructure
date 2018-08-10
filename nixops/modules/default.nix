@@ -1,6 +1,7 @@
 [
   ./../../private/local.nix
   ./standard.nix
+  ./acme-dns01.nix
   ./secrets.nix
   ./roles.nix
   ./terraform.nix
