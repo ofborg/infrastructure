@@ -32,8 +32,8 @@ let
         };
 
         interfaces.bond0 = {
-          ip4 = interfaceIPs ipv4Blocks;
-          ip6 = interfaceIPs ipv6Blocks;
+          ipv4.addresses = interfaceIPs ipv4Blocks;
+          ipv6.addresses = interfaceIPs ipv6Blocks;
         };
       };
     };
