@@ -118,3 +118,36 @@ resource "aws_route53_record" "evaluator-packet" {
   ttl     = "300"
   records = [ "${packet_device.evaluator.*.access_private_ipv4[count.index]}" ]
 }
+
+resource "aws_iam_policy" "acme-dns01" {
+  name        = "certbot-dns-route53"
+  path        = "/"
+  description = ""
+
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "route53:ListHostedZones",
+                "route53:GetChange"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect" : "Allow",
+            "Action" : [
+                "route53:ChangeResourceRecordSets"
+            ],
+            "Resource" : [
+                "arn:aws:route53:::hostedzone/${data.aws_route53_zone.root.zone_id}"
+            ]
+        }
+    ]
+}
+EOF
+}
