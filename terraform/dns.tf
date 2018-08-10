@@ -47,7 +47,8 @@ resource "aws_route53_record" "test" {
   name    = "test.${data.aws_route53_zone.root.name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${packet_device.core.*.access_public_ipv4}" ]
+  records = [ "${packet_device.core.*.access_public_ipv4}",
+              "${packet_device.core-1.access_public_ipv4}" ]
 }
 
 resource "aws_route53_record" "events" {
@@ -81,6 +82,14 @@ resource "aws_route53_record" "core" {
   type    = "A"
   ttl     = "300"
   records = [ "${packet_device.core.*.access_private_ipv4[count.index]}" ]
+}
+
+resource "aws_route53_record" "core-1" {
+  zone_id = "${data.aws_route53_zone.root.zone_id}"
+  name    = "${packet_device.core-1.hostname}"
+  type    = "A"
+  ttl     = "300"
+  records = [ "${packet_device.core-1.access_private_ipv4}" ]
 }
 
 resource "aws_route53_record" "builder" {

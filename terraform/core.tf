@@ -37,6 +37,15 @@ resource "packet_device" "core" {
   project_id       = "${packet_project.ofborg.id}"
 }
 
+resource "packet_device" "core-1" {
+  hostname         = "core-1.ewr1.nix.ci"
+  plan             = "baremetal_0"
+  facility         = "ewr1"
+  operating_system = "nixos_18_03"
+  billing_cycle    = "hourly"
+  project_id       = "${packet_project.ofborg.id}"
+}
+
 resource "nixos_node" "core" {
   count = "${packet_device.core.count}"
   node_name = "core-${count.index}"
@@ -48,6 +57,20 @@ resource "nixos_node" "core" {
     roles.core.enable = true;
     packet.network_data = ''
       ${jsonencode("${packet_device.core.*.network[count.index]}")}
+    '';
+  NIX
+}
+
+resource "nixos_node" "core-1" {
+  node_name = "core-1"
+  ip = "${packet_device.core-1.access_public_ipv4}"
+  nix = <<NIX
+    packet.plan = "${packet_device.core-1.plan}";
+    networking.hostName = "${packet_device.core-1.hostname}";
+
+    roles.core.enable = true;
+    packet.network_data = ''
+      ${jsonencode("${packet_device.core-1.network}")}
     '';
   NIX
 }
