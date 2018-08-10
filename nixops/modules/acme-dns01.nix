@@ -1,6 +1,12 @@
 { pkgs, config, lib, ... }:
 let
   cfg = config.services.ofborg.acme-dns01;
+  foldListToAttrs = l: f:
+    lib.foldl
+      (coll: elem:
+        let r = f elem;
+        in coll // { "${r.name}" = r.value; }
+      ) {} l;
 in {
   options = {
     services.ofborg.acme-dns01 = {
@@ -9,7 +15,8 @@ in {
 
       domains = lib.mkOption {
         type = lib.types.listOf lib.types.string;
-        default = [ ];
+        default = [
+        ];
       };
 
       directory = lib.mkOption {
@@ -41,43 +48,64 @@ in {
       permissions = "0600";
     };
 
-    systemd.services.acme-dns01 = {
-      enable = true;
-      after = [ "network.target" "network-online.target" "acme-dns01-env-file-key.service" ];
-      wants = [ "network-online.target" "acme-dns01-env-file-key.service" ];
-      wantedBy = [ "multi-user.target" ];
-
-      path = with pkgs; [
-        lego
-      ];
-
-      serviceConfig = {
-        Type = "oneshot";
-        PrivateTmp = true;
-        EnvironmentFile = "/run/keys/acme-dns01-env-file";
+    systemd.targets.acme-certificates = {};
+    systemd.timers = foldListToAttrs cfg.domains (domain: {
+      name = "acme-dns01-${domain}";
+      value = {
+        description = "Renew ACME Certificates";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "weekly";
+          Unit = "acme-dns01-${domain}.service";
+          Persistent = "yes";
+          AccuracySec = "5m";
+          RandomizedDelaySec = "1h";
+        };
       };
+    });
 
-      preStart = ''
-        mkdir -p '${cfg.directory}'
-        chown 'root:root' '${cfg.directory}'
-        chmod 755 '${cfg.directory}'
-      '';
+    # systemd.services.nginx.requires = [ "acme-certificates.target" ];
+    systemd.services = foldListToAttrs cfg.domains (domain:
+      { name = "acme-dns01-${domain}";
+        value = {
+          enable = true;
+          after = [ "network.target" "network-online.target" "acme-dns01-env-file-key.service" ];
+          wants = [ "network-online.target" "acme-dns01-env-file-key.service" ];
+          before = [ "acme-certificates.target" ];
+          wantedBy = [ "acme-certificates.target" "multi-user.target" ];
 
-      script = let
-        cmdline = [
-          "--accept-tos"
-          "--path" cfg.directory
-          "--dns" "route53"
-          "--email" cfg.email
-        ] ++
-          (lib.flatten
-            (builtins.map
-              (domain: ["--domains" domain]) cfg.domains)) ++ [
-        ];
-      in ''
-        cd "${cfg.directory}";
-        lego ${lib.escapeShellArgs cmdline} run
-      '';
-    };
+          path = with pkgs; [ lego ];
+
+          serviceConfig = {
+            Type = "oneshot";
+            PrivateTmp = true;
+            EnvironmentFile = "/run/keys/acme-dns01-env-file";
+          };
+
+          preStart = ''
+            mkdir -p '${cfg.directory}'
+            chown 'root:root' '${cfg.directory}'
+            chmod 755 '${cfg.directory}'
+          '';
+
+          script = let
+            cmdline = [
+              "--accept-tos"
+              "--path" cfg.directory
+              "--dns" "route53"
+              "--email" cfg.email
+              "--domains" domain
+            ];
+          in ''
+            cd "${cfg.directory}";
+            if [ -f "./certificates/${domain}.crt" ] && [ -f "./certificates/${domain}.crt" ]; then
+              lego ${lib.escapeShellArgs cmdline} renew --days 10
+            else
+              lego ${lib.escapeShellArgs cmdline} run
+            fi
+          '';
+        };
+      }
+    );
   };
 }

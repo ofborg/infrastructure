@@ -14,6 +14,17 @@ in {
       config = {
         allowUnfree = true;
         packageOverrides = pkgs: {
+          lego = pkgs.lego.overrideAttrs (x: rec {
+            name = "lego-${version}";
+            version = "1.0.1";
+            rev = "v${version}";
+            src = pkgs.fetchFromGitHub {
+              inherit rev;
+              owner = "xenolf";
+              repo = "lego";
+              sha256 = "1l9winhqwid8ac8il303qkhsn0v5h7zhlklviszfi1rjal38ipiz";
+            };
+          });
         };
       };
     };
