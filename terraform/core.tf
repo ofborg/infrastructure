@@ -68,7 +68,7 @@ resource "nixos_node" "core-1" {
     packet.plan = "${packet_device.core-1.plan}";
     networking.hostName = "${packet_device.core-1.hostname}";
 
-    roles.core.enable = true;
+    roles.core-v2.enable = true;
     packet.network_data = ''
       ${jsonencode("${packet_device.core-1.network}")}
     '';
