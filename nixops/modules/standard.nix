@@ -31,7 +31,7 @@ in {
       };
     };
 
-    services.prometheus.nodeExporter = {
+    services.prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [
         # "cpu" # broken?
