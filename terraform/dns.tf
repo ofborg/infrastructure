@@ -42,12 +42,12 @@ resource "aws_route53_record" "logs" {
 }
 
 
-resource "aws_route53_record" "test" {
+resource "aws_route53_record" "test4" {
   zone_id = "${data.aws_route53_zone.root.zone_id}"
-  name    = "test.${data.aws_route53_zone.root.name}"
+  name    = "test4.${data.aws_route53_zone.root.name}"
   type    = "A"
   ttl     = "300"
-  records = [ "${packet_device.core.*.access_public_ipv4}",
+  records = [
               "${packet_device.core-1.access_public_ipv4}" ]
 }
 

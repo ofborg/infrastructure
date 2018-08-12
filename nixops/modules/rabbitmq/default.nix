@@ -30,23 +30,27 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    security.acme.certs."${cfg.domain}" = {
-      plugins = [ "cert.pem" "fullchain.pem" "full.pem" "key.pem" "account_key.json" ];
+    services.ofborg.acme-dns01.domains."${cfg.domain}" = {
       group = "rabbitmq";
-      allowKeysForGroup = true;
-      postRun = ''
+      bundle = false;
+      block = [ "rabbitmq.service" "nginx.service" ];
+      postRenew = ''
         systemctl restart rabbitmq.service
+        echo hi
       '';
     };
 
     services.phpfpm.enable_main = true;
     services.nginx = {
       enable = true;
-      virtualHosts."${cfg.domain}" = pkgs.nginxVhostPHP
+      virtualHosts."${cfg.domain}" = (pkgs.nginxVhostPHP
         (pkgs.mutate ./queue-monitor {
           user = cfg.monitoring_username;
           password = cfg.monitoring_password;
-        });
+        })) // {
+          sslCertificate = "${config.services.ofborg.acme-dns01.directory}/certificates/${cfg.domain}.crt";
+          sslCertificateKey = "${config.services.ofborg.acme-dns01.directory}/certificates/${cfg.domain}.key";
+        };
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 5671 15671 ];
@@ -75,29 +79,33 @@ in {
       cookie = lib.escapeShellArg cfg.cookie;
       plugins = [ "rabbitmq_management" "rabbitmq_web_stomp" ];
       config = let
-          cert_dir = "${config.security.acme.directory}/${cfg.domain}";
+          cert_dir = "${config.services.ofborg.acme-dns01.directory}/certificates/${cfg.domain}";
         in ''
            [
              {rabbit, [
                 {tcp_listen_options, [
                         {keepalive, true}]},
                 {heartbeat, 10},
-                {ssl_listeners, [{"::", 5671}]},
+
+                {ssl_listeners, [{"0.0.0.0", 5671}  ]},
                 {ssl_options, [
-                               {cacertfile,"${cert_dir}/fullchain.pem"},
-                               {certfile,"${cert_dir}/cert.pem"},
-                               {keyfile,"${cert_dir}/key.pem"},
+                               {cacertfile,"${cert_dir}.crt"},
+                               {certfile,"${cert_dir}.crt"},
+                               {keyfile,"${cert_dir}.key"},
                                {verify,verify_none},
                                {fail_if_no_peer_cert,false}]},
-                {log_levels, [{connection, debug}]}
+                {log_levels, [{connection, debug},
+{default, debug},
+{upgrade, debug}
+]}
               ]},
               {rabbitmq_management, [{listener, [{port, 15672}]}]},
               {rabbitmq_web_stomp,
                        [{ssl_config, [{port,       15671},
                         {backlog,    1024},
-                        {cacertfile,"${cert_dir}/fullchain.pem"},
-                        {certfile,"${cert_dir}/cert.pem"},
-                        {keyfile,"${cert_dir}/key.pem"}
+                        {cacertfile,"${cert_dir}.crt"},
+                        {certfile,"${cert_dir}.crt"},
+                        {keyfile,"${cert_dir}.key"}
                    ]}]}
            ].
          '';

@@ -14,13 +14,11 @@ self: super: {
     }));
 
   nginxVhostProxy = to: {
-    enableACME = true;
     forceSSL = true;
     locations."/".proxyPass = to;
   };
 
   nginxVhostPHP = root: {
-    enableACME = true;
     forceSSL = true;
 
     inherit root;

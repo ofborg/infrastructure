@@ -16,8 +16,8 @@ in {
         packageOverrides = pkgs: {
           lego = pkgs.lego.overrideAttrs (x: rec {
             name = "lego-${version}";
-            version = "1.0.1";
-            rev = "v${version}";
+            version = "20180811";
+            rev = "6588bc6fa5b9d47abae1b6c40ef73e166f44fa95";
             src = pkgs.fetchFromGitHub {
               inherit rev;
               owner = "xenolf";

@@ -45,6 +45,8 @@ in {
     })
     (mkIf cfg.core-v2.enable rec {
       services.ofborg.acme-dns01.enable = true;
+      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      services.ofborg.rabbitmq.enable = true;
     })
     (mkIf cfg.builder.enable rec {
       services.ofborg.builder.enable = true;

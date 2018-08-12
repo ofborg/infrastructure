@@ -14,9 +14,30 @@ in {
       };
 
       domains = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
-        default = [
-        ];
+        type = lib.types.attrsOf (lib.types.submodule {
+          options = {
+            group = lib.mkOption {
+              type = lib.types.str;
+              default = "root";
+            };
+
+            bundle = lib.mkOption {
+              type = lib.types.bool;
+              default = true;
+            };
+
+            block = lib.mkOption {
+              type = lib.types.listOf lib.types.string;
+              default = [];
+            };
+
+            postRenew = lib.mkOption {
+              type = lib.types.str;
+              default = "";
+            };
+          };
+        });
+        default = {};
       };
 
       directory = lib.mkOption {
@@ -49,8 +70,8 @@ in {
     };
 
     systemd.targets.acme-certificates = {};
-    systemd.timers = foldListToAttrs cfg.domains (domain: {
-      name = "acme-dns01-${domain}";
+    systemd.timers = lib.flip lib.mapAttrs' cfg.domains (domain: attrs:
+     { name = "acme-dns01-${domain}";
       value = {
         description = "Renew ACME Certificates";
         wantedBy = [ "timers.target" ];
@@ -64,15 +85,15 @@ in {
       };
     });
 
-    # systemd.services.nginx.requires = [ "acme-certificates.target" ];
-    systemd.services = foldListToAttrs cfg.domains (domain:
+    systemd.services = (lib.flip lib.mapAttrs' cfg.domains (domain: attrs:
       { name = "acme-dns01-${domain}";
         value = {
           enable = true;
           after = [ "network.target" "network-online.target" "acme-dns01-env-file-key.service" ];
           wants = [ "network-online.target" "acme-dns01-env-file-key.service" ];
-          before = [ "acme-certificates.target" ];
-          wantedBy = [ "acme-certificates.target" "multi-user.target" ];
+          before = attrs.block ++ [ "acme-certificates.target" ];
+          wantedBy = [ "acme-certificates.target" ];
+          requiredBy = attrs.block;
 
           path = with pkgs; [ lego ];
 
@@ -96,16 +117,27 @@ in {
               "--email" cfg.email
               "--domains" domain
             ];
+            subopts = lib.optional (!attrs.bundle) "--no-bundle";
           in ''
             cd "${cfg.directory}";
             if [ -f "./certificates/${domain}.crt" ] && [ -f "./certificates/${domain}.crt" ]; then
-              lego ${lib.escapeShellArgs cmdline} renew --days 10
+              preHash=$(md5sum "./certificates/${domain}.crt")
+              ${pkgs.lego}/bin/lego ${lib.escapeShellArgs cmdline} renew  ${lib.escapeShellArgs subopts} --days 10
+              postHash=$(md5sum "./certificates/${domain}.crt")
+              if [ "$preHash" != "$postHash" ]; then
+                echo "Certificate updated, running post-renew hooks"
+                ${attrs.postRenew}
+              fi
             else
-              lego ${lib.escapeShellArgs cmdline} run
+              ${pkgs.lego}/bin/lego ${lib.escapeShellArgs cmdline} run ${lib.escapeShellArgs subopts} 
             fi
+
+            chgrp "${attrs.group}" "./certificates/${domain}."*
+            chmod g+r "./certificates/${domain}."*
+            chmod o+x "./certificates/"
           '';
         };
-      }
+      })
     );
   };
 }
