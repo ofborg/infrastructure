@@ -65,9 +65,13 @@ in {
           (peer: acceptPortFromPeer peer port)
           cfg.cluster_ips;
     in lib.concatStrings [
-      (lib.concatMapStrings acceptPortFromPeers [
-        4369 25672
-      ])
+      # Ports from https://www.rabbitmq.com/clustering.html
+      (lib.concatMapStrings acceptPortFromPeers ([
+          4369  # epmd
+          25672 # Erlang distribution server port
+          15672 # rabbitmqadmin
+        ] ++ (lib.range 35672 35682) # Erlang distribution client ports
+      ))
     ];
 
 
