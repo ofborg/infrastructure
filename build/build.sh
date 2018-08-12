@@ -2,7 +2,7 @@
 #!nix-shell -i bash ../shell.nix
 
 set -eux
-
+exit 1
 git-crypt unlock
 
 git-crypt status
