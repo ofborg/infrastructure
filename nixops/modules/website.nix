@@ -25,16 +25,6 @@ in {
           "/prometheus/".proxyPass = "http://127.0.0.1:9090/prometheus/";
         };
       };
-
-      virtualHosts."test.${cfg.domain}" = {
-        enableACME = true;
-        forceSSL = true;
-        locations = {
-          "/".alias = "/status";
-          "/status".proxyPass = "http://127.0.0.1:9090/alerts";
-          "/static".proxyPass = "http://127.0.0.1:9090/static";
-        };
-      };
     };
   };
 }
