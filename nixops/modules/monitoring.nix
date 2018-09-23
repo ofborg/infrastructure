@@ -34,6 +34,10 @@ in {
       evaluator_nodes = lib.mkOption {
         type = lib.types.listOf lib.types.string;
       };
+
+      extra_nodes = lib.mkOption {
+        type = lib.types.listOf lib.types.string;
+      };
     };
   };
 
@@ -148,6 +152,7 @@ in {
                   (cfg.monitoring_nodes
                     ++ cfg.builder_nodes
                     ++ cfg.evaluator_nodes
+                    ++ cfg.extra_nodes
                     ++ cfg.administration_nodes));
             }
           ];
