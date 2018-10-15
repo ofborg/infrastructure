@@ -104,14 +104,14 @@ in {
           }
 
           ALERT FreeInodes4HrsAway
-          IF predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4   * 3600) <= 0
+          IF predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4 * 3600) <= 0
           FOR 5m
           LABELS {
             severity="page"
           }
 
-          ALERT FreeSpace4HrsAway
-          IF predict_linear(node_filesystem_free{mountpoint="/"}[1h], 4 * 3600) <= 0
+          ALERT FreeSpace2HrsAway
+          IF predict_linear(node_filesystem_free{mountpoint="/"}[1h], 2 * 3600) <= 0
           FOR 5m
           LABELS {
             severity="page"
