@@ -47,8 +47,9 @@ in {
           };
 
           script = ''
-            find "${config.services.ofborg.config_merged.log_storage.path}" -type f -mtime +7 -delete
-            find "${config.services.ofborg.config_merged.log_storage.path}" -mindepth 1 -type d -empty -mtime +7 -delete
+            find "${config.services.ofborg.config_merged.log_storage.path}" \
+              -type f -mtime +7 -not -name '*.json' \
+              -exec sh -c "echo '***DELETED LOGS***' > {}" \;
           '';
         };
 
