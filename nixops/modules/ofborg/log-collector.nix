@@ -47,8 +47,8 @@ in {
           };
 
           script = ''
-            find "${config.services.ofborg.config_merged.log_storage.path}" -type f -mtime +7 -delete
-            find "${config.services.ofborg.config_merged.log_storage.path}" -mindepth 1 -type d -empty -mtime +7 -delete
+            find "${config.services.ofborg.config_merged.log_storage.path}" -type f -mtime +30 -delete
+            find "${config.services.ofborg.config_merged.log_storage.path}" -mindepth 1 -type d -empty -mtime +30 -delete
           '';
         };
 
