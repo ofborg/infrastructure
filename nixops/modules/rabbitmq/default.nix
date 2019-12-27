@@ -31,7 +31,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     security.acme.certs."${cfg.domain}" = {
-      plugins = [ "cert.pem" "fullchain.pem" "full.pem" "key.pem" "account_key.json" "account_reg.json" ];
+      plugins = [ "cert.pem" "fullchain.pem" "full.pem" "key.pem" "account_key.json" ];
       group = "rabbitmq";
       allowKeysForGroup = true;
       postRun = ''
@@ -75,7 +75,7 @@ in {
       cookie = lib.escapeShellArg cfg.cookie;
       plugins = [ "rabbitmq_management" "rabbitmq_web_stomp" ];
       config = let
-          cert_dir = "/var/lib/acme/${cfg.domain}";
+          cert_dir = "${config.security.acme.directory}/${cfg.domain}";
         in ''
            [
              {rabbit, [

@@ -10,9 +10,8 @@ in {
   config = lib.mkIf cfg.enable_main {
     services.phpfpm.pools.main = {
       listen = "/run/php-fpm.sock";
-      user = "nginx";
-      group = "nginx";
       extraConfig = ''
+
         listen.owner = nginx
         listen.group = nginx
         listen.mode = 0600
