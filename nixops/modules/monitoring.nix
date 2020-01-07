@@ -59,7 +59,12 @@ in {
 
       extraFlags = [ "--web.external-url=https://${config.services.ofborg.website.domain}/prometheus/" ];
 
-      alertmanagerURL = [ "http://127.0.0.1:9093" ];
+      alertmanagers = [ {
+        scheme = "http";
+        static_configs = [ {
+          targets = [ "127.0.0.1:9093" ];
+        } ];
+      } ];
       alertmanager = {
         enable = true;
         configuration = {
@@ -73,52 +78,47 @@ in {
         };
       };
 
-      rules = [
-        ''
-          ALERT MissingOfBorgData
-          IF absent(ofborg_queue_builder_waiting) == 1
-          FOR 5m
-          LABELS {
-            severity="page"
-          }
-
-          ALERT StalledEvaluator
-          IF ofborg_queue_evaluator_waiting > 0 and ofborg_queue_evaluator_in_progress == 0
-          FOR 5m
-          LABELS {
-            severity="page"
-          }
-
-          ALERT BrokenEvaluator
-          IF (ofborg_queue_evaluator_waiting > 0 or ofborg_queue_evaluator_in_progress > 0) and changes(ofborg_task_evaluation_check_complete[1h]) == 0
-          FOR 30m
-          LABELS {
-            severity="page"
-          }
-
-          ALERT StalledBuilder
-          IF ofborg_queue_builder_waiting > 0 and ofborg_queue_builder_in_progress == 0
-          FOR 5m
-          LABELS {
-            severity="page"
-          }
-
-          ALERT FreeInodes4HrsAway
-          IF predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4 * 3600) <= 0
-          FOR 5m
-          LABELS {
-            severity="page"
-          }
-
-          ALERT FreeSpace2HrsAway
-          IF predict_linear(node_filesystem_free{mountpoint="/"}[1h], 2 * 3600) <= 0
-          FOR 5m
-          LABELS {
-            severity="page"
-          }
-
-        ''
-      ];
+      rules = [ (builtins.toJSON {
+        groups  = [ {
+          name = "alerts";
+          rules = [
+            {
+              alert = "MissingOfBorgData";
+              expr = "absent(ofborg_queue_builder_waiting) == 1";
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "StalledEvaluator";
+              expr = "ofborg_queue_evaluator_waiting > 0 and ofborg_queue_evaluator_in_progress == 0";
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "BrokenEvaluator";
+              expr = "(ofborg_queue_evaluator_waiting > 0 or ofborg_queue_evaluator_in_progress > 0) and changes(ofborg_task_evaluation_check_complete[1h]) == 0";
+              for = "30m";
+              labels.severity = "page";
+            }
+            {
+              alert = "StalledBuilder";
+              expr = "ofborg_queue_builder_waiting > 0 and ofborg_queue_builder_in_progress == 0";
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "FreeInodes4HrsAway";
+              expr = ''predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4 * 3600) <= 0'';
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "FreeSpace2HrsAway";
+              expr = ''predict_linear(node_filesystem_free{mountpoint="/"}[1h], 2 * 3600) <= 0'';
+              for = "5m";
+              labels.severity = "page";
+            }
+          ]; } ]; }) ];
 
       scrapeConfigs = [
         {
