@@ -1,26 +1,3 @@
-# /network.nix
-assert
-  let
-    identity = pkgs: let
-      rev = builtins.readFile "${pkgs.path}/.rev";
-      sha256 = builtins.readFile "${pkgs.path}/.sha256";
-    in "${rev}  ${sha256}";
-
-    actual = identity (import <nixpkgs> {});
-    expected = identity (import ./../nix);
-
-    diffTrace = act: exp:
-      if exp == act then true
-      else builtins.trace
-        "
-The pinned Nixpkgs has changed, but NixOps is still using the old one.
-
-  Expected: ${exp}
-  Actual: ${act}
-
-Please exit and re-open the nix-shell
-" false;
-  in diffTrace actual expected;
 {
   defaults = { nodes, lib, ... }: {
     imports = import ./modules;
