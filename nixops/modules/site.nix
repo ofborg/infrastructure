@@ -35,8 +35,6 @@ in {
             (readJSON ../../repos/ofborg/config.known-users.json).runner.known_users;
           extra = readJSON ../../repos/ofborg/config.extra-known-users.json;
         in nixpkgsContributors ++ extra;
-
-      rabbitmq.host = cfg.services.ofborg.rabbitmq.domain;
     };
 
     users.mutableUsers = false;
