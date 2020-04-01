@@ -21,8 +21,6 @@ in stdenv.mkDerivation rec {
     ]))
  ];
 
-  NIXOPS_STATE = "${toString ./.}/private/nixops-state/deployments.nixops";
   HISTFILE = "${toString ./.}/.bash_hist";
-  NIXOPS_DEPLOYMENT = "ofborg-production";
   NIX_PATH = "nixpkgs=${pkgs.path}:ofborg-infra=${toString ./.}";
 }

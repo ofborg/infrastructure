@@ -22,6 +22,14 @@ Please exit and re-open the nix-shell
 " false;
   in diffTrace actual expected;
 {
+  network = {
+    storage.s3 = {
+      region = "us-east-1";
+      bucket = "grahamc-nixops-state";
+      key = "ofborg.nixops";
+      kms_keyid = "166c5cbe-b827-4105-bdf4-a2db9b52efb4";
+    };
+  };
   defaults = { nodes, lib, ... }: {
     imports = import ./modules;
 
@@ -108,7 +116,6 @@ Please exit and re-open the nix-shell
       {}
       nodes;
   in allImported)
-  // (import ../spotinst/interp.nix)
   // {
     hetzner-sb65-1083082-hel1-dc2 = {
       deployment.targetEnv = "none";
@@ -147,4 +154,72 @@ Please exit and re-open the nix-shell
 
       nix.maxJobs = 16;
     };
+
+    resources.packetKeyPairs.dummy = {
+      project = "86d5d066-b891-4608-af55-a481aa2c0094";
+    };
+    packet-spot-eval-1 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://139.178.89.161/current/907e8786.packethost.net/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
+    packet-spot-eval-2 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://139.178.89.161/current/907e8786.packethost.net/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
+    packet-spot-eval-3 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://139.178.89.161/current/907e8786.packethost.net/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
+
   }

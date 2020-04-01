@@ -28,6 +28,7 @@ in {
       firewall = {
         enable = true;
         allowedTCPPorts = [ 22 9100 ];
+        logRefusedConnections = false;
       };
     };
 
