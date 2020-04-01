@@ -27,13 +27,13 @@ in {
     services.ofborg.webhook.domain = "webhook.nix.ci";
     services.ofborg.rabbitmq.domain = "events.nix.ci";
 
-    services.ofborg.config_public = readJSON ../repos/ofborg/config.public.json;
+    services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
 
     services.ofborg.config_private = {
       runner.known_users = let
           nixpkgsContributors =
-            (readJSON ../repos/ofborg/config.known-users.json).runner.known_users;
-          extra = readJSON ../repos/ofborg/config.extra-known-users.json;
+            (readJSON ../../repos/ofborg/config.known-users.json).runner.known_users;
+          extra = readJSON ../../repos/ofborg/config.extra-known-users.json;
         in nixpkgsContributors ++ extra;
 
       rabbitmq.host = cfg.services.ofborg.rabbitmq.domain;
