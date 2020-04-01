@@ -32,4 +32,4 @@ mkdir -p repos
 fetchrepo repos/ofborg https://github.com/nixos/ofborg.git released
 fetchrepo repos/log-viewer https://github.com/samueldr/ofborg-viewer.git master
 
-nixops deploy --dry-activate
+nixops deploy --dry-activate --allow-recreate
