@@ -22,14 +22,6 @@ Please exit and re-open the nix-shell
 " false;
   in diffTrace actual expected;
 {
-  network = {
-    storage.s3 = {
-      region = "us-east-1";
-      bucket = "grahamc-nixops-state";
-      key = "ofborg.nixops";
-      kms_keyid = "166c5cbe-b827-4105-bdf4-a2db9b52efb4";
-    };
-  };
   defaults = { nodes, lib, ... }: {
     imports = import ./modules;
 
