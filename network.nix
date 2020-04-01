@@ -7,4 +7,4 @@
       kms_keyid = "166c5cbe-b827-4105-bdf4-a2db9b52efb4";
     };
   };
-} // (import ./nixops/network.nix{
+} // (import ./nixops/network.nix)
