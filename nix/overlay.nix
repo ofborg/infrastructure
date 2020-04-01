@@ -59,21 +59,6 @@ self: super: {
     cp $src/terraform-provider-hcloud $out/bin
   '';
 
-  nixUnstable = self.nix.overrideAttrs ({ patches ? [], ... }: {
-    pname = "nix";
-    name = "nix-2.3.2";
-    version = "2.3.2";
-
-    src = self.fetchurl {
-      url = "http://nixos.org/releases/nix/nix-2.3./nix-2.3.2.tar.xz";
-      sha256 = "9fea4b52db0b296dcf05d36f7ecad9f48396af3a682bb21e31f8d04c469beef8";
-    };
-
-    patches = patches ++ [
-      ./0001-don-t-warn-if-we-receive-a-restrict-eval-to-the-daem.patch
-    ];
-  });
-
   nixops = let
     newpkgs = import (self.fetchFromGitHub {
       owner = "NixOS";
