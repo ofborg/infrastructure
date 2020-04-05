@@ -24,8 +24,8 @@ in {
         forceSSL = true;
 
         locations = {
-          "=/logfile" = {
-            alias = config.services.ofborg.config_merged.log_storage.path;
+          "/logfile/" = {
+            alias = "${config.services.ofborg.config_merged.log_storage.path}/";
             extraConfig = ''
               add_header Access-Control-Allow-Origin "*";
               add_header Access-Control-Request-Method "GET";
@@ -37,7 +37,7 @@ in {
             '';
           };
 
-          "=/logs" = {
+          "/logs/" = {
             alias = pkgs.log_api;
             extraConfig = ''
               add_header Access-Control-Allow-Origin "*";
