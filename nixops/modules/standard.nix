@@ -32,6 +32,16 @@ in {
       };
     };
 
+    systemd.services.promtail = {
+      after = [ "loki.service" ];
+      before = [ "syslog.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.grafana-loki}/bin/promtail -config.file ${./logging/promtail.yml}";
+        # DynamicUser = "yes";
+      };
+    };
+
     services.prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [

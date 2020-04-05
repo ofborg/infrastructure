@@ -12,6 +12,7 @@
   ./webhook
   ./phpfpm.nix
   ./monitoring.nix
+  ./logging.nix
   ./log-viewer.nix
   ./website.nix
 ]
