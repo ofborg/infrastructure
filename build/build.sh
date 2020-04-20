@@ -32,7 +32,7 @@ mkdir -p repos
 fetchrepo repos/ofborg https://github.com/nixos/ofborg.git released
 fetchrepo repos/log-viewer https://github.com/samueldr/ofborg-viewer.git master
 
-if [ "${0:-x}" != "--do-it-live" ]; then
+if [ "${1:-x}" != "--do-it-live" ]; then
     nixops deploy --dry-activate --allow-recreate
 else
     nixops deploy
