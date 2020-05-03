@@ -86,44 +86,6 @@
       nodes;
   in allImported)
   // {
-    hetzner-sb65-1083082-hel1-dc2 = {
-      deployment.targetEnv = "none";
-      deployment.targetHost = "95.216.99.249";
-
-      nix.gc_free_gb = 100;
-      services.ofborg.builder.enable = true;
-      services.ofborg.evaluator.enable = true;
-
-      boot.loader.grub.devices = [ "/dev/sda" "/dev/sdb" ];
-      services.openssh.enable = true;
-      networking.hostId = "81bf6083";
-      networking.useDHCP = false;
-      networking.interfaces.enp27s0.useDHCP = true;
-      boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "sd_mod" ];
-      boot.initrd.kernelModules = [ ];
-      boot.kernelModules = [ "kvm-amd" ];
-      boot.extraModulePackages = [ ];
-
-      fileSystems."/" =
-        { device = "rpool/safe/root";
-        fsType = "zfs";
-        };
-
-      fileSystems."/nix" =
-        { device = "rpool/local/nix";
-        fsType = "zfs";
-        };
-
-      fileSystems."/boot" =
-        { device = "/dev/disk/by-uuid/3d7d6997-82df-4976-9f8c-057731c1234b";
-        fsType = "ext4";
-        };
-
-      swapDevices = [ ];
-
-      nix.maxJobs = 16;
-    };
-
     resources.packetKeyPairs.dummy = {
       project = "86d5d066-b891-4608-af55-a481aa2c0094";
     };
