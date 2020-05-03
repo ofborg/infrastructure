@@ -15,6 +15,7 @@
 
     environment.RUST_BACKTRACE = "1";
     environment.RUST_LOG = "debug,async_std=error";
+    environment.RUST_LOG_JSON = "1";
 
     serviceConfig = {
       User = "ofborg";
