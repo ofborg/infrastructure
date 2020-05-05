@@ -37,7 +37,7 @@ self: super: {
       "~ \.php$" = {
         extraConfig = ''
           fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass unix:/run/php-fpm.sock;
+          fastcgi_pass unix:${super.config.services.phpfpm.pools.main.socket};
           fastcgi_index index.php;
           fastcgi_param SCRIPT_FILENAME ${root}/$fastcgi_script_name;
           include ${self.nginx}/conf/fastcgi_params;
