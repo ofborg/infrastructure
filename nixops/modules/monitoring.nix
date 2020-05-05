@@ -11,7 +11,7 @@ in {
       };
 
       domain = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       alert_manager_receivers = lib.mkOption {
@@ -20,23 +20,23 @@ in {
       };
 
       monitoring_nodes = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
 
       administration_nodes = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
 
       builder_nodes = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
 
       evaluator_nodes = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
 
       extra_nodes = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
     };
   };

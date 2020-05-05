@@ -45,7 +45,7 @@ in {
         default = "none";
       };
       network_data = mkOption {
-        type = types.string;
+        type = types.str;
       };
     };
   };

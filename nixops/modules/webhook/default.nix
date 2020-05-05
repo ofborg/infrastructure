@@ -28,23 +28,23 @@ in {
 
       # !!! Write a config.php using these options
       domain = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       rabbit_host = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       rabbit_username = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       rabbit_password = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       github_shared_secret = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
     };
   };

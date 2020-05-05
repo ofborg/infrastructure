@@ -5,7 +5,7 @@ in {
   options = {
     services.ofborg = {
       commit_email = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
         default = "ofborg@example.com";
       };
 
