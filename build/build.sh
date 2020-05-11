@@ -33,7 +33,7 @@ fetchrepo repos/ofborg https://github.com/nixos/ofborg.git released
 fetchrepo repos/log-viewer https://github.com/samueldr/ofborg-viewer.git master
 
 if [ "${1:-x}" != "--do-it-live" ]; then
-    nixops deploy --dry-activate --allow-recreate
+    nixops deploy --dry-activate --check --allow-recreate
 else
-    nixops deploy
+    nixops deploy --check --allow-recreate
 fi
