@@ -59,6 +59,23 @@ self: super: {
     cp $src/terraform-provider-hcloud $out/bin
   '';
 
+  nix = super.nix.overrideAttrs (drv: {
+    patches = drv.patches or [] ++ [
+      # Extra patch to catch more evaluation errors, remove when included in nix stable.
+      # https://github.com/NixOS/nix/pull/3584
+      (self.fetchpatch {
+        name = "outputs-to-install-validate.patch";
+        url = "https://github.com/NixOS/nix/pull/3584/commits/e022ce892e35c49e6091c8baa92881ba4544ff65.patch";
+        sha256 = "sha256-v9/J77P22wWrAO2qCl74IaW8i2a5lg0kDMh3Kn0GDjk=";
+      })
+      (self.fetchpatch {
+        name = "outputs-to-install-error.patch";
+        url = "https://github.com/NixOS/nix/pull/3584/commits/85e8add6f843f166d6f19f52056e6310827ede14.patch";
+        sha256 = "sha256-kpNsFR4X2eZGynDs3RqUsNnYLga9ably3K49jyTwJNg=";
+      })
+    ];
+  });
+
   nixops = let
     newpkgs = import (self.fetchFromGitHub {
       owner = "NixOS";
