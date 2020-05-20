@@ -54,7 +54,8 @@ in {
     services.nginx = {
       enable = true;
       virtualHosts."${cfg.domain}" = pkgs.nginxVhostPHP
-        "${configuredWebhook}/web";
+        "${configuredWebhook}/web"
+        config.services.phpfpm.pools.main.socket;
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 ];

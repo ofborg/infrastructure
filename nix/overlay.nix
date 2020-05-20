@@ -19,7 +19,7 @@ self: super: {
     locations."/".proxyPass = to;
   };
 
-  nginxVhostPHP = root: {
+  nginxVhostPHP = root: socket: {
     enableACME = true;
     forceSSL = true;
 
@@ -37,7 +37,7 @@ self: super: {
       "~ \.php$" = {
         extraConfig = ''
           fastcgi_split_path_info ^(.+\.php)(/.+)$;
-          fastcgi_pass unix:${super.config.services.phpfpm.pools.main.socket};
+          fastcgi_pass unix:${socket};
           fastcgi_index index.php;
           fastcgi_param SCRIPT_FILENAME ${root}/$fastcgi_script_name;
           include ${self.nginx}/conf/fastcgi_params;
