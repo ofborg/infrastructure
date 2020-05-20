@@ -46,7 +46,8 @@ in {
         (pkgs.mutate ./queue-monitor {
           user = cfg.monitoring_username;
           password = cfg.monitoring_password;
-        });
+        })
+        config.services.phpfpm.pools.main.socket;
     };
 
     networking.firewall.allowedTCPPorts = [ 80 443 5671 15671 ];
