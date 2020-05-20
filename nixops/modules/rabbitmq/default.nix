@@ -8,23 +8,23 @@ in {
       };
 
       cookie = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       domain = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       monitoring_username = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       monitoring_password = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
 
       cluster_ips = lib.mkOption {
-        type = lib.types.listOf lib.types.string;
+        type = lib.types.listOf lib.types.str;
       };
     };
   };

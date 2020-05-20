@@ -6,7 +6,7 @@ in {
   options = {
     terraform = {
       name = mkOption {
-        type = types.string;
+        type = types.str;
       };
     };
   };

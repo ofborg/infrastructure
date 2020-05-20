@@ -9,7 +9,7 @@ in {
       };
 
       domain = lib.mkOption {
-        type = lib.types.string;
+        type = lib.types.str;
       };
     };
   };
@@ -47,7 +47,7 @@ in {
               add_header X-XSS-Protection "1; mode=block";
 
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
-              fastcgi_pass unix:/run/php-fpm.sock;
+              fastcgi_pass unix:${config.services.phpfpm.pools.main.socket};
               fastcgi_index index.php;
               fastcgi_param SCRIPT_FILENAME ${pkgs.log_api}/index.php;
               include ${pkgs.nginx}/conf/fastcgi_params;
