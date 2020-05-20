@@ -29,14 +29,6 @@ in {
 
     services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
 
-    services.ofborg.config_private = {
-      runner.known_users = let
-          nixpkgsContributors =
-            (readJSON ../../repos/ofborg/config.known-users.json).runner.known_users;
-          extra = readJSON ../../repos/ofborg/config.extra-known-users.json;
-        in nixpkgsContributors ++ extra;
-    };
-
     users.mutableUsers = false;
   };
 }
