@@ -152,5 +152,68 @@
 
       nix.buildCores = 24;
     };
+    packet-spot-eval-4 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://147.75.194.151/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
+    packet-spot-eval-5 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://147.75.194.151/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
+    packet-spot-eval-6 = { resources, ... }: {
+      deployment.targetEnv = "packet";
+      deployment.packet = {
+        project = "86d5d066-b891-4608-af55-a481aa2c0094";
+        keyPair = resources.packetKeyPairs.dummy;
+        facility = "ewr1";
+        plan = "m1.xlarge.x86";
+        ipxeScriptUrl = "http://147.75.194.151/result/x86/netboot.ipxe";
+        spotInstance = true;
+        spotPriceMax = "2.00";
+        tags = {
+          buildkite = "...yes...";
+        };
+      };
+
+      nix.gc_free_gb = 100;
+      services.ofborg.builder.enable = true;
+      services.ofborg.evaluator.enable = true;
+
+      nix.buildCores = 24;
+    };
 
   }
