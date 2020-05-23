@@ -167,6 +167,16 @@ in {
         }
 
         {
+          job_name = "rabbitmq";
+          static_configs = [
+            {
+              targets = [ "${rabbitmq.domain}:9419" ];
+            }
+          ];
+        }
+
+        # TODO: remove?
+        {
           job_name = "ofborg-queue";
           metrics_path = "/prometheus.php";
           scheme = "https";
