@@ -170,7 +170,7 @@ in {
           job_name = "rabbitmq";
           static_configs = [
             {
-              targets = [ "${rabbitmq.domain}:9419" ];
+              targets = [ "${rabbitcfg.domain}:9419" ];
             }
           ];
         }
