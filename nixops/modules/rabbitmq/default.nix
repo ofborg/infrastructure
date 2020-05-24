@@ -115,7 +115,7 @@ in {
       environment = {
         PUBLISH_PORT = "9419";
         RABBIT_CAPABILITIE = "bert,no_sort";
-        RABBIT_EXPORTERS = "connections,exchange,node,queue";
+        RABBIT_EXPORTERS = "exchange,node,queue";
         RABBIT_USER = cfg.monitoring_username;
         RABBIT_PASSWORD = cfg.monitoring_password;
       };
