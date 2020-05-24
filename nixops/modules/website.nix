@@ -23,6 +23,7 @@ in {
         root = ../../website;
         locations = {
           "/prometheus/".proxyPass = "http://127.0.0.1:9090/prometheus/";
+          "/prometheus/api/v1/admin".return = "403 'Forbidden'";
         };
       };
     };

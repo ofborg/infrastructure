@@ -65,7 +65,7 @@ in {
     services.prometheus = {
       enable = true;
 
-      extraFlags = [ "--web.external-url=https://${config.services.ofborg.website.domain}/prometheus/" ];
+      extraFlags = [ "--web.enable-admin-api" "--web.external-url=https://${config.services.ofborg.website.domain}/prometheus/" ];
 
       alertmanagers = [ {
         scheme = "http";
