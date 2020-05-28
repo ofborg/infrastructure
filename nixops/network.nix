@@ -87,7 +87,15 @@
   in allImported)
   // (
   let
-    numMachines = last: builtins.genList (n: n + 1) last;
+    numMachines = last:
+      let
+        last' =
+          if last == "" then
+            3 # if OFBORG_PACKET_HOSTS is unspecified, use this amount by default
+          else
+            if builtins.isInt last then last else builtins.fromJSON last;
+      in
+      builtins.genList (n: n + 1) last';
 
     mkEvaluator = n: {
       name = "packet-spot-eval-${toString n}";
@@ -116,5 +124,10 @@
     resources.packetKeyPairs.dummy = {
       project = "86d5d066-b891-4608-af55-a481aa2c0094";
     };
-  } // builtins.listToAttrs (map (n: mkEvaluator n) (numMachines 6))
+  } //
+  builtins.listToAttrs (
+    map
+      (n: mkEvaluator n)
+      (numMachines (builtins.getEnv "OFBORG_PACKET_HOSTS"))
+  )
 )
