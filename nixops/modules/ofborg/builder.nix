@@ -11,11 +11,18 @@ in {
           type = types.bool;
           default = false;
         };
+        metricsPort = mkOption {
+          type = types.int;
+          default = 9897;
+        };
       };
     };
   };
 
   config = mkIf cfg.enable rec {
+
+    networking.firewall.allowedTCPPorts = [ cfg.metricsPort ];
+
     systemd = {
       services = {
         ofborg-builder =

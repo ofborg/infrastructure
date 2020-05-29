@@ -16,6 +16,7 @@
     environment.RUST_BACKTRACE = "1";
     environment.RUST_LOG = "debug,async_std=error";
     environment.RUST_LOG_JSON = "1";
+    environment.METRICS_PORT = lib.mkIf (bin == "builder") (toString config.services.ofborg.builder.metricsPort);
 
     serviceConfig = {
       User = "ofborg";

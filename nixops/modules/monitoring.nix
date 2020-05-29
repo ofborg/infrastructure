@@ -152,6 +152,18 @@ in {
         }
 
         {
+          job_name = "ofborg-builder";
+          honor_labels = true;
+          static_configs = [
+            {
+              targets = lib.unique
+                (map (add_port config.services.ofborg.builder.metricsPort)
+                  cfg.builder_nodes);
+            }
+          ];
+        }
+
+        {
           job_name = "node";
           static_configs = [
             {
