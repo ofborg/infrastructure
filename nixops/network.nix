@@ -104,7 +104,7 @@
         deployment.packet = {
           project = "86d5d066-b891-4608-af55-a481aa2c0094";
           keyPair = resources.packetKeyPairs.dummy;
-          facility = "nrt1";
+          facility = "ewr1";
           plan = "m1.xlarge.x86";
           ipxeScriptUrl = "http://images.packet.net/nixos/installer-pre/x86/netboot.ipxe";
           spotInstance = true;
