@@ -48,17 +48,6 @@ self: super: {
 
   terraform-provider-nixos = self.callPackage ./terraform-provider-nixos.nix {};
 
-  terraform-provider-hcloud = self.runCommand "terraform-provider-hcloud" {
-    src = self.fetchzip {
-      url = "https://github.com/hetznercloud/terraform-provider-hcloud/releases/download/v1.0.0/terraform-provider-hcloud_v1.0.0_linux_386.zip";
-      stripRoot = false;
-      sha256 = "0g7r52v56fdkfwzlxfhi00hjrxkpdgriccr7g1y5j4r7pyx1svkr";
-    };
-  } ''
-    mkdir -p $out/bin
-    cp $src/terraform-provider-hcloud $out/bin
-  '';
-
   nixops = let
     newpkgs = import (self.fetchFromGitHub {
       owner = "NixOS";
@@ -83,6 +72,11 @@ self: super: {
           });
 
           nixops-packet = poetrysuper.nixops-packet.overridePythonAttrs(old: {
+            src = builtins.fetchGit {
+              url = "https://github.com/grahamc/nixops-packet.git";
+              ref = "pinned-for-ofborg";
+              rev = "d807cdc0879b03b9c4da4d8db9fbce77e65d3496";
+            };
             format = "pyproject";
             buildInputs = old.buildInputs ++ [ poetryself.poetry ];
           });
