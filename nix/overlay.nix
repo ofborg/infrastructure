@@ -83,6 +83,11 @@ self: super: {
           });
 
           nixops-packet = poetrysuper.nixops-packet.overridePythonAttrs(old: {
+            src = builtins.fetchGit {
+              url = "https://github.com/grahamc/nixops-packet.git";
+              ref = "pinned-for-ofborg";
+              rev = "d807cdc0879b03b9c4da4d8db9fbce77e65d3496";
+            };
             format = "pyproject";
             buildInputs = old.buildInputs ++ [ poetryself.poetry ];
           });
