@@ -1,5 +1,14 @@
 provider "metal" {}
 
+output "deploy_targets" {
+  value = {
+    core = {
+      ip = metal_device.ofborg-core.network.0.address
+      expression = "{ roles.core.enable = true; }"
+    }
+  }
+}
+
 variable "project_id" {
   default = "86d5d066-b891-4608-af55-a481aa2c0094"
 }
