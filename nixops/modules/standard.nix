@@ -5,6 +5,7 @@ in {
   options = {
     nix.gc_free_gb = lib.mkOption {
       type = lib.types.int;
+      default = 20;
     };
   };
 
@@ -19,6 +20,9 @@ in {
     };
 
     services.openssh.enable = true;
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUy2CGT6P3q2kApZEuyCHsuCruwdRzeWMdQe/WjdCak grahamc@Petunia"
+    ];
     networking = {
       nameservers = [
         "4.2.2.1"

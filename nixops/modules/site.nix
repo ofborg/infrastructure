@@ -4,8 +4,9 @@ let
     (builtins.readFile file);
   cfg = config;
 in {
+  options.internalPkgs = pkgs.lib.mkOption { };
   config = {
-    nixpkgs.config.packageOverrides = {
+    internalPkgs = {
       ofborg = (import ../../repos/ofborg/default.nix {}).ofborg.rs;
       webhook_api = (import ../../repos/ofborg/default.nix {}).ofborg.php;
       logviewer = let
@@ -25,7 +26,7 @@ in {
     ];
 
     services.ofborg.webhook.domain = "webhook.nix.ci";
-    services.ofborg.rabbitmq.domain = "events.nix.ci";
+    services.ofborg.rabbitmq.domain = "devoted-teal-duck.rmq.cloudamqp.com";
 
     services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
 

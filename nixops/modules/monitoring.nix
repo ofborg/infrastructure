@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ nodes, pkgs, config, lib, ... }:
 let
   cfg = config.services.ofborg.monitoring;
   rabbitcfg = config.services.ofborg.rabbitmq;
@@ -42,6 +42,26 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.ofborg.monitoring = let
+        hostnameIf = f: nodes:
+          map (node: node.config.networking.hostName)
+              (lib.filter f (lib.attrValues nodes));
+      in {
+        monitoring_nodes = hostnameIf
+          (node: node.config.services.ofborg.monitoring.enable)
+          nodes;
+        builder_nodes = hostnameIf
+          (node: node.config.services.ofborg.builder.enable)
+          nodes;
+        evaluator_nodes = hostnameIf
+          (node: node.config.services.ofborg.evaluator.enable)
+          nodes;
+        administration_nodes = hostnameIf
+          (node: node.config.services.ofborg.administrative.enable)
+          nodes;
+      };
+
+
     services.nginx = {
       enable = true;
 
