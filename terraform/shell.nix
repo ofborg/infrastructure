@@ -53,6 +53,31 @@ in pkgs.mkShell {
         # if the versions are not provided via file paths.
         postBuild = "mv go/bin/terraform-provider-metal{,_v1.0.0}";
       })
+      (pkgs.buildGoModule rec {
+        pname = "terraform-provider-rabbitmq";
+        version = "1.5.1";
+        goPackagePath = "github.com/cyrilgdn/terraform-provider-rabbitmq";
+        subPackages = [ "." ];
+        src = pkgs.fetchFromGitHub {
+          owner = "cyrilgdn";
+          repo = "terraform-provider-rabbitmq";
+          rev = "v${version}";
+          sha256 = "sha256-fqJEBIkAHqFgILAsMeTNqoZXyBGqDvnXL5sPc/OHu/s=";
+        };
+        preBuild = ''
+         set -x
+         if [ "x''${outputHashAlgo:-}" != x ]; then
+            env
+            rm -rf vendor
+         fi
+        '';
+        vendorSha256 = "sha256-Oliwxv8L2ss9BD83HRfG7gWuqRVlC5gjZP5wiyYAJBo=";
+        # Terraform allow checking the provider versions, but this breaks
+        # if the versions are not provided via file paths.
+        postBuild = ''
+         mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
+        '';
+      })
     ]))
   ];
 
