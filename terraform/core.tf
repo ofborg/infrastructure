@@ -31,7 +31,7 @@ resource "packet_device" "core" {
   count            = 1 # nixops code doesn't support > 1 right now
   hostname         = "core-${count.index}.ewr1.nix.ci"
   plan             = "baremetal_0"
-  facility         = "ewr1"
+  facilities       = [ "ewr1" ]
   operating_system = "nixos_17_03"
   billing_cycle    = "hourly"
   project_id       = "${packet_project.ofborg.id}"
