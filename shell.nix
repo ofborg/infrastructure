@@ -10,6 +10,7 @@ in stdenv.mkDerivation rec {
     git
     gitAndTools.git-crypt
     nixops
+    morph
     (terraform_0_11.withPlugins (plugins: [
       terraform-provider-nixos
       plugins.packet
