@@ -1,5 +1,22 @@
 provider "cloudamqp" {}
 
+locals {
+  userpass = split("/", split("@", cloudamqp_instance.instance.url)[0])[2]
+}
+
+output "rabbitmq_management_endpoint" {
+  value = "https://${cloudamqp_instance.instance.host}"
+}
+
+output "rabbitmq_username" {
+  value = split(":", local.userpass)[0]
+}
+
+output "rabbitmq_password" {
+  value = split(":", local.userpass)[1]
+  sensitive = true
+}
+
 resource "cloudamqp_instance" "instance" {
   name          = "ofborg"
   plan          = "squirrel-1"
