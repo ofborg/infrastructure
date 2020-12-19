@@ -1,10 +1,5 @@
 provider "metal" {}
 
-variable "tags" {
-  type    = list(string)
-  default = ["terraform-ofborg"]
-}
-
 variable "project_id" {
   default = "86d5d066-b891-4608-af55-a481aa2c0094"
 }

@@ -10,6 +10,14 @@ terraform {
     metal = {
       source = "nixpkgs/metal"
     }
+
+    cloudamqp = {
+      source = "nixpkgs/cloudamqp"
+    }
   }
 }
 
+variable "tags" {
+  type    = list(string)
+  default = ["terraform-ofborg"]
+}

@@ -13,6 +13,31 @@ in pkgs.mkShell {
     pkgs.vault
     pkgs.niv
     (pkgs.terraform_0_14.withPlugins (p: [
+      (pkgs.buildGoModule rec {
+        pname = "terraform-provider-cloudamqp";
+        version = "1.8.6";
+        goPackagePath = "github.com/cloudamqp/terraform-provider-cloudamqp";
+        subPackages = [ "." ];
+        src = pkgs.fetchFromGitHub {
+          owner = "cloudamqp";
+          repo = "terraform-provider-cloudamqp";
+          rev = "v${version}";
+          sha256 = "sha256-OxHvKoENhrPxg1uv/r92VXflroIRupJOZG64IGp4sok=";
+        };
+        preBuild = ''
+         set -x
+         if [ "x''${outputHashAlgo:-}" != x ]; then
+            env
+            rm -rf vendor
+         fi
+        '';
+        vendorSha256 = "sha256-29Ys9YBShFutpZ1to4Zc+QJ4mtKvJQijrBuFRbpHjxE=";
+        # Terraform allow checking the provider versions, but this breaks
+        # if the versions are not provided via file paths.
+        postBuild = ''
+         mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
+        '';
+      })
       (pkgs.buildGoPackage rec {
         pname = "terraform-provider-metal";
         version = "1.0.0";
@@ -34,6 +59,9 @@ in pkgs.mkShell {
   shellHook = ''
     export PACKET_AUTH_TOKEN=$(${pkgs.vault}/bin/vault kv get \
       -field api_key_token packet/creds/nixos-foundation)
+
+    export CLOUDAMQP_APIKEY=$(${pkgs.vault}/bin/vault kv get \
+      -field key secret/ofborg/cloudamqp.key)
 
     aws_creds=$(vault kv get -format=json aws-personal/creds/nixops-deploy)
     export AWS_ACCESS_KEY_ID=$(jq -r .data.access_key <<<"$aws_creds")
