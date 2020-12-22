@@ -1,59 +1,14 @@
 {
   imports = [
     ({
-      swapDevices = [
-
-      ];
-
-      fileSystems = {
-
-        "/boot" = {
-          device = "/dev/disk/by-id/ata-Micron_5200_MTFDDAK480TDN_200325F2200A-part2";
-          fsType = "vfat";
-
-        };
-
-
-        "/" = {
-          device = "npool/root";
-          fsType = "zfs";
-          options = [ "defaults" ];
-        };
-
-
-        "/nix" = {
-          device = "npool/nix";
-          fsType = "zfs";
-          options = [ "defaults" ];
-        };
-
-
-        "/home" = {
-          device = "npool/home";
-          fsType = "zfs";
-          options = [ "defaults" ];
-        };
-
-
-        "/var" = {
-          device = "npool/var";
-          fsType = "zfs";
-          options = [ "defaults" ];
-        };
-
-      };
-
-      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-Micron_5200_MTFDDAK480TDN_200325F2200A" "/dev/disk/by-id/ata-Micron_5200_MTFDDAK480TDN_200325F21F8F" ];
-    })
-    ({
-      networking.hostName = "ofborg-core";
+      networking.hostName = "ofborg-evaluator-2";
       networking.dhcpcd.enable = false;
       networking.defaultGateway = {
-        address = "136.144.57.216";
+        address = "147.75.39.220";
         interface = "bond0";
       };
       networking.defaultGateway6 = {
-        address = "2604:1380:45f1:400::2";
+        address = "2604:1380:0:d600::36";
         interface = "bond0";
       };
       networking.nameservers = [
@@ -72,30 +27,30 @@
         };
 
         interfaces = [
-          "enp1s0f0"
-          "enp1s0f1"
+          "enp2s0"
+          "enp2s0d1"
         ];
       };
 
       networking.interfaces.bond0 = {
         useDHCP = false;
-        macAddress = "1c:34:da:42:74:c8";
+        macAddress = "24:8a:07:e7:61:80";
 
         ipv4 = {
           routes = [
             {
               address = "10.0.0.0";
               prefixLength = 8;
-              via = "10.68.6.130";
+              via = "10.99.98.182";
             }
           ];
           addresses = [
             {
-              address = "136.144.57.217";
+              address = "147.75.39.221";
               prefixLength = 31;
             }
             {
-              address = "10.68.6.131";
+              address = "10.99.98.183";
               prefixLength = 31;
             }
           ];
@@ -104,7 +59,7 @@
         ipv6 = {
           addresses = [
             {
-              address = "2604:1380:45f1:400::3";
+              address = "2604:1380:0:d600::37";
               prefixLength = 127;
             }
           ];
@@ -112,6 +67,27 @@
       };
     }
     )
+    ({
+      swapDevices = [
+
+        {
+          device = "/dev/disk/by-id/md-uuid-3fd11c09:a8b760a5:272775f8:bd1e4a50";
+        }
+
+      ];
+
+      fileSystems = {
+
+        "/" = {
+          device = "/dev/disk/by-id/md-uuid-b2c77f01:4c6c169b:5f4aafb9:5d748dbe";
+          fsType = "ext4";
+
+        };
+
+      };
+
+      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160811E3E520" "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160811E3E52B" ];
+    })
     ({
       imports = [
         (
@@ -122,16 +98,22 @@
         )
         (
           {
+            nixpkgs.config.allowUnfree = true;
             boot.initrd.availableKernelModules = [
-              "xhci_pci"
               "ahci"
-              "usbhid"
+              "ehci_pci"
+              "megaraid_sas"
+              "mpt3sas"
               "sd_mod"
+              "usbhid"
+              "xhci_pci"
             ];
 
             boot.kernelModules = [ "kvm-intel" ];
             boot.kernelParams = [ "console=ttyS1,115200n8" ];
             boot.extraModulePackages = [ ];
+
+            hardware.enableAllFirmware = true;
           }
         )
         (
@@ -142,13 +124,13 @@
               terminal_output serial console
               terminal_input serial console
             '';
-            nix.maxJobs = lib.mkDefault 16;
+            nix.maxJobs = lib.mkDefault 48;
           }
         )
       ];
     }
     )
-    ({ networking.hostId = "5c89f81c"; }
+    ({ networking.hostId = "f3690d84"; }
     )
   ];
 }
