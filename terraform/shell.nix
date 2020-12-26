@@ -80,22 +80,5 @@ in pkgs.mkShell {
       })
     ]))
   ];
-
-  shellHook = ''
-    export PACKET_AUTH_TOKEN=$(${pkgs.vault}/bin/vault kv get \
-      -field api_key_token packet/creds/nixos-foundation)
-
-    export CLOUDAMQP_APIKEY=$(${pkgs.vault}/bin/vault kv get \
-      -field key secret/ofborg/cloudamqp.key)
-
-    aws_creds=$(vault kv get -format=json aws-personal/creds/nixops-deploy)
-    export AWS_ACCESS_KEY_ID=$(jq -r .data.access_key <<<"$aws_creds")
-    export AWS_SECRET_ACCESS_KEY=$(${pkgs.jq}/bin/jq -r .data.secret_key <<<"$aws_creds")
-    export AWS_SESSION_TOKEN=$(${pkgs.jq}/bin/jq -r .data.security_token <<<"$aws_creds")
-    if [ -z "$AWS_SESSION_TOKEN" ] ||  [ "$AWS_SESSION_TOKEN" == "null" ]; then
-      unset AWS_SESSION_TOKEN
-    fi
-    unset aws_creds
-  '';
 }
 
