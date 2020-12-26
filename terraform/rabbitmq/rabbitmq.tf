@@ -124,8 +124,8 @@ resource "rabbitmq_user" "builders" {
 }
 
 resource "rabbitmq_permissions" "builders" {
-  for_each = var.builders
-  user  = "builder-${each.key}"
+  for_each = rabbitmq_user.builders
+  user  = each.value.name
   vhost = rabbitmq_vhost.ofborg.name
 
   permissions {
