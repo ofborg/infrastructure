@@ -1,6 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p jq
 
+set -eux
 
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
 function finish {
@@ -50,16 +51,22 @@ cat <<EOF > "$scratch/default.nix"
 EOF
 
 machines | while read machine; do
-	name="$(jq -r .key <<<"$machine")"
-	ip=$(jq -r .value.ip <<<"$machine")
-	jq -r .value.expression <<<"$machine" > "$scratch/machines/${name}.expr.nix"
-  	ssh "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"
-
-        networkentry "$name" "$ip" >> "$scratch/default.nix"
+   (
+        name="$(jq -r .key <<<"$machine")"
+        ip=$(jq -r .value.ip <<<"$machine")
+        jq -r .value.expression <<<"$machine"
+        jq -r .value.expression <<<"$machine" > "$scratch/machines/${name}.expr.nix"
+        if ssh -o BatchMode=yes -o IdentitiesOnly=yes -i ./deploy.key "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"; then
+          networkentry "$name" "$ip" >> "$scratch/default.nix"
+        fi
+   ) < /dev/null
 done
 
 echo "}" >> "$scratch/default.nix"
 
+git rm -rf ./morph-network
 rm -rf ./morph-network
+
 mv "$scratch" ./morph-network
+git add morph-network
 
