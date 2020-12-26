@@ -26,6 +26,12 @@ resource "cloudamqp_instance" "instance" {
    no_default_alarms = true
 }
 
+resource "cloudamqp_plugin" "instance-plugin-prometheus" {
+  instance_id = cloudamqp_instance.instance.id
+  name = "rabbitmq_prometheus"
+  enabled = true
+}
+
 resource "cloudamqp_notification" "graham" {
   instance_id = cloudamqp_instance.instance.id
   type        = "email"
