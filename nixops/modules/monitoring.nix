@@ -43,20 +43,20 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.ofborg.monitoring = let
-        hostnameIf = f: nodes:
-          map (node: node.config.networking.hostName)
+        targethostIf = f: nodes:
+          map (node: node.config.deployment.targetHost)
               (lib.filter f (lib.attrValues nodes));
       in {
-        monitoring_nodes = hostnameIf
+        monitoring_nodes = targethostIf
           (node: node.config.services.ofborg.monitoring.enable)
           nodes;
-        builder_nodes = hostnameIf
+        builder_nodes = targethostIf
           (node: node.config.services.ofborg.builder.enable)
           nodes;
-        evaluator_nodes = hostnameIf
+        evaluator_nodes = targethostIf
           (node: node.config.services.ofborg.evaluator.enable)
           nodes;
-        administration_nodes = hostnameIf
+        administration_nodes = targethostIf
           (node: node.config.services.ofborg.administrative.enable)
           nodes;
       };
@@ -190,7 +190,10 @@ in {
           job_name = "rabbitmq";
           static_configs = [
             {
-              targets = [ "${rabbitcfg.domain}:9419" ];
+              targets = lib.unique
+                (map (add_port 9419)
+                  cfg.administration_nodes);
+
             }
           ];
         }

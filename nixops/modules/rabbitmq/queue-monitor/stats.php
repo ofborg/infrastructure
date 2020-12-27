@@ -1,6 +1,6 @@
 <?php
 
-$queues = json_decode(file_get_contents('http://@user@:@password@@127.0.0.1:15672/api/queues'), true);
+$queues = json_decode(file_get_contents('https://@user@:@password@@@domain@/api/queues'), true);
 
 $stats = array_map(
     function($queue) {
