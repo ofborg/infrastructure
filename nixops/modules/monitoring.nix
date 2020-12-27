@@ -205,7 +205,7 @@ in {
           scheme = "https";
           static_configs = [
             {
-              targets = [ rabbitcfg.domain ];
+              targets = [ rabbitcfg.monitoring_domain ];
             }
           ];
         }
