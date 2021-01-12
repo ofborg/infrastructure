@@ -48,6 +48,7 @@ done
 
 unset aws_creds
 
+vault kv get -format=json -field data secret/ofborg/rabbitmq.vars.json > ./terraform/rabbitmq/vars.auto.tfvars.json
 vault kv get -field=expression secret/ofborg/local.nix > ./private/local.nix
 vault kv get -field=key secret/ofborg/github.key > ./private/github.key
 
