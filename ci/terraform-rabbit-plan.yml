@@ -1,0 +1,12 @@
+steps:
+  - label: ":terraform: RabbitMQ Plan"
+    depends_on: terraform-base-apply
+    key: terraform-rabbitmq-plan
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    commands:
+      - ./enter-env.sh ./ci/terraform-plan.sh rabbit ./ci/terraform-rabbit-apply.yml ./ci/terraform-import.yml
+    agents:
+      ofborg-infrastructure: true
+    artifact_paths:
+      - "terraform/rabbitmq/terraform.plan"

@@ -1,0 +1,3 @@
+steps:
+  - label: ":deploy:"
+    command: echo "Let's go!"

@@ -1,6 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p bashInteractive vault awscli jq openssh
 
+set +x # don't leak secrets!
 set -eu
 
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
@@ -12,6 +13,8 @@ function finish {
   fi
 }
 trap finish EXIT
+
+scriptroot=$(dirname "$(realpath "$0")")
 
 echo "--> Assuming role: ofborg-deployers" >&2
 vault_creds=$(vault token create \
@@ -48,18 +51,18 @@ done
 
 unset aws_creds
 
-vault kv get -format=json -field data secret/ofborg/rabbitmq.vars.json > ./terraform/rabbitmq/vars.auto.tfvars.json
-vault kv get -field=expression secret/ofborg/local.nix > ./private/local.nix
-vault kv get -field=key secret/ofborg/github.key > ./private/github.key
+vault kv get -format=json -field data secret/ofborg/rabbitmq.vars.json > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
+vault kv get -field=expression secret/ofborg/local.nix > "$scriptroot/private/local.nix"
+vault kv get -field=key secret/ofborg/github.key > "$scriptroot/private/github.key"
 
 echo "--> Signing SSH key deploy.key.pub -> deploy.key-cert.pub" >&2
-if [ ! -f deploy.key ]; then
-  ssh-keygen -t rsa -f deploy.key -N ""
+if [ ! -f "$scriptroot/deploy.key" ]; then
+  ssh-keygen -t rsa -f "$scriptroot/deploy.key" -N ""
 fi
 
 vault write -field=signed_key \
-  ssh-keys-ofborg/sign/root public_key=@./deploy.key.pub > deploy.key-cert.pub
-export SSH_IDENTITY_FILE=$(pwd)/deploy.key
+  ssh-keys-ofborg/sign/root public_key=@"$scriptroot/deploy.key.pub" > "$scriptroot/deploy.key-cert.pub"
+export SSH_IDENTITY_FILE="$scriptroot/deploy.key"
 export SSH_USER=root
 
 if [ "x${1:-}" == "x" ]; then

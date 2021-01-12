@@ -1,0 +1,14 @@
+steps:
+  - block: ":terraform: RabbitMQ Apply"
+    depends_on: terraform-rabbitmq-plan
+    key: terraform-rabbitmq-confirm
+
+  - label: ":terraform: RabbitMQ Apply"
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    depends_on: terraform-rabbitmq-confirm
+    key: terraform-rabbitmq-apply
+    command:
+      - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-import.yml
+    agents:
+      ofborg-infrastructure: true

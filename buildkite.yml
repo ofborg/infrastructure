@@ -6,49 +6,9 @@ steps:
     key: terraform-base-plan
     concurrency_group: ofborg-infrastructure-terraform
     concurrency: 1
-    command: ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd base && terraform init && terraform plan -input=false -out ./terraform.plan'"
+    commands:
+      - ./enter-env.sh ./ci/terraform-plan.sh base ./ci/terraform-base-apply.yml ./ci/terraform-rabbit-plan.yml
     agents:
       ofborg-infrastructure: true
     artifact_paths:
       - "terraform/base/terraform.plan"
-
-  - block: ":terraform: Base Apply"
-    depends_on: terraform-base-plan
-    key: terraform-base-confirm
-
-  - label: ":terraform: Base Apply"
-    concurrency_group: ofborg-infrastructure-terraform
-    concurrency: 1
-    depends_on: terraform-base-confirm
-    key: terraform-base-apply
-    command:
-      - buildkite-agent artifact download terraform/base/terraform.plan .
-      - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd base && terraform init && terraform apply -input=false ./terraform.plan'"
-    agents:
-      ofborg-infrastructure: true
-
-  - label: ":terraform: RabbitMQ Plan"
-    depends_on: terraform-base-apply
-    key: terraform-rabbitmq-plan
-    concurrency_group: ofborg-infrastructure-terraform
-    concurrency: 1
-    command: ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd rabbitmq && terraform init && terraform plan -input=false -out ./terraform.plan'"
-    agents:
-      ofborg-infrastructure: true
-    artifact_paths:
-      - "terraform/rabbitmq/terraform.plan"
-
-  - block: ":terraform: RabbitMQ Apply"
-    depends_on: terraform-rabbitmq-plan
-    key: terraform-rabbitmq-confirm
-
-  - label: ":terraform: RabbitMQ Apply"
-    concurrency_group: ofborg-infrastructure-terraform
-    concurrency: 1
-    depends_on: terraform-rabbitmq-confirm
-    key: terraform-rabbitmq-apply
-    command:
-      - buildkite-agent artifact download terraform/rabbitmq/terraform.plan .
-      - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd rabbitmq && terraform init && terraform apply -input=false ./terraform.plan'"
-    agents:
-      ofborg-infrastructure: true
