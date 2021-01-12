@@ -28,7 +28,7 @@ echo "                       AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN" >&2
 export PACKET_AUTH_TOKEN=$(vault kv get -field api_key_token packet/creds/nixos-foundation)
 export CLOUDAMQP_APIKEY=$(vault kv get -field key secret/ofborg/cloudamqp.key)
 
-aws_creds=$(vault kv get -format=json aws-personal/creds/nixops-deploy)
+aws_creds=$(vault kv get -format=json aws-personal/creds/state-ofborg)
 export AWS_ACCESS_KEY_ID=$(jq -r .data.access_key <<<"$aws_creds")
 export AWS_SECRET_ACCESS_KEY=$(jq -r .data.secret_key <<<"$aws_creds")
 export AWS_SESSION_TOKEN=$(jq -r .data.security_token <<<"$aws_creds")
