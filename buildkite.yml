@@ -1,0 +1,53 @@
+env:
+  NIX_PATH: nixpkgs=channel:nixos-unstable-small
+
+steps:
+  - label: ":terraform: Base Plan"
+    key: terraform-base-plan
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    command: ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd base && terraform init && terraform plan -out ./terraform.plan'"
+    agents:
+      ofborg-infrastructure: true
+    artifact_paths:
+      - "terraform/base/terraform.plan"
+
+  - block: ":terraform: Base Apply"
+    depends_on: terraform-base-plan
+    key: terraform-base-confirm
+
+  - label: ":terraform: Base Apply"
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    depends_on: terraform-base-confirm
+    key: terraform-base-apply
+    command:
+      - buildkite-agent artifact download terraform/base/terraform.plan terraform/base/
+      - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd base && terraform init && terraform apply ./terraform.plan'"
+    agents:
+      ofborg-infrastructure: true
+
+  - label: ":terraform: RabbitMQ Plan"
+    key: terraform-rabbitmq-plan
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    command: ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd rabbitmq && terraform init && terraform plan -out ./terraform.plan'"
+    agents:
+      ofborg-infrastructure: true
+    artifact_paths:
+      - "terraform/rabbitmq/terraform.plan"
+
+  - block: ":terraform: RabbitMQ Apply"
+    depends_on: terraform-rabbitmq-plan
+    key: terraform-rabbitmq-confirm
+
+  - label: ":terraform: RabbitMQ Apply"
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    depends_on: terraform-rabbitmq-confirm
+    key: terraform-rabbitmq-apply
+    command:
+      - buildkite-agent artifact download terraform/rabbitmq/terraform.plan terraform/rabbitmq/
+      - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd rabbitmq && terraform init && terraform apply ./terraform.plan'"
+    agents:
+      ofborg-infrastructure: true
