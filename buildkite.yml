@@ -28,7 +28,7 @@ steps:
       ofborg-infrastructure: true
 
   - label: ":terraform: RabbitMQ Plan"
-    depends_on: terraform-base-plan
+    depends_on: terraform-base-apply
     key: terraform-rabbitmq-plan
     concurrency_group: ofborg-infrastructure-terraform
     concurrency: 1
