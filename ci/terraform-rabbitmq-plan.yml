@@ -5,7 +5,7 @@ steps:
     concurrency_group: ofborg-infrastructure-terraform
     concurrency: 1
     commands:
-      - ./enter-env.sh ./ci/terraform-plan.sh rabbit ./ci/terraform-rabbit-apply.yml ./ci/terraform-import.yml
+      - ./enter-env.sh ./ci/terraform-plan.sh rabbitmq ./ci/terraform-rabbitmq-apply.yml ./ci/terraform-import.yml
     agents:
       ofborg-infrastructure: true
     artifact_paths:

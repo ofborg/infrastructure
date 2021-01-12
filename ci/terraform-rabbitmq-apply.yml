@@ -9,6 +9,6 @@ steps:
     depends_on: terraform-rabbitmq-confirm
     key: terraform-rabbitmq-apply
     command:
-      - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-import.yml
+      - ./enter-env.sh ./ci/terraform-apply.sh rabbitmq ./ci/terraform-import.yml
     agents:
       ofborg-infrastructure: true

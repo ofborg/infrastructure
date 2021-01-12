@@ -9,6 +9,6 @@ steps:
     depends_on: terraform-base-confirm
     key: terraform-base-apply
     command:
-      - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-rabbit-plan.yml
+      - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-rabbitmq-plan.yml
     agents:
       ofborg-infrastructure: true
