@@ -22,7 +22,7 @@ steps:
     depends_on: terraform-base-confirm
     key: terraform-base-apply
     command:
-      - buildkite-agent artifact download terraform/base/terraform.plan terraform/base/
+      - buildkite-agent artifact download terraform/base/terraform.plan
       - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd base && terraform init && terraform apply -input=false ./terraform.plan'"
     agents:
       ofborg-infrastructure: true
@@ -48,7 +48,7 @@ steps:
     depends_on: terraform-rabbitmq-confirm
     key: terraform-rabbitmq-apply
     command:
-      - buildkite-agent artifact download terraform/rabbitmq/terraform.plan terraform/rabbitmq/
+      - buildkite-agent artifact download terraform/rabbitmq/terraform.plan
       - ./enter-env.sh sh -c "cd terraform && nix-shell --run 'cd rabbitmq && terraform init && terraform apply -input=false ./terraform.plan'"
     agents:
       ofborg-infrastructure: true
