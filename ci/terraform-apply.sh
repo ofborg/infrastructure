@@ -16,4 +16,4 @@ cd "$scriptroot/../terraform/$tfconfig/"
 terraform init
 terraform apply -input=false ./terraform.plan
 
-buildkite-agent pipeline upload "$nextpipeline"
+buildkite-agent pipeline upload "$scriptroot/../$nextpipeline"
