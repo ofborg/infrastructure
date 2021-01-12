@@ -1,6 +1,5 @@
 steps:
   - block: ":terraform: RabbitMQ Apply"
-    depends_on: terraform-rabbitmq-plan
     key: terraform-rabbitmq-confirm
 
   - label: ":terraform: RabbitMQ Apply"
