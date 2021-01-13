@@ -11,4 +11,4 @@ steps:
       - git diff
       - git diff --cached
       - git commit -m "Automatic update of deploy targets."
-      - ./enter-env.sh git push vaultpush "$BUILDKITE_BRANCH"
+      - ./enter-env.sh git push vaultpush HEAD:"$BUILDKITE_BRANCH"
