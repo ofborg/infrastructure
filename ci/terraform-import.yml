@@ -1,8 +1,8 @@
 env:
-  - GIT_AUTHOR_NAME: Buildkite
-  - GIT_AUTHOR_EMAIL: ci@buildkite
-  - GIT_COMMITTER_NAME: Buildkite
-  - GIT_COMMITTER_EMAIL: ci@buildkite
+  GIT_AUTHOR_NAME: Buildkite
+  GIT_AUTHOR_EMAIL: ci@buildkite
+  GIT_COMMITTER_NAME: Buildkite
+  GIT_COMMITTER_EMAIL: ci@buildkite
 
 steps:
   - label: ":deploy:"
