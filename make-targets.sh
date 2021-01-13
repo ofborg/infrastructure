@@ -55,7 +55,13 @@ machines | while read machine; do
         ip=$(jq -r .value.ip <<<"$machine")
         jq -r .value.expression <<<"$machine"
         jq -r .value.expression <<<"$machine" > "$scratch/machines/${name}.expr.nix"
-        if ssh -o BatchMode=yes -o IdentitiesOnly=yes -i ./deploy.key "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"; then
+        if ssh \
+          -o StrictHostKeyChecking=no \
+          -o UserKnownHostsFile="$scratch/known_hosts" \
+          -o BatchMode=yes \
+          -o IdentitiesOnly=yes \
+          -i ./deploy.key \
+          "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"; then
           networkentry "$name" "$ip" >> "$scratch/default.nix"
         fi
    ) < /dev/null
