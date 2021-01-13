@@ -1,3 +1,6 @@
 steps:
   - label: ":deploy:"
-    command: echo "Let's go!"
+    commands:
+      - ./enter-env.sh ./make-targets.sh
+      - git diff
+      - git diff --cached
