@@ -2,6 +2,7 @@
 #!nix-shell -i bash -I nixpkgs=channel:nixos-unstable-small -p jq
 
 set -eux
+set -o pipefail
 
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
 function finish {
