@@ -13,7 +13,7 @@ trap finish EXIT
 
 machines() (
   cd "$(dirname "$0")/terraform"
-  nix-shell --run "set -o pipefail; cd base && terraform init && terraform output -json | jq .deploy_targets.value" \
+  nix-shell -I nixpkgs=channel:nixos-unstable-small --run "set -o pipefail; cd base && terraform init && terraform output -json | jq .deploy_targets.value" \
 	  | jq -cr '. as $input | keys | map(. as $name | { key: $name, value: $input[$name]}) | .[]'
 )
 
