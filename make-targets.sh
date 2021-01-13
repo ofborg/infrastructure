@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p jq
+#!nix-shell -i bash -I nixpkgs=channel:nixos-unstable-small -p jq
 
 set -eux
 
