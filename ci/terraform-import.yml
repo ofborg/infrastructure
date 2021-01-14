@@ -3,7 +3,7 @@ env:
   GIT_AUTHOR_EMAIL: ci@buildkite
   GIT_COMMITTER_NAME: Buildkite
   GIT_COMMITTER_EMAIL: ci@buildkite
-
+  NIX_PATH: nixpkgs=channel:nixos-unstable-small
 steps:
   - label: "Server Intake"
     commands:
