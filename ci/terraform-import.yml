@@ -19,6 +19,7 @@ steps:
     concurrency: 1
     key: deploy-dry-activate
     commands:
+      - ./build/clone.sh
       - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix dry-activate"
     agents:
       ofborg-infrastructure: true
@@ -33,6 +34,7 @@ steps:
     depends_on: deploy-confirm-test
     key: deploy-test
     commands:
+      - ./build/clone.sh
       - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix test"
     agents:
       ofborg-infrastructure: true
@@ -47,6 +49,7 @@ steps:
     depends_on: deploy-confirm-boot
     key: deploy-boot
     commands:
+      - ./build/clone.sh
       - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix boot"
     agents:
       ofborg-infrastructure: true
