@@ -38,7 +38,7 @@ steps:
     key: deploy-test
     commands:
       - ./build/clone.sh
-      - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix test"
+      - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix test --upload-secrets"
     agents:
       ofborg-infrastructure: true
 
