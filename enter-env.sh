@@ -65,6 +65,14 @@ vault write -field=signed_key \
   ssh-keys-ofborg/sign/root public_key=@"$scriptroot/deploy.key.pub" > "$scriptroot/deploy.key-cert.pub"
 export SSH_IDENTITY_FILE="$scriptroot/deploy.key"
 export SSH_USER=root
+export SSH_CONFIG_FILE="$scriptroot/ssh-config"
+cat <<EOF > $SSH_CONFIG_FILE
+StrictHostKeyChecking no
+UserKnownHostsFile $scriptroot/morph-network/known_hosts
+BatchMode yes
+IdentitiesOnly yes
+IdentityFile $SSH_IDENTITY_FILE
+EOF
 
 echo "--> Creating authenticated git remote: vaultpush" >&2
 git remote rm vaultpush || true
