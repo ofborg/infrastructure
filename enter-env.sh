@@ -66,6 +66,7 @@ vault write -field=signed_key \
 export SSH_IDENTITY_FILE="$scriptroot/deploy.key"
 export SSH_USER=root
 export SSH_CONFIG_FILE="$scriptroot/ssh-config"
+export NIX_SSHOPTS="-F $SSH_CONFIG_FILE"
 cat <<EOF > $SSH_CONFIG_FILE
 StrictHostKeyChecking no
 UserKnownHostsFile $scriptroot/morph-network/known_hosts
