@@ -74,6 +74,10 @@ IdentitiesOnly yes
 IdentityFile $SSH_IDENTITY_FILE
 EOF
 
+echo "--> Created SSH config file at $SSH_CONFIG_FILE" >&2
+cat "$SSH_CONFIG_FILE" >&2
+
+
 echo "--> Creating authenticated git remote: vaultpush" >&2
 git remote rm vaultpush || true
 pushtoken=$(vault write -field token github-ofborg/token repository_ids=122906544 permissions=contents=write)
