@@ -60,7 +60,6 @@ in {
         # and while I'd like to upgrade it, it was a can of worms... and
         # this username and password isn't very interesting, anyway.
 
-        RABBIT_CAPABILITIE = "bert,no_sort";
         RABBIT_EXPORTERS = "exchange,node,queue";
         RABBIT_USER = cfg.monitoring_username;
         RABBIT_PASSWORD = cfg.monitoring_password;
