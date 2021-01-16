@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash ./terraform/shell.nix
+#!nix-shell -i bash ./shell.nix
 
 set -eux
 set -o pipefail
@@ -42,7 +42,7 @@ cat <<EOF > "$scratch/default.nix"
   network = {
     pkgs =
       let
-        sources = import ../terraform/nix/sources.nix;
+        sources = import ../nix/sources.nix;
       in
       import sources.nixpkgs {
         config = {

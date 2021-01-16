@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash ./terraform/shell.nix
+#!nix-shell -i bash ./shell.nix
 
 set +x # don't leak secrets!
 set -eu

@@ -2,7 +2,7 @@
   network = {
     pkgs =
       let
-        sources = import ../terraform/nix/sources.nix;
+        sources = import ../nix/sources.nix;
       in
       import sources.nixpkgs {
         config = {
