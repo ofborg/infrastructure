@@ -5,13 +5,21 @@ let
 
   pkgs = import sources.nixpkgs {
     overlays = [ overlay ];
-    config = {};
+    config = {
+      allowUnfree = true;
+    };
   };
-in pkgs.mkShell {
+in
+pkgs.mkShell {
   buildInputs = [
     pkgs.jq
     pkgs.vault
     pkgs.niv
+    pkgs.openssh
+    pkgs.awscli
+    pkgs.bashInteractive
+    pkgs.git
+    pkgs.morph
     (pkgs.terraform_0_14.withPlugins (p: [
       (pkgs.buildGoModule rec {
         pname = "terraform-provider-cloudamqp";
@@ -25,17 +33,17 @@ in pkgs.mkShell {
           sha256 = "sha256-OxHvKoENhrPxg1uv/r92VXflroIRupJOZG64IGp4sok=";
         };
         preBuild = ''
-         set -x
-         if [ "x''${outputHashAlgo:-}" != x ]; then
-            env
-            rm -rf vendor
-         fi
+          set -x
+          if [ "x''${outputHashAlgo:-}" != x ]; then
+             env
+             rm -rf vendor
+          fi
         '';
         vendorSha256 = "sha256-29Ys9YBShFutpZ1to4Zc+QJ4mtKvJQijrBuFRbpHjxE=";
         # Terraform allow checking the provider versions, but this breaks
         # if the versions are not provided via file paths.
         postBuild = ''
-         mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
+          mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
         '';
       })
       (pkgs.buildGoPackage rec {
@@ -65,20 +73,19 @@ in pkgs.mkShell {
           sha256 = "sha256-fqJEBIkAHqFgILAsMeTNqoZXyBGqDvnXL5sPc/OHu/s=";
         };
         preBuild = ''
-         set -x
-         if [ "x''${outputHashAlgo:-}" != x ]; then
-            env
-            rm -rf vendor
-         fi
+          set -x
+          if [ "x''${outputHashAlgo:-}" != x ]; then
+             env
+             rm -rf vendor
+          fi
         '';
         vendorSha256 = "sha256-Oliwxv8L2ss9BD83HRfG7gWuqRVlC5gjZP5wiyYAJBo=";
         # Terraform allow checking the provider versions, but this breaks
         # if the versions are not provided via file paths.
         postBuild = ''
-         mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
+          mv $NIX_BUILD_TOP/go/bin/${pname}{,_v${version}}
         '';
       })
     ]))
   ];
 }
-

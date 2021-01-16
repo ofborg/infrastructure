@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -I nixpkgs=channel:nixos-unstable-small -p bashInteractive vault awscli jq openssh
+#!nix-shell -i bash ./terraform/shell.nix
 
 set +x # don't leak secrets!
 set -eu

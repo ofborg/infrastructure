@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -I nixpkgs=channel:nixos-unstable-small -p jq
+#!nix-shell -i bash ./terraform/shell.nix
 
 set -eux
 set -o pipefail
@@ -40,7 +40,15 @@ EOF
 cat <<EOF > "$scratch/default.nix"
 {
   network = {
-    pkgs = import <nixpkgs> {};
+    pkgs =
+      let
+        sources = import ../terraform/nix/sources.nix;
+      in
+      import sources.nixpkgs {
+        config = {
+          allowUnfree = true;
+        };
+      };
     nixConfig = {
       builders = "";
       experimental-features = "nix-command";

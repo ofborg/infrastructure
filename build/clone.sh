@@ -1,8 +1,6 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash ../shell.nix
+#!nix-shell -i bash ../terraform/shell.nix
 #shellcheck shell=bash
-
-echo "$NIX_PATH"
 
 set -eux
 
