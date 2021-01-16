@@ -22,7 +22,6 @@ steps:
     key: deploy-dry-activate
     commands:
       - ./build/clone.sh
-      - ./enter-env.sh nix-shell --run "command -v morph"
       - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix dry-activate"
     agents:
       ofborg-infrastructure: true

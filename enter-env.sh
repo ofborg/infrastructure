@@ -6,7 +6,7 @@ set -eu
 
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
 function finish {
-  git remote rm vaultpush || true
+  git remote rm vaultpush 2>/dev/null || true
   rm -rf "$scratch"
   if [ "x${VAULT_EXIT_ACCESSOR:-}" != "x" ]; then
     echo "--> Revoking my token ..." >&2
@@ -80,7 +80,7 @@ cat "$SSH_CONFIG_FILE" >&2
 
 
 echo "--> Creating authenticated git remote: vaultpush" >&2
-git remote rm vaultpush || true
+git remote rm vaultpush 2>/dev/null || true
 pushtoken=$(vault write -field token github-ofborg/token repository_ids=122906544 permissions=contents=write)
 git remote add vaultpush "https://x-access-token:$pushtoken@github.com/ofborg/infrastructure.git"
 
@@ -103,4 +103,3 @@ bash --init-file "$scratch/bashrc"
 else
   "$@"
 fi
-

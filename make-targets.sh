@@ -60,7 +60,7 @@ machines | while read machine; do
           -o UserKnownHostsFile="$scratch/known_hosts" \
           -o BatchMode=yes \
           -o IdentitiesOnly=yes \
-          -i ./deploy.key \
+          -i "$SSH_IDENTITY_FILE" \
           "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"; then
           networkentry "$name" "$ip" >> "$scratch/default.nix"
         fi
@@ -74,4 +74,3 @@ rm -rf ./morph-network
 
 mv "$scratch" ./morph-network
 git add morph-network
-
