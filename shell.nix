@@ -88,4 +88,7 @@ pkgs.mkShell {
       })
     ]))
   ];
+
+  HISTFILE = "${toString ./.}/.bash_hist";
+  NIX_PATH = "nixpkgs=${pkgs.path}:ofborg-infra=${toString ./.}";
 }
