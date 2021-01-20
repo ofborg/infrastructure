@@ -55,3 +55,17 @@ steps:
       - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix boot"
     agents:
       ofborg-infrastructure: true
+
+  - block: "Confirm nix-collect-garbage"
+    key: collect-garbage-confirm
+
+  - label: "nix-collect-garbage"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on:
+      - deploy-boot
+      - collect-garbage-confirm
+    command:
+      -  ./enter-env.sh morph exec --on="*" ./morph-network/default.nix nix-collect-garbage
+    agents:
+      ofborg-infrastructure: true
