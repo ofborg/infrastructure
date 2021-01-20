@@ -22,7 +22,7 @@ steps:
     key: deploy-dry-activate
     commands:
       - ./build/clone.sh
-      - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix dry-activate"
+      - ./enter-env.sh morph deploy ./morph-network/default.nix dry-activate
     agents:
       ofborg-infrastructure: true
 
@@ -37,7 +37,7 @@ steps:
     key: deploy-test
     commands:
       - ./build/clone.sh
-      - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix test --upload-secrets"
+      - ./enter-env.sh morph deploy ./morph-network/default.nix test --upload-secrets
     agents:
       ofborg-infrastructure: true
 
@@ -52,6 +52,20 @@ steps:
     key: deploy-boot
     commands:
       - ./build/clone.sh
-      - ./enter-env.sh nix-shell --run "morph deploy ./morph-network/default.nix boot"
+      - ./enter-env.sh morph deploy ./morph-network/default.nix boot
+    agents:
+      ofborg-infrastructure: true
+
+  - block: "Confirm nix-collect-garbage"
+    key: collect-garbage-confirm
+
+  - label: "nix-collect-garbage"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on:
+      - deploy-boot
+      - collect-garbage-confirm
+    command:
+      -  ./enter-env.sh morph exec --on="*" ./morph-network/default.nix nix-collect-garbage
     agents:
       ofborg-infrastructure: true
