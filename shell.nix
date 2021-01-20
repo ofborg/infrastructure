@@ -12,6 +12,7 @@ let
 in
 pkgs.mkShell {
   buildInputs = [
+    pkgs.coreutils
     pkgs.jq
     pkgs.vault
     pkgs.niv
