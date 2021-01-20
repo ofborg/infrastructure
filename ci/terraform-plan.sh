@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell ../terraform/shell.nix -i bash
+#!nix-shell ../shell.nix -i bash
 # shellcheck shell=bash
 set -eux
 

@@ -2,8 +2,6 @@
 #!nix-shell -i bash ../shell.nix
 #shellcheck shell=bash
 
-echo "$NIX_PATH"
-
 set -eux
 
 fetchrepo() {

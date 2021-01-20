@@ -1,6 +1,14 @@
 {
   network = {
-    pkgs = import <nixpkgs> {};
+    pkgs =
+      let
+        sources = import ../nix/sources.nix;
+      in
+      import sources.nixpkgs {
+        config = {
+          allowUnfree = true;
+        };
+      };
     nixConfig = {
       builders = "";
       experimental-features = "nix-command";

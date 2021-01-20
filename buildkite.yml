@@ -1,6 +1,3 @@
-env:
-  NIX_PATH: nixpkgs=channel:nixos-unstable-small
-
 steps:
   - label: ":terraform: Base Plan"
     key: terraform-base-plan
