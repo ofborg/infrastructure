@@ -18,7 +18,7 @@ steps:
     concurrency_group: ofborg-infrastructure-deploy
     concurrency: 1
     command:
-      - ./enter-env.sh morph exec --on="*" ./morph-network/default.nix nix-collect-garbage
+      - ./enter-env.sh ./ci/collect-garbage.sh
     agents:
       ofborg-infrastructure: true
 
