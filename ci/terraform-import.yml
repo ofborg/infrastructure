@@ -60,9 +60,7 @@ steps:
   - label: "nix-collect-garbage"
     concurrency_group: ofborg-infrastructure-deploy
     concurrency: 1
-    depends_on:
-      - deploy-boot
-      - collect-garbage-confirm
+    depends_on: collect-garbage-confirm
     command:
       -  ./enter-env.sh morph exec --on="*" ./morph-network/default.nix nix-collect-garbage
     agents:
