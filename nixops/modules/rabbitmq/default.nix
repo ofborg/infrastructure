@@ -55,11 +55,6 @@ in {
       environment = {
         PUBLISH_PORT = "9419";
         RABBIT_URL = "https://${cfg.domain}";
-        SKIPVERIFY = "true"; # yeah, sue me. the current version in nixpkgs
-        # fails on https://github.com/kbudde/rabbitmq_exporter/issues/149
-        # and while I'd like to upgrade it, it was a can of worms... and
-        # this username and password isn't very interesting, anyway.
-
         RABBIT_EXPORTERS = "exchange,node,queue";
         RABBIT_USER = cfg.monitoring_username;
         RABBIT_PASSWORD = cfg.monitoring_password;
