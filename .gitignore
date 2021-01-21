@@ -1,6 +1,7 @@
 .bash_hist
 repos
-.terraform
+**/.terraform
+**/.terraform.lock.hcl
 private/*
 deploy.key*
 ssh-config
