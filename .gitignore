@@ -1,3 +1,7 @@
 .bash_hist
 repos
 .terraform
+private/*
+deploy.key*
+ssh-config
+terraform.plan

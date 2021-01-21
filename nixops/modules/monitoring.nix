@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ nodes, pkgs, config, lib, ... }:
 let
   cfg = config.services.ofborg.monitoring;
   rabbitcfg = config.services.ofborg.rabbitmq;
@@ -42,6 +42,26 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    services.ofborg.monitoring = let
+        targethostIf = f: nodes:
+          map (node: node.config.deployment.targetHost)
+              (lib.filter f (lib.attrValues nodes));
+      in {
+        monitoring_nodes = targethostIf
+          (node: node.config.services.ofborg.monitoring.enable)
+          nodes;
+        builder_nodes = targethostIf
+          (node: node.config.services.ofborg.builder.enable)
+          nodes;
+        evaluator_nodes = targethostIf
+          (node: node.config.services.ofborg.evaluator.enable)
+          nodes;
+        administration_nodes = targethostIf
+          (node: node.config.services.ofborg.administrative.enable)
+          nodes;
+      };
+
+
     services.nginx = {
       enable = true;
 
@@ -170,7 +190,10 @@ in {
           job_name = "rabbitmq";
           static_configs = [
             {
-              targets = [ "${rabbitcfg.domain}:9419" ];
+              targets = lib.unique
+                (map (add_port 9419)
+                  cfg.administration_nodes);
+
             }
           ];
         }
@@ -182,7 +205,7 @@ in {
           scheme = "https";
           static_configs = [
             {
-              targets = [ rabbitcfg.domain ];
+              targets = [ rabbitcfg.monitoring_domain ];
             }
           ];
         }

@@ -1,0 +1,11 @@
+steps:
+  - label: ":terraform: Base Plan"
+    key: terraform-base-plan
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    commands:
+      - ./enter-env.sh ./ci/terraform-plan.sh base ./ci/terraform-base-apply.yml ./ci/terraform-rabbitmq-plan.yml
+    agents:
+      ofborg-infrastructure: true
+    artifact_paths:
+      - "terraform/base/terraform.plan"

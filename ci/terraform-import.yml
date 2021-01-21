@@ -1,0 +1,63 @@
+env:
+  GIT_AUTHOR_NAME: Buildkite
+  GIT_AUTHOR_EMAIL: ci@buildkite
+  GIT_COMMITTER_NAME: Buildkite
+  GIT_COMMITTER_EMAIL: ci@buildkite
+
+steps:
+  - label: "Server Intake"
+    commands:
+      - ./enter-env.sh ./make-targets.sh
+      - if ! git diff --cached --exit-code; then git commit -m "Automatic update of deploy targets." && ./enter-env.sh git push vaultpush HEAD:"$BUILDKITE_BRANCH"; fi
+    agents:
+      ofborg-infrastructure: true
+
+  - wait
+
+  - label: "nix-collect-garbage"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    command:
+      - ./enter-env.sh ./ci/collect-garbage.sh
+    agents:
+      ofborg-infrastructure: true
+
+  - label: "Dry Activation"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    key: deploy-dry-activate
+    commands:
+      - ./build/clone.sh
+      - ./enter-env.sh morph deploy ./morph-network/default.nix dry-activate
+    agents:
+      ofborg-infrastructure: true
+
+  - block: "Confirm Test Deploy"
+    key: deploy-confirm-test
+    depends_on: deploy-dry-activate
+
+  - label: "Deploy: Test"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on: deploy-confirm-test
+    key: deploy-test
+    commands:
+      - ./build/clone.sh
+      - ./enter-env.sh morph deploy ./morph-network/default.nix test --upload-secrets
+    agents:
+      ofborg-infrastructure: true
+
+  - block: "Confirm Boot Deploy"
+    key: deploy-confirm-boot
+    depends_on: deploy-test
+
+  - label: "Deploy: Boot"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on: deploy-confirm-boot
+    key: deploy-boot
+    commands:
+      - ./build/clone.sh
+      - ./enter-env.sh morph deploy ./morph-network/default.nix boot
+    agents:
+      ofborg-infrastructure: true

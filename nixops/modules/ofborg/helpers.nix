@@ -32,7 +32,7 @@
       export NIX_PATH=nixpkgs=/run/current-system/nixpkgs;
       git config --global user.email "${config.services.ofborg.commit_email}"
       git config --global user.name "OfBorg"
-      exec ${pkgs.ofborg}/bin/${bin} ${config.services.ofborg.config_json}
+      exec ${config.internalPkgs.ofborg}/bin/${bin} ${config.services.ofborg.config_json}
     '';
   };
 }

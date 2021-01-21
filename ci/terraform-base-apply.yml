@@ -1,0 +1,12 @@
+steps:
+  - block: ":terraform: Base Apply"
+    key: terraform-base-confirm
+
+  - label: ":terraform: Base Apply"
+    concurrency_group: ofborg-infrastructure-terraform
+    concurrency: 1
+    depends_on: terraform-base-confirm
+    command:
+      - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-rabbitmq-plan.yml
+    agents:
+      ofborg-infrastructure: true

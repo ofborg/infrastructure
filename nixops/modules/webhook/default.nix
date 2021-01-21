@@ -5,7 +5,7 @@ let
 
   configuredWebhook = pkgs.runCommand "configured-webhook"
     {
-      src = pkgs.webhook_api;
+      src = config.internalPkgs.webhook_api;
       config = pkgs.mutate ./config.php {
         domain = rabbitcfg.domain;
         username = cfg.rabbit_username;

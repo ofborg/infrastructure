@@ -19,7 +19,7 @@ in {
     services.nginx = {
       enable = true;
       virtualHosts."${cfg.domain}" = {
-        root = "${pkgs.logviewer}";
+        root = "${config.internalPkgs.logviewer}";
         enableACME = true;
         forceSSL = true;
 
@@ -38,7 +38,7 @@ in {
           };
 
           "/logs/" = {
-            alias = pkgs.log_api;
+            alias = config.internalPkgs.log_api;
             extraConfig = ''
               add_header Access-Control-Allow-Origin "*";
               add_header Access-Control-Request-Method "GET";
@@ -49,7 +49,7 @@ in {
               fastcgi_split_path_info ^(.+\.php)(/.+)$;
               fastcgi_pass unix:${config.services.phpfpm.pools.main.socket};
               fastcgi_index index.php;
-              fastcgi_param SCRIPT_FILENAME ${pkgs.log_api}/index.php;
+              fastcgi_param SCRIPT_FILENAME ${config.internalPkgs.log_api}/index.php;
               include ${pkgs.nginx}/conf/fastcgi_params;
               try_files /index.php =404;
             '';
