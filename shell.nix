@@ -25,7 +25,6 @@ pkgs.mkShell {
       (pkgs.buildGoModule rec {
         pname = "terraform-provider-cloudamqp";
         version = "1.8.6";
-        goPackagePath = "github.com/cloudamqp/terraform-provider-cloudamqp";
         subPackages = [ "." ];
         src = pkgs.fetchFromGitHub {
           owner = "cloudamqp";
@@ -65,7 +64,6 @@ pkgs.mkShell {
       (pkgs.buildGoModule rec {
         pname = "terraform-provider-rabbitmq";
         version = "1.5.1";
-        goPackagePath = "github.com/cyrilgdn/terraform-provider-rabbitmq";
         subPackages = [ "." ];
         src = pkgs.fetchFromGitHub {
           owner = "cyrilgdn";
