@@ -6,3 +6,4 @@ private/*
 deploy.key*
 ssh-config
 terraform.plan
+vars.auto.tfvars.json
