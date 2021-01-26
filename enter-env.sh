@@ -4,18 +4,26 @@
 set +x # don't leak secrets!
 set -eu
 
+scriptroot=$(dirname "$(realpath "$0")")
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
+
 function finish {
   git remote rm vaultpush 2>/dev/null || true
   rm -rf "$scratch"
   if [ "x${VAULT_EXIT_ACCESSOR:-}" != "x" ]; then
-    echo "--> Revoking my token ..." >&2
+    echo "--> Revoking my token..." >&2
     vault token revoke -self
+    echo "--> Removing secret files..." >&2
+    rm -f \
+      "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json" \
+      "$scriptroot/private/local.nix" \
+      "$scriptroot/private/github.key" \
+      "$scriptroot/deploy.key" \
+      "$scriptroot/deploy.key.pub" \
+      "$scriptroot/deploy.key-cert.pub"
   fi
 }
 trap finish EXIT
-
-scriptroot=$(dirname "$(realpath "$0")")
 
 echo "--> Assuming role: ofborg-deployers" >&2
 vault_creds=$(vault token create \
