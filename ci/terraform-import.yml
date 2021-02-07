@@ -21,6 +21,8 @@ steps:
       - ./enter-env.sh ./ci/collect-garbage.sh
     agents:
       ofborg-infrastructure: true
+      
+  - wait
 
   - label: "Dry Activation"
     concurrency_group: ofborg-infrastructure-deploy
