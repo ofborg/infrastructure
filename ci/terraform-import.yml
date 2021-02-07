@@ -13,7 +13,7 @@ steps:
           git commit -m "Automatic update of deploy targets."
           ./enter-env.sh git push vaultpush HEAD:"$BUILDKITE_BRANCH"
         else
-          buildkite-agent pipeline upload ./terraform-deploy.yml
+          buildkite-agent pipeline upload ./ci/terraform-deploy.yml
         fi
     agents:
       ofborg-infrastructure: true
