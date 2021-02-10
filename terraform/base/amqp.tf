@@ -32,6 +32,12 @@ resource "cloudamqp_plugin" "instance-plugin-prometheus" {
   enabled = true
 }
 
+resource "cloudamqp_plugin" "instance-plugin-web_stop" {
+  instance_id = cloudamqp_instance.instance.id
+  name = "rabbitmq_web_stomp"
+  enabled = true
+}
+
 resource "cloudamqp_notification" "graham" {
   instance_id = cloudamqp_instance.instance.id
   type        = "email"
