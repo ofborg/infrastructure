@@ -32,7 +32,7 @@ resource "cloudamqp_plugin" "instance-plugin-prometheus" {
   enabled = true
 }
 
-resource "cloudamqp_plugin" "instance-plugin-web_stop" {
+resource "cloudamqp_plugin" "instance-plugin-web_stomp" {
   instance_id = cloudamqp_instance.instance.id
   name = "rabbitmq_web_stomp"
   enabled = true
