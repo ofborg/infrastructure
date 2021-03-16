@@ -3,7 +3,8 @@ let
   inherit (lib) mkIf mkOption types;
   helpers = import ./helpers.nix { inherit config pkgs; };
   cfg = config.services.ofborg.evaluator;
-in {
+in
+{
   options = {
     services.ofborg = {
       evaluator = {
@@ -16,6 +17,8 @@ in {
   };
 
   config = mkIf cfg.enable rec {
+    nix.nrBuildUsers = 128;
+
     systemd = {
       services = {
         ofborg-evaluator =
