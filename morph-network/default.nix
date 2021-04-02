@@ -87,4 +87,28 @@
       ./machines/ofborg-evaluator-4.system.nix
     ];
   };
+  "ofborg-evaluator-6" = {
+    deployment = {
+      targetHost = "147.75.105.25";
+      targetUser = "root";
+      substituteOnDestination = true;
+    };
+    imports = [
+      ../nixops/modules
+      ./machines/ofborg-evaluator-6.expr.nix
+      ./machines/ofborg-evaluator-6.system.nix
+    ];
+  };
+  "ofborg-evaluator-7" = {
+    deployment = {
+      targetHost = "147.75.198.37";
+      targetUser = "root";
+      substituteOnDestination = true;
+    };
+    imports = [
+      ../nixops/modules
+      ./machines/ofborg-evaluator-7.expr.nix
+      ./machines/ofborg-evaluator-7.system.nix
+    ];
+  };
 }
