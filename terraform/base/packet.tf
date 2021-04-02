@@ -16,7 +16,7 @@ output "deploy_targets" {
 }
 
 variable "evaluators" {
-  default = 5
+  default = 8
 }
 
 variable "project_id" {
