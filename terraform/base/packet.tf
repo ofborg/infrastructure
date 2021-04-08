@@ -8,6 +8,11 @@ output "deploy_targets" {
           expression = "{ roles.core.enable = true; }"
           provisioner = "metal"
         },
+        macofborg1 = {
+          ip = "macofborg1"
+          expression = "{ }"
+          provisioner = "nixos-install"
+        },
       },
       {for e in metal_device.evaluator : e.hostname => {
         ip = e.network.0.address
