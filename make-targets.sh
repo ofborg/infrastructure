@@ -37,6 +37,35 @@ networkentry() (
 EOF
 )
 
+sshwrap() (
+  ssh \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile="$scratch/known_hosts" \
+    -o BatchMode=yes \
+    -o IdentitiesOnly=yes \
+    -i "$SSH_IDENTITY_FILE" \
+    "$@"
+)
+
+cfg_for_provisioner() (
+  provisioner=$1
+  ip=$2
+
+  case "$provisioner" in
+    "metal")
+      cfg_for_metal "$ip"
+      ;;
+    *)
+      echo "Failed: no such provisioner: $provisioner"
+      exit 1
+      ;;
+  esac
+)
+
+cfg_for_metal() (
+  sshwrap "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"
+)
+
 cat <<EOF > "$scratch/default.nix"
 {
   network = {
@@ -61,15 +90,10 @@ machines | while read machine; do
    (
         name="$(jq -r .key <<<"$machine")"
         ip=$(jq -r .value.ip <<<"$machine")
+        provisioner=$(jq -r .value.provisioner <<<"$machine")
         jq -r .value.expression <<<"$machine"
         jq -r .value.expression <<<"$machine" > "$scratch/machines/${name}.expr.nix"
-        if ssh \
-          -o StrictHostKeyChecking=no \
-          -o UserKnownHostsFile="$scratch/known_hosts" \
-          -o BatchMode=yes \
-          -o IdentitiesOnly=yes \
-          -i "$SSH_IDENTITY_FILE" \
-          "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"; then
+        if cfg_for_provisioner "$provisioner" "$ip"; then
           networkentry "$name" "$ip" >> "$scratch/default.nix"
         fi
    ) < /dev/null
