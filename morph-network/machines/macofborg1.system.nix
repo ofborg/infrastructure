@@ -1,0 +1,1 @@
+{ imports = [ ./macofborg1/configuration.nix ]; }
