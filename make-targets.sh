@@ -55,6 +55,9 @@ cfg_for_provisioner() (
     "metal")
       cfg_for_metal "$ip"
       ;;
+    "nixos-install")
+      cfg_for_nixos_install "$ip"
+      ;;
     *)
       echo "Failed: no such provisioner: $provisioner"
       exit 1
@@ -64,6 +67,13 @@ cfg_for_provisioner() (
 
 cfg_for_metal() (
   sshwrap "root@$ip" -- cat /etc/nixos/packet/system.nix > "$scratch/machines/${name}.system.nix"
+)
+
+cfg_for_nixos_install() (
+  mkdir -p "$scratch/machines/${name}"
+  sshwrap "root@$ip" -- cat /etc/nixos/configuration.nix > "$scratch/machines/${name}/configuration.nix"
+  sshwrap "root@$ip" -- cat /etc/nixos/hardware-configuration.nix > "$scratch/machines/${name}/hardware-configuration.nix"
+  printf '{ imports = [ %s ]; }' "./${name}/configuration.nix" >  "$scratch/machines/${name}.system.nix"
 )
 
 cat <<EOF > "$scratch/default.nix"
