@@ -2,9 +2,6 @@
 let cfg = config.services.ofborg.monitoring;
 in {
   config = lib.mkIf cfg.enable {
-    # macofborg1 needs to use tailscale in order to get an accessible IP address
-    tailscale.enable = true;
-
     networking.firewall.extraCommands = builtins.concatStringsSep "\n"
       (lib.mapAttrsToList (name: node: ''
         # ${name}
@@ -15,6 +12,9 @@ in {
             '' else ''
             #     (null)
           ''}'') nodes);
+
+    # macofborg1 needs to use tailscale in order to get an accessible IP address
+    services.tailscale.enable = true;
 
     services.loki = {
       enable = true;
