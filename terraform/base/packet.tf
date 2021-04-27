@@ -9,7 +9,7 @@ output "deploy_targets" {
           provisioner = "metal"
         },
         macofborg1 = {
-          ip = "macofborg1"
+          ip = "100.89.83.94" # tailscale-issued IP
           expression = "{ }"
           provisioner = "nixos-install"
         },
