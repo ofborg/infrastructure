@@ -29,7 +29,7 @@
   };
   "macofborg1" = {
     deployment = {
-      targetHost = "macofborg1";
+      targetHost = "100.89.83.94";
       targetUser = "root";
       substituteOnDestination = true;
     };
