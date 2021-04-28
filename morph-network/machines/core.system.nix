@@ -72,8 +72,8 @@
         };
 
         interfaces = [
-          "enp1s0f0"
-          "enp1s0f1"
+          "enp1s0f0np0"
+          "enp1s0f1np1"
         ];
       };
 
