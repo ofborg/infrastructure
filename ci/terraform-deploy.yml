@@ -51,3 +51,17 @@ steps:
     agents:
       ofborg-infrastructure: true
 
+  - block: ":rotating_light: Deploy with a reboot :rotating_light: "
+    key: deploy-confirm-reboot
+    depends_on: deploy-dry-activate
+
+  - label: "Deploying with a reboot"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on: deploy-confirm-reboot
+    key: deploy-reboot
+    commands:
+      - ./build/clone.sh
+      - ./enter-env.sh morph deploy ./morph-network/default.nix boot --reboot
+    agents:
+      ofborg-infrastructure: true
