@@ -65,3 +65,14 @@ steps:
       - ./enter-env.sh morph deploy ./morph-network/default.nix boot --reboot
     agents:
       ofborg-infrastructure: true
+
+  - label: "Pushing secrets after reboot"
+    concurrency_group: ofborg-infrastructure-deploy
+    concurrency: 1
+    depends_on: deploy-reboot
+    key: deploy-post-reboot-upload-secrets
+    commands:
+      - ./build/clone.sh
+      - ./enter-env.sh morph upload-secrets ./morph-network/default.nix
+    agents:
+      ofborg-infrastructure: true
