@@ -1,16 +1,12 @@
 let
   sources = import ./nix/sources.nix;
-  overlay = _: pkgs: {
-  };
+  overlay = _: pkgs: { };
 
   pkgs = import sources.nixpkgs {
     overlays = [ overlay ];
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
-in
-pkgs.mkShell {
+in pkgs.mkShell {
   buildInputs = [
     pkgs.coreutils
     pkgs.jq
@@ -21,6 +17,7 @@ pkgs.mkShell {
     pkgs.bashInteractive
     pkgs.git
     pkgs.morph
+    pkgs.shellcheck
     (pkgs.terraform_0_14.withPlugins (p: [
       (pkgs.buildGoModule rec {
         pname = "terraform-provider-cloudamqp";
