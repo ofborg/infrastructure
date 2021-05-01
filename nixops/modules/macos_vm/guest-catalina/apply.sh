@@ -3,7 +3,7 @@
 LOGHOST=10.172.170.1
 echo "apply started at $(date)" | nc -w0 -u $LOGHOST 1514
 
-printf "\n*.*\t@$LOGHOST:1514\n" | tee -a /etc/syslog.conf
+printf "\n*.*\t@%s:1514\n" "$LOGHOST" | tee -a /etc/syslog.conf
 pkill syslog
 pkill asl
 

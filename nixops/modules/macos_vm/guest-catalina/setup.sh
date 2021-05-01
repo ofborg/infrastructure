@@ -8,12 +8,16 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
 
 (
     # Make this thing work as root
+    # shellcheck disable=SC2030
     export USER=root
+    # shellcheck disable=SC2030
     export HOME=~root
+    # shellcheck disable=SC2030
     export ALLOW_PREEXISTING_INSTALLATION=1
     env
     curl -vL https://nixos.org/releases/nix/nix-2.3.10/install > ~nixos/install-nix
     chmod +rwx ~nixos/install-nix
+    # shellcheck disable=SC2002
     cat /dev/null | sudo -i -H -u nixos -- sh ~nixos/install-nix --daemon --darwin-use-unencrypted-nix-store-volume
 )
 
@@ -22,9 +26,12 @@ cp /Volumes/CONFIG/ofborg-config.json /var/lib/ofborg/config.json
 
 (
     # Make this thing work as root
+    # shellcheck disable=SC2030,SC2031
     export USER=root
+    # shellcheck disable=SC2030,SC2031
     export HOME=~root
 
+    # shellcheck disable=SC1091
     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
     env
     ls -la /private || true
@@ -48,19 +55,24 @@ cp /Volumes/CONFIG/ofborg-config.json /var/lib/ofborg/config.json
 
     installer=$(nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer --no-out-link)
     set +e
-    yes | sudo -i -H -u nixos -- $installer/bin/darwin-installer;
+    yes | sudo -i -H -u nixos -- "$installer/bin/darwin-installer";
     echo $?
     set -e
 )
 
 (
+    # shellcheck disable=SC2031
     export USER=root
+    # shellcheck disable=SC2031
     export HOME=~root
 
     rm -f /etc/nix/nix.conf
     rm -f /etc/bashrc
     ln -s /etc/static/bashrc /etc/bashrc
+    # shellcheck disable=SC1091
     . /etc/static/bashrc
+
+    # shellcheck disable=SC2002
     cat /Volumes/CONFIG/darwin-configuration.nix | sudo -u nixos -- tee ~nixos/.nixpkgs/darwin-configuration.nix
 
     while ! sudo -i -H -u nixos -- nix ping-store; do
