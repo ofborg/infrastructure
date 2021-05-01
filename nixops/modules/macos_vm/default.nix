@@ -6,7 +6,15 @@ let
   versions = {
     catalina = {
       zvolName = "rpool/catalina";
-      guestConfigDir = ./guest-catalina;
+      guestConfigDir = pkgs.runCommand "guest-config-catalina" {
+        buildInputs = [ pkgs.shellcheck ];
+      } ''
+        mkdir -p $out
+        cp -r ${./guest-catalina}/* $out/
+        cp ${config.services.ofborg.config_json} $out/ofborg-config.json
+        chmod +x $out/*.sh
+        shellcheck $out/*.sh
+      '';
       cloverImage = (pkgs.callPackage ./dist/clover-catalina { }).clover-image;
     };
   };
@@ -26,6 +34,10 @@ in {
 
   config = mkIf cfg.enable (let oscfg = versions."${cfg.version}";
   in rec {
+    services.ofborg.config_override = {
+      checkout.root = "/private/var/lib/ofborg/checkout";
+      nix.system = "x86_64-darwin";
+    };
     macosGuest = {
       enable = true;
 
