@@ -7,7 +7,14 @@ printf "\n*.*\t@$LOGHOST:1514\n" | tee -a /etc/syslog.conf
 pkill syslog
 pkill asl
 
-echo "Apply started at $(date)" | logger -t apply.sh
+logtohost() (
+  logger -t apply.sh -p install.emerg
+)
+
+for i in $(seq 1 5); do
+  echo "Apply.$i started at $(date)" | logtohost
+  sleep 1
+done
 
 (
     PS4='${BASH_SOURCE}::${FUNCNAME[0]}::$LINENO '
@@ -25,5 +32,5 @@ echo "Apply started at $(date)" | logger -t apply.sh
     }
     trap finish EXIT
 
-    /Volumes/CONFIG/setup.sh 2>&1 | logger -t setup.sh
-) 2>&1 | logger -t apply.sh
+    /Volumes/CONFIG/setup.sh 2>&1 | logtohost
+) 2>&1 | logtohost
