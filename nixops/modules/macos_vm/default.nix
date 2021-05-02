@@ -53,5 +53,23 @@ in {
         ovmfVarsFile = ./dist/OVMF_VARS-1024x768.fd;
       };
     };
+
+    systemd.services.free-space = let
+      disk = "/";
+      minFree = 5 * 1024 * 1024; # 5 GB
+      service = "run-macos-vm.service";
+    in {
+      startAt = "*:0/10";
+      path = [ pkgs.coreutils ];
+      serviceConfig = {
+        ExecCondition = pkgs.writeShellScript "free-space-condition" ''
+          [[ "$(df -k --output=avail ${disk} | tail -n 1)" -lt "${
+            toString minFree
+          }" ]] && exit 0
+        '';
+        ExecStart =
+          "/run/current-system/systemd/bin/systemctl restart ${service}";
+      };
+    };
   });
 }
