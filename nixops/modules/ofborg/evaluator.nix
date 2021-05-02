@@ -17,13 +17,7 @@ in
   };
 
   config = mkIf cfg.enable rec {
-    nix = {
-      nrBuildUsers = 128;
-      gc = {
-        automatic = true;
-        dates = "weekly";
-      };
-    };
+    nix.nrBuildUsers = 128;
 
     systemd = {
       services = {
