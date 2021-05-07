@@ -37,7 +37,7 @@ CONF
 }
 
 variable "evaluators" {
-  default = 8
+  default = 4
 }
 
 variable "project_id" {
