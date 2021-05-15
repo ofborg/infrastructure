@@ -27,7 +27,7 @@ step() {
       ofborg-infrastructure: true
 
   - label: "Pushing secrets to $host after reboot"
-    depends_on: deploy-$host-confirm-reboot
+    depends_on: deploy-$host-reboot
     concurrency_group: ofborg-infrastructure-individual-reboot
     concurrency: $NRHOSTS
     key: deploy-$host-secrets
