@@ -29,7 +29,7 @@ step() {
     depends_on: deploy-$host-confirm-reboot
     concurrency_group: ofborg-infrastructure-individual-reboot
     concurrency: $NRHOSTS
-    key: deploy-$host-reboot
+    key: deploy-$host-secrets
     commands:
       - ./build/clone.sh
       - ./enter-env.sh morph upload-secrets ./morph-network/default.nix --on="$host"
