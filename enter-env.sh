@@ -20,7 +20,8 @@ function finish {
       "$scriptroot/private/github.key" \
       "$scriptroot/deploy.key" \
       "$scriptroot/deploy.key.pub" \
-      "$scriptroot/deploy.key-cert.pub"
+      "$scriptroot/deploy.key-cert.pub" \
+      "$scriptroot/ssh-config.inc"
   fi
 }
 trap finish EXIT
@@ -81,7 +82,25 @@ UserKnownHostsFile $scriptroot/morph-network/known_hosts
 BatchMode yes
 IdentitiesOnly yes
 IdentityFile $SSH_IDENTITY_FILE
+Include $SSH_CONFIG_FILE.inc
 EOF
+
+nix-instantiate --eval --json -E "let net = import $scriptroot/morph-network; in
+builtins.concatStringsSep \"\n\"
+  (map
+    (p: ''
+      Host \${p} eval-\${builtins.substring 17 10 p}
+          HostName \${net.\${p}.deployment.targetHost}
+          User \${net.\${p}.deployment.targetUser}
+    '')
+    (builtins.attrNames (builtins.removeAttrs net [ \"network\" \"core\" ])))
+  +
+''
+
+  Host core
+      HostName \${net.\"core\".deployment.targetHost}
+      User \${net.\"core\".deployment.targetUser}
+''" | jq -r > $SSH_CONFIG_FILE.inc
 
 echo "--> Created SSH config file at $SSH_CONFIG_FILE" >&2
 cat "$SSH_CONFIG_FILE" >&2
