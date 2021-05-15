@@ -9,6 +9,12 @@ steps:
     agents:
       ofborg-infrastructure: true
 
+  - label: "prompt-individual-reboots"
+    command:
+      - ./enter-env.sh ./ci/reboot-individual.sh
+    agents:
+      ofborg-infrastructure: true
+
   - wait
 
   - label: "Dry Activation"
