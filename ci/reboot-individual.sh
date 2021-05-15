@@ -52,4 +52,4 @@ hosts="$(nix-instantiate -E --eval --json \
   for host in $hosts; do
     step "$host"
   done
-) | cat # | buildkite-agent pipeline upload
+) | buildkite-agent pipeline upload
