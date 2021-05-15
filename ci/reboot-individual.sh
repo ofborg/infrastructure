@@ -13,6 +13,7 @@ step() {
   cat <<EOF
   - block: ":rotating_light: Deploy $host with a reboot :rotating_light: "
     key: deploy-$host-confirm-reboot
+    depends_on: prompt-individual-reboots
 
   - label: ":nixos: reboot deploy $host"
     depends_on: deploy-$host-confirm-reboot

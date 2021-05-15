@@ -10,6 +10,7 @@ steps:
       ofborg-infrastructure: true
 
   - label: "prompt-individual-reboots"
+    key: "prompt-individual-reboots"
     command:
       - ./enter-env.sh ./ci/reboot-individual.sh
     agents:
