@@ -123,16 +123,4 @@
       ./machines/ofborg-evaluator-6.system.nix
     ];
   };
-  "ofborg-evaluator-7" = {
-    deployment = {
-      targetHost = "147.75.78.109";
-      targetUser = "root";
-      substituteOnDestination = true;
-    };
-    imports = [
-      ../nixops/modules
-      ./machines/ofborg-evaluator-7.expr.nix
-      ./machines/ofborg-evaluator-7.system.nix
-    ];
-  };
 }
