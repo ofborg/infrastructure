@@ -131,7 +131,7 @@ in {
             {
               alert = "StalledBuilder";
               expr = "ofborg_queue_builder_waiting > 0 and ofborg_queue_builder_in_progress == 0";
-              for = "5m";
+              for = "30m";
               labels.severity = "page";
             }
             {
