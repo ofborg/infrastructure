@@ -6,7 +6,17 @@ let
     overlays = [ overlay ];
     config = { allowUnfree = true; };
   };
-in pkgs.mkShell {
+
+  morph = pkgs.morph.overrideAttrs ({ patches ? [ ], ... }: {
+    patches = patches ++ [
+      (pkgs.fetchpatch {
+        url = "https://github.com/DBCDK/morph/commit/ff4e0cd5f7cbdb9be50661d75560a40d5928530c.patch";
+        sha256 = "1ChMLjAh8Tmrf0G8tQuvRVDro8/VbnFbBWoFEglB4XA=";
+      })
+    ];
+  });
+in
+pkgs.mkShell {
   buildInputs = [
     pkgs.coreutils
     pkgs.jq
@@ -16,7 +26,7 @@ in pkgs.mkShell {
     pkgs.awscli
     pkgs.bashInteractive
     pkgs.git
-    pkgs.morph
+    morph
     pkgs.shellcheck
     (pkgs.terraform_0_14.withPlugins (p: [
       (pkgs.buildGoModule rec {
