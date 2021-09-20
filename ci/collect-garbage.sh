@@ -15,6 +15,7 @@ step() {
     concurrency_group: ofborg-infrastructure-gc
     concurrency: $NRHOSTS
     command:
+      - ./enter-env.sh morph exec --on="$host" ./morph-network/default.nix -- rm -rf /nix/var/log/nix/
       - ./enter-env.sh morph exec --on="$host" ./morph-network/default.nix nix-collect-garbage
     agents:
       ofborg-infrastructure: true
