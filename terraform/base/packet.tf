@@ -2,15 +2,15 @@ provider "metal" {}
 
 output "deploy_targets" {
   value = merge(
-      {
-        core = {
-          ip = metal_device.ofborg-core.network.0.address
-          expression = "{ roles.core.enable = true; }"
-          provisioner = "metal"
-        },
-        macofborg1 = {
-          ip = "100.89.83.94" # tailscale-issued IP
-          expression = <<CONF
+    {
+      core = {
+        ip          = metal_device.ofborg-core.network.0.address
+        expression  = "{ roles.core.enable = true; }"
+        provisioner = "metal"
+      },
+      macofborg1 = {
+        ip          = "100.89.83.94" # tailscale-issued IP
+        expression  = <<CONF
 {
   roles.darwin-builder.enable = true;
   services.ofborg.macos_vm.version = "catalina";
@@ -25,14 +25,14 @@ output "deploy_targets" {
   };
 }
 CONF
-          provisioner = "nixos-install"
-        },
+        provisioner = "nixos-install"
       },
-      {for e in metal_device.evaluator : e.hostname => {
-        ip = e.network.0.address
-        expression = "{ services.ofborg = { builder.enable = true; evaluator.enable = true; }; }"
-        provisioner = "metal"
-      }},
+    },
+    { for e in metal_device.evaluator : e.hostname => {
+      ip          = e.network.0.address
+      expression  = "{ services.ofborg = { builder.enable = true; evaluator.enable = true; }; }"
+      provisioner = "metal"
+    } },
   )
 }
 
@@ -74,19 +74,19 @@ USERDATA
           device = "/dev/sda"
           partitions = [
             {
-              label = "BIOS"
+              label  = "BIOS"
               number = 1
-              size = "8M"
+              size   = "8M"
             },
             {
-              label = "BOOT"
+              label  = "BOOT"
               number = 2
-              size = "512M"
+              size   = "512M"
             },
             {
-              label = "ROOT"
+              label  = "ROOT"
               number = 3
-              size = 0
+              size   = 0
             },
           ]
         },
@@ -94,19 +94,19 @@ USERDATA
           device = "/dev/sdb"
           partitions = [
             {
-              label = "SECONDBIOS"
+              label  = "SECONDBIOS"
               number = 1
-              size = "8M"
+              size   = "8M"
             },
             {
-              label = "SECONDBOOT"
+              label  = "SECONDBOOT"
               number = 2
-              size = "512M"
+              size   = "512M"
             },
             {
-              label = "SECONDROOT"
+              label  = "SECONDROOT"
               number = 3
-              size = 0
+              size   = 0
             },
           ]
         },
@@ -117,7 +117,7 @@ USERDATA
           mount = {
             device = "/dev/sda2"
             format = "vfat"
-            point = "/boot"
+            point  = "/boot"
             create = { options = [
               "32",
               "-n",
@@ -140,27 +140,27 @@ USERDATA
 
       datasets = {
         "npool/root" = { properties = { mountpoint = "legacy" } }
-        "npool/nix" = { properties = { mountpoint = "legacy" } }
+        "npool/nix"  = { properties = { mountpoint = "legacy" } }
         "npool/home" = { properties = { mountpoint = "legacy" } }
-        "npool/var" = { properties = { mountpoint = "legacy" } }
+        "npool/var"  = { properties = { mountpoint = "legacy" } }
       }
 
       mounts = [
         {
           dataset = "npool/root"
-          point = "/"
+          point   = "/"
         },
         {
           dataset = "npool/nix"
-          point = "/nix"
+          point   = "/nix"
         },
         {
-          dataset ="npool/home"
-          point ="/home"
+          dataset = "npool/home"
+          point   = "/home"
         },
         {
-          dataset ="npool/var"
-          point ="/var"
+          dataset = "npool/var"
+          point   = "/var"
         }
       ]
     }
@@ -170,12 +170,12 @@ USERDATA
   # http://images.platformequinix.net/nixos/installer-pre2/x86/netboot.ipxe
   # This URL was causing issues before, but should be identical to the netboot.gsc.io
   # URL on an ongoing basis.
-  ipxe_script_url     = "https://netboot.gsc.io/installer-pre2/x86/netboot.ipxe"
-  always_pxe       = false
-  tags                = concat(var.tags, ["core-0", "skip-hydra"])
+  ipxe_script_url = "https://netboot.gsc.io/installer-pre2/x86/netboot.ipxe"
+  always_pxe      = false
+  tags            = concat(var.tags, ["core-0", "skip-hydra"])
 
   lifecycle {
-    ignore_changes = [ user_data ]
+    ignore_changes = [user_data]
   }
 }
 
@@ -198,7 +198,7 @@ USERDATA
   tags                = concat(var.tags, ["evaluator", "skip-hydra"])
 
   lifecycle {
-    ignore_changes = [ user_data ]
+    ignore_changes = [user_data]
   }
 }
 
