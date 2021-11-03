@@ -1,12 +1,44 @@
 {
   imports = [
-    ({ networking.hostId = "4fe975c8"; }
+    ({
+      boot.kernelModules = [ "dm_multipath" "dm_round_robin" "ipmi_watchdog" ];
+      services.openssh.enable = true;
+    }
+    )
+    ({
+      nixpkgs.config.allowUnfree = true;
+      boot.initrd.availableKernelModules = [
+        "ahci"
+        "ehci_pci"
+        "megaraid_sas"
+        "mpt3sas"
+        "sd_mod"
+        "usbhid"
+        "xhci_pci"
+      ];
+
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.kernelParams = [ "console=ttyS1,115200n8" ];
+      boot.extraModulePackages = [ ];
+
+      hardware.enableAllFirmware = true;
+    }
+    )
+    ({ lib, ... }:
+      {
+        boot.loader.grub.extraConfig = ''
+          serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
+          terminal_output serial console
+          terminal_input serial console
+        '';
+        nix.maxJobs = lib.mkDefault 48;
+      }
     )
     ({
       swapDevices = [
 
         {
-          device = "/dev/disk/by-id/md-uuid-f1b830d7:bbd1e99e:00c2d373:ae3dcf8c";
+          device = "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_1530133E03E5-part2";
         }
 
       ];
@@ -14,66 +46,47 @@
       fileSystems = {
 
         "/" = {
-          device = "/dev/disk/by-id/md-uuid-56550d52:647a7748:972bb187:1d03516a";
-          fsType = "ext4";
+          device = "npool/root";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
 
+
+        "/nix" = {
+          device = "npool/nix";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+
+        "/var" = {
+          device = "npool/var";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+
+        "/home" = {
+          device = "npool/home";
+          fsType = "zfs";
+          options = [ "defaults" ];
         };
 
       };
 
-      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160511AE68B4" "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160511AE63B6" ];
+      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_1530133E03E5" ];
     })
-    ({
-      imports = [
-        (
-          {
-            boot.kernelModules = [ "dm_multipath" "dm_round_robin" "ipmi_watchdog" ];
-            services.openssh.enable = true;
-          }
-        )
-        (
-          {
-            nixpkgs.config.allowUnfree = true;
-            boot.initrd.availableKernelModules = [
-              "ahci"
-              "ehci_pci"
-              "megaraid_sas"
-              "mpt3sas"
-              "sd_mod"
-              "usbhid"
-              "xhci_pci"
-            ];
-
-            boot.kernelModules = [ "kvm-intel" ];
-            boot.kernelParams = [ "console=ttyS1,115200n8" ];
-            boot.extraModulePackages = [ ];
-
-            hardware.enableAllFirmware = true;
-          }
-        )
-        (
-          { lib, ... }:
-          {
-            boot.loader.grub.extraConfig = ''
-              serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
-              terminal_output serial console
-              terminal_input serial console
-            '';
-            nix.maxJobs = lib.mkDefault 48;
-          }
-        )
-      ];
-    }
+    ({ networking.hostId = "049bf0c4"; }
     )
-    ({
+    ({ modulesPath, ... }: {
       networking.hostName = "ofborg-evaluator-3";
       networking.dhcpcd.enable = false;
       networking.defaultGateway = {
-        address = "147.75.38.34";
+        address = "147.75.193.228";
         interface = "bond0";
       };
       networking.defaultGateway6 = {
-        address = "2604:1380:0:d600::1e";
+        address = "2604:1380:0:d600::a";
         interface = "bond0";
       };
       networking.nameservers = [
@@ -99,23 +112,23 @@
 
       networking.interfaces.bond0 = {
         useDHCP = false;
-        macAddress = "24:8a:07:e3:cb:d0";
+        macAddress = "24:8a:07:63:8e:e0";
 
         ipv4 = {
           routes = [
             {
               address = "10.0.0.0";
               prefixLength = 8;
-              via = "10.99.98.158";
+              via = "10.99.98.136";
             }
           ];
           addresses = [
             {
-              address = "147.75.38.35";
+              address = "147.75.193.229";
               prefixLength = 31;
             }
             {
-              address = "10.99.98.159";
+              address = "10.99.98.137";
               prefixLength = 31;
             }
           ];
@@ -124,7 +137,7 @@
         ipv6 = {
           addresses = [
             {
-              address = "2604:1380:0:d600::1f";
+              address = "2604:1380:0:d600::b";
               prefixLength = 127;
             }
           ];
