@@ -1,14 +1,92 @@
 {
   imports = [
     ({
+      boot.kernelModules = [ "dm_multipath" "dm_round_robin" "ipmi_watchdog" ];
+      services.openssh.enable = true;
+    }
+    )
+    ({
+      nixpkgs.config.allowUnfree = true;
+      boot.initrd.availableKernelModules = [
+        "ahci"
+        "ehci_pci"
+        "megaraid_sas"
+        "mpt3sas"
+        "sd_mod"
+        "usbhid"
+        "xhci_pci"
+      ];
+
+      boot.kernelModules = [ "kvm-intel" ];
+      boot.kernelParams = [ "console=ttyS1,115200n8" ];
+      boot.extraModulePackages = [ ];
+
+      hardware.enableAllFirmware = true;
+    }
+    )
+    ({ lib, ... }:
+      {
+        boot.loader.grub.extraConfig = ''
+          serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
+          terminal_output serial console
+          terminal_input serial console
+        '';
+        nix.maxJobs = lib.mkDefault 48;
+      }
+    )
+    ({
+      swapDevices = [
+
+        {
+          device = "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160711D98579-part2";
+        }
+
+      ];
+
+      fileSystems = {
+
+        "/" = {
+          device = "npool/root";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+
+        "/nix" = {
+          device = "npool/nix";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+
+        "/var" = {
+          device = "npool/var";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+
+        "/home" = {
+          device = "npool/home";
+          fsType = "zfs";
+          options = [ "defaults" ];
+        };
+
+      };
+
+      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160711D98579" ];
+    })
+    ({ networking.hostId = "c85e7a87"; }
+    )
+    ({ modulesPath, ... }: {
       networking.hostName = "ofborg-evaluator-2";
       networking.dhcpcd.enable = false;
       networking.defaultGateway = {
-        address = "147.75.39.220";
+        address = "147.75.74.212";
         interface = "bond0";
       };
       networking.defaultGateway6 = {
-        address = "2604:1380:0:d600::36";
+        address = "2604:1380:0:d600::e";
         interface = "bond0";
       };
       networking.nameservers = [
@@ -34,23 +112,23 @@
 
       networking.interfaces.bond0 = {
         useDHCP = false;
-        macAddress = "24:8a:07:e7:61:80";
+        macAddress = "24:8a:07:e3:cf:70";
 
         ipv4 = {
           routes = [
             {
               address = "10.0.0.0";
               prefixLength = 8;
-              via = "10.99.98.182";
+              via = "10.99.98.142";
             }
           ];
           addresses = [
             {
-              address = "147.75.39.221";
+              address = "147.75.74.213";
               prefixLength = 31;
             }
             {
-              address = "10.99.98.183";
+              address = "10.99.98.143";
               prefixLength = 31;
             }
           ];
@@ -59,78 +137,13 @@
         ipv6 = {
           addresses = [
             {
-              address = "2604:1380:0:d600::37";
+              address = "2604:1380:0:d600::f";
               prefixLength = 127;
             }
           ];
         };
       };
     }
-    )
-    ({
-      swapDevices = [
-
-        {
-          device = "/dev/disk/by-id/md-uuid-3fd11c09:a8b760a5:272775f8:bd1e4a50";
-        }
-
-      ];
-
-      fileSystems = {
-
-        "/" = {
-          device = "/dev/disk/by-id/md-uuid-b2c77f01:4c6c169b:5f4aafb9:5d748dbe";
-          fsType = "ext4";
-
-        };
-
-      };
-
-      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160811E3E520" "/dev/disk/by-id/ata-MICRON_M510DC_MTFDDAK480MBP_160811E3E52B" ];
-    })
-    ({
-      imports = [
-        (
-          {
-            boot.kernelModules = [ "dm_multipath" "dm_round_robin" "ipmi_watchdog" ];
-            services.openssh.enable = true;
-          }
-        )
-        (
-          {
-            nixpkgs.config.allowUnfree = true;
-            boot.initrd.availableKernelModules = [
-              "ahci"
-              "ehci_pci"
-              "megaraid_sas"
-              "mpt3sas"
-              "sd_mod"
-              "usbhid"
-              "xhci_pci"
-            ];
-
-            boot.kernelModules = [ "kvm-intel" ];
-            boot.kernelParams = [ "console=ttyS1,115200n8" ];
-            boot.extraModulePackages = [ ];
-
-            hardware.enableAllFirmware = true;
-          }
-        )
-        (
-          { lib, ... }:
-          {
-            boot.loader.grub.extraConfig = ''
-              serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
-              terminal_output serial console
-              terminal_input serial console
-            '';
-            nix.maxJobs = lib.mkDefault 48;
-          }
-        )
-      ];
-    }
-    )
-    ({ networking.hostId = "f3690d84"; }
     )
   ];
 }
