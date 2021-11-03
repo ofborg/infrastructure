@@ -153,7 +153,9 @@ in {
           job_name = "prometheus";
           static_configs = [
             {
-              targets = cfg.monitoring_nodes;
+              targets = lib.unique
+                (map (add_port 9898)
+                  cfg.monitoring_nodes);
             }
           ];
         }
