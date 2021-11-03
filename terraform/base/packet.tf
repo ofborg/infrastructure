@@ -293,13 +293,12 @@ USERDATA
 }
 CUSTOMDATA
 
-  # ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/x86/x86"
-  ipxe_script_url = "https://netboot.gsc.io/installer-pre2/x86/netboot.ipxe"
+  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/x86/x86"
   always_pxe      = false
   tags            = concat(var.tags, ["evaluator", "skip-hydra"])
 
   lifecycle {
-    ignore_changes = [user_data, custom_data]
+    ignore_changes = [user_data]
   }
 }
 
