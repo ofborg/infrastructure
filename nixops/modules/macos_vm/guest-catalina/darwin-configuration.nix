@@ -5,15 +5,18 @@ with lib;
 {
   environment.systemPackages = [ config.nix.package ];
 
+  programs.zsh.enable = true;
+  programs.zsh.enableCompletion = false;
   programs.bash.enable = true;
   programs.bash.enableCompletion = false;
 
   #services.activate-system.enable = true;
   services.ofborg.enable = true;
-  services.ofborg.package = (import (builtins.fetchTarball {
-    url = "https://github.com/NixOS/ofborg/archive/released.tar.gz";
-  }) { # inherit pkgs;
-  }).ofborg.rs;
+  services.ofborg.package = (import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/ofborg/archive/released.tar.gz";
+    })
+    { }).ofborg.rs;
 
   services.ofborg.configFile = "/var/lib/ofborg/config.json";
   # Manage user for ofborg, this enables creating/deleting users
@@ -27,8 +30,10 @@ with lib;
   nix.buildCores = 1;
   nix.gc.automatic = true;
   nix.gc.interval = { Minute = 15; };
-  nix.gc.options = let gbFree = 50;
-  in "--max-freed $((${
+  nix.gc.options =
+    let gbFree = 50;
+    in
+    "--max-freed $((${
     toString gbFree
   } * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
 
