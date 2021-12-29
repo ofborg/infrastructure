@@ -7,14 +7,14 @@ let
     config = { allowUnfree = true; };
   };
 
-  morph = pkgs.morph.overrideAttrs ({ patches ? [ ], ... }: {
-    patches = patches ++ [
-      (pkgs.fetchpatch {
-        url = "https://github.com/DBCDK/morph/commit/ff4e0cd5f7cbdb9be50661d75560a40d5928530c.patch";
-        sha256 = "1ChMLjAh8Tmrf0G8tQuvRVDro8/VbnFbBWoFEglB4XA=";
-      })
-    ];
-  });
+  morph = import
+    (pkgs.fetchFromGitHub {
+      owner = "DBCDK";
+      repo = "morph";
+      rev = "081a5752825d4884d82b5b3b84baa426fadc2307";
+      sha256 = "lZIZlwRTv1skWuwGBLXF4gyyaXF5IXjC36savQOh2JI=";
+    })
+    { };
 in
 pkgs.mkShell {
   buildInputs = [
