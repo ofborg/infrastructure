@@ -130,7 +130,8 @@ in {
             }
             {
               alert = "StalledBuilder";
-              expr = "ofborg_queue_builder_waiting > 0 and ofborg_queue_builder_in_progress == 0";
+              expr = ''ofborg_queue_builder_waiting{arch!~".*-lowprior"} > 0 and ofborg_queue_builder_in_progress{arch!~".*-lowprior"} == 0'';
+              # expr = "ofborg_queue_builder_waiting > 0 and ofborg_queue_builder_in_progress == 0";
               for = "30m";
               labels.severity = "page";
             }
