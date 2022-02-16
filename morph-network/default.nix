@@ -27,18 +27,6 @@
       ./machines/core.system.nix
     ];
   };
-  "macofborg1" = {
-    deployment = {
-      targetHost = "100.89.83.94";
-      targetUser = "root";
-      substituteOnDestination = true;
-    };
-    imports = [
-      ../nixops/modules
-      ./machines/macofborg1.expr.nix
-      ./machines/macofborg1.system.nix
-    ];
-  };
   "ofborg-evaluator-0" = {
     deployment = {
       targetHost = "147.75.198.101";
