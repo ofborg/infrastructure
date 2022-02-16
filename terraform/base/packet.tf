@@ -8,25 +8,6 @@ output "deploy_targets" {
         expression  = "{ roles.core.enable = true; }"
         provisioner = "metal"
       },
-      macofborg1 = {
-        ip          = "100.89.83.94" # tailscale-issued IP
-        expression  = <<CONF
-{
-  roles.darwin-builder.enable = true;
-  services.ofborg.macos_vm.version = "catalina";
-  macosGuest = {
-    guest = {
-      sockets = 1;
-      cores = 4;
-      threads = 1;
-      memoryInMegs = 13 * 1024;
-    };
-    network.externalInterface = "ens1";
-  };
-}
-CONF
-        provisioner = "nixos-install"
-      },
     },
     { for e in metal_device.evaluator : e.hostname => {
       ip          = e.network.0.address
