@@ -7,14 +7,7 @@ let
     config = { allowUnfree = true; };
   };
 
-  morph = import
-    (pkgs.fetchFromGitHub {
-      owner = "DBCDK";
-      repo = "morph";
-      rev = "081a5752825d4884d82b5b3b84baa426fadc2307";
-      sha256 = "lZIZlwRTv1skWuwGBLXF4gyyaXF5IXjC36savQOh2JI=";
-    })
-    { };
+  morph = import sources.morph { };
 in
 pkgs.mkShell {
   buildInputs = [

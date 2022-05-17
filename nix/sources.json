@@ -1,4 +1,16 @@
 {
+    "morph": {
+        "branch": "master",
+        "description": "NixOS deployment tool",
+        "homepage": null,
+        "owner": "DBCDK",
+        "repo": "morph",
+        "rev": "2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49",
+        "sha256": "121d2w6kgvznkz2h05paq1sivgk69arfka14j68d9d7hmikfaxya",
+        "type": "tarball",
+        "url": "https://github.com/DBCDK/morph/archive/2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
