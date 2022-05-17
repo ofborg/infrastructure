@@ -38,7 +38,7 @@
       swapDevices = [
 
         {
-          device = "/dev/disk/by-id/ata-MZ7KM480HAHP00D3_S2VWNXAH200131-part2";
+          device = "/dev/disk/by-id/ata-Micron_5100_MTFDDAK480TCC_171616D4DE77-part2";
         }
 
       ];
@@ -74,19 +74,19 @@
 
       };
 
-      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-MZ7KM480HAHP00D3_S2VWNXAH200131" ];
+      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-Micron_5100_MTFDDAK480TCC_171616D4DE77" ];
     })
-    ({ networking.hostId = "e8869437"; }
+    ({ networking.hostId = "d067d48a"; }
     )
     ({ modulesPath, ... }: {
       networking.hostName = "ofborg-evaluator-6";
       networking.dhcpcd.enable = false;
       networking.defaultGateway = {
-        address = "147.75.38.62";
+        address = "145.40.65.244";
         interface = "bond0";
       };
       networking.defaultGateway6 = {
-        address = "2604:1380:0:d600::2";
+        address = "2604:1380:0:d600::";
         interface = "bond0";
       };
       networking.nameservers = [
@@ -105,30 +105,30 @@
         };
 
         interfaces = [
-          "enp2s0"
-          "enp2s0d1"
+          "enp5s0f0np0"
+          "enp5s0f1np1"
         ];
       };
 
       networking.interfaces.bond0 = {
         useDHCP = false;
-        macAddress = "f4:52:14:70:2f:70";
+        macAddress = "0c:c4:7a:d6:67:a0";
 
         ipv4 = {
           routes = [
             {
               address = "10.0.0.0";
               prefixLength = 8;
-              via = "10.99.98.130";
+              via = "10.99.98.128";
             }
           ];
           addresses = [
             {
-              address = "147.75.38.63";
+              address = "145.40.65.245";
               prefixLength = 31;
             }
             {
-              address = "10.99.98.131";
+              address = "10.99.98.129";
               prefixLength = 31;
             }
           ];
@@ -137,7 +137,7 @@
         ipv6 = {
           addresses = [
             {
-              address = "2604:1380:0:d600::3";
+              address = "2604:1380:0:d600::1";
               prefixLength = 127;
             }
           ];
