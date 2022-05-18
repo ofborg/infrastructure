@@ -27,18 +27,6 @@
       ./machines/core.system.nix
     ];
   };
-  "core-next" = {
-    deployment = {
-      targetHost = "147.28.146.35";
-      targetUser = "root";
-      substituteOnDestination = true;
-    };
-    imports = [
-      ../nixops/modules
-      ./machines/core-next.expr.nix
-      ./machines/core-next.system.nix
-    ];
-  };
   "ofborg-evaluator-0" = {
     deployment = {
       targetHost = "147.75.198.101";
