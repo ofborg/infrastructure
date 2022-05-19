@@ -8,7 +8,7 @@ terraform {
 
   required_providers {
     rabbitmq = {
-      source = "nixpkgs/rabbitmq"
+      source = "cyrilgdn/rabbitmq"
     }
   }
 }

@@ -1,14 +1,26 @@
 {
+    "morph": {
+        "branch": "master",
+        "description": "NixOS deployment tool",
+        "homepage": null,
+        "owner": "DBCDK",
+        "repo": "morph",
+        "rev": "2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49",
+        "sha256": "121d2w6kgvznkz2h05paq1sivgk69arfka14j68d9d7hmikfaxya",
+        "type": "tarball",
+        "url": "https://github.com/DBCDK/morph/archive/2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "niv": {
         "branch": "master",
         "description": "Easy dependency management for Nix projects",
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "ba57d5a29b4e0f2085917010380ef3ddc3cf380f",
-        "sha256": "1kpsvc53x821cmjg1khvp1nz7906gczq8mp83664cr15h94sh8i4",
+        "rev": "82e5cd1ad3c387863f0545d7591512e76ab0fc41",
+        "sha256": "090l219mzc0gi33i3psgph6s2pwsc8qy4lyrqjdj4qzkvmaj65a7",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/ba57d5a29b4e0f2085917010380ef3ddc3cf380f.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/82e5cd1ad3c387863f0545d7591512e76ab0fc41.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -17,10 +29,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17",
-        "sha256": "1l7bnn2mlwmbi6s9kqa1g2i66arzshqijym1qmqq5417q5pq1da7",
+        "rev": "43ff6cb1c027d13dc938b88eb099462210fea52f",
+        "sha256": "042z7dc1xk22l3mk290rns2faywl6kbrbdjpjldksfn1jl3jnjsh",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/8e4fe32876ca15e3d5eb3ecd3ca0b224417f5f17.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/43ff6cb1c027d13dc938b88eb099462210fea52f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

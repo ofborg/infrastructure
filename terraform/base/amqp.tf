@@ -10,6 +10,7 @@ output "rabbitmq_management_endpoint" {
 
 output "rabbitmq_username" {
   value = split(":", local.userpass)[0]
+  sensitive = true
 }
 
 output "rabbitmq_password" {

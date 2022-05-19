@@ -274,7 +274,7 @@ USERDATA
 }
 CUSTOMDATA
 
-  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/x86/x86"
+  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
   always_pxe      = false
   tags            = concat(var.tags, ["evaluator", "skip-hydra"])
 
