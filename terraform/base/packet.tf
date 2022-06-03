@@ -166,8 +166,8 @@ resource "metal_device" "evaluator" {
   hostname         = "ofborg-evaluator-${count.index}"
   billing_cycle    = "hourly"
   operating_system = "custom_ipxe"
-  plan             = "m1.xlarge.x86"
-  facilities       = ["ewr1"]
+  plan             = "m3.large.x86"
+  metro            = "dc"
 
   user_data = <<USERDATA
 #!nix
@@ -179,21 +179,21 @@ USERDATA
     "cpr_storage": {
         "disks": [
             {
-                "device": "/dev/sda",
+                "device": "/dev/disk/by-packet-category/boot0",
                 "wipeTable": true,
                 "partitions": [
                   {
                     "label": "BIOS",
                     "number": 1,
-                    "size": 4096
+                    "size": "512M"
                   },
                   {
-                    "label": "SWAPA1",
+                    "label": "SWAP",
                     "number": 2,
                     "size": "3993600"
                   },
                   {
-                    "label": "ROOTA1",
+                    "label": "ROOT",
                     "number": 3,
                     "size": 0
                   }
@@ -203,13 +203,14 @@ USERDATA
         "filesystems": [
             {
                 "mount": {
-                    "device": "/dev/sda2",
-                    "format": "swap",
-                    "point": "none",
+                    "device": "/dev/disk/by-packet-category/boot0-part1",
+                    "format": "vfat",
+                    "point": "/boot/efi",
                     "create": {
                         "options": [
-                            "-L",
-                            "SWAP"
+                            "32",
+                            "-n",
+                            "EFI"
                         ]
                     }
                 }
@@ -223,8 +224,8 @@ USERDATA
                 "vdevs": [
                     {
                         "disk": [
-                            "/dev/sda3",
-                            "/dev/sdb"
+                            "/dev/disk/by-packet-category/storage0",
+                            "/dev/disk/by-packet-category/storage1"
                         ]
                     }
                 ]
@@ -274,7 +275,8 @@ USERDATA
 }
 CUSTOMDATA
 
-  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
+  # ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
+  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal-prs/pr-82/x86"
   always_pxe      = false
   tags            = concat(var.tags, ["evaluator", "skip-hydra"])
 
@@ -282,4 +284,3 @@ CUSTOMDATA
     ignore_changes = [user_data]
   }
 }
-
