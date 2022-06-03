@@ -7,17 +7,16 @@
     )
     ({
       nixpkgs.config.allowUnfree = true;
+
       boot.initrd.availableKernelModules = [
         "ahci"
-        "ehci_pci"
-        "megaraid_sas"
         "mpt3sas"
+        "nvme"
         "sd_mod"
-        "usbhid"
         "xhci_pci"
       ];
-
-      boot.kernelModules = [ "kvm-intel" ];
+      boot.initrd.kernelModules = [ ];
+      boot.kernelModules = [ "kvm-amd" ];
       boot.kernelParams = [ "console=ttyS1,115200n8" ];
       boot.extraModulePackages = [ ];
 
@@ -26,24 +25,26 @@
     )
     ({ lib, ... }:
       {
-        boot.loader.grub.extraConfig = ''
-          serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1
-          terminal_output serial console
-          terminal_input serial console
-        '';
-        nix.maxJobs = lib.mkDefault 48;
+        boot.loader = {
+          systemd-boot.enable = true;
+          efi.canTouchEfiVariables = true;
+        };
+        nix.maxJobs = lib.mkDefault 64;
       }
     )
     ({
       swapDevices = [
 
-        {
-          device = "/dev/disk/by-id/ata-Micron_5100_MTFDDAK480TCC_171616D4DE77-part2";
-        }
-
       ];
 
       fileSystems = {
+
+        "/boot/efi" = {
+          device = "/dev/disk/by-id/ata-MTFDDAV240TDU_21433252038C-part1";
+          fsType = "vfat";
+
+        };
+
 
         "/" = {
           device = "npool/root";
@@ -74,19 +75,19 @@
 
       };
 
-      boot.loader.grub.devices = [ "/dev/disk/by-id/ata-Micron_5100_MTFDDAK480TCC_171616D4DE77" ];
+      boot.loader.efi.efiSysMountPoint = "/boot/efi";
     })
-    ({ networking.hostId = "d067d48a"; }
+    ({ networking.hostId = "1e97b98c"; }
     )
     ({ modulesPath, ... }: {
       networking.hostName = "ofborg-evaluator-6";
       networking.dhcpcd.enable = false;
       networking.defaultGateway = {
-        address = "145.40.65.244";
+        address = "147.75.50.252";
         interface = "bond0";
       };
       networking.defaultGateway6 = {
-        address = "2604:1380:0:d600::";
+        address = "2604:1380:45f1:400::";
         interface = "bond0";
       };
       networking.nameservers = [
@@ -105,30 +106,30 @@
         };
 
         interfaces = [
-          "enp5s0f0np0"
-          "enp5s0f1np1"
+          "enp65s0f0"
+          "enp65s0f1"
         ];
       };
 
       networking.interfaces.bond0 = {
         useDHCP = false;
-        macAddress = "0c:c4:7a:d6:67:a0";
+        macAddress = "b4:96:91:d1:fc:66";
 
         ipv4 = {
           routes = [
             {
               address = "10.0.0.0";
               prefixLength = 8;
-              via = "10.99.98.128";
+              via = "10.68.6.128";
             }
           ];
           addresses = [
             {
-              address = "145.40.65.245";
+              address = "147.75.50.253";
               prefixLength = 31;
             }
             {
-              address = "10.99.98.129";
+              address = "10.68.6.129";
               prefixLength = 31;
             }
           ];
@@ -137,7 +138,7 @@
         ipv6 = {
           addresses = [
             {
-              address = "2604:1380:0:d600::1";
+              address = "2604:1380:45f1:400::1";
               prefixLength = 127;
             }
           ];
