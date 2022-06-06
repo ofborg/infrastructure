@@ -174,109 +174,7 @@ resource "metal_device" "evaluator" {
 ${var.bootstrap_expr}
 USERDATA
 
-  custom_data = <<CUSTOMDATA
-{
-    "cpr_storage": {
-        "disks": [
-            {
-                "device": "/dev/disk/by-packet-category/boot0",
-                "wipeTable": true,
-                "partitions": [
-                  {
-                    "label": "BIOS",
-                    "number": 1,
-                    "size": "512M"
-                  },
-                  {
-                    "label": "SWAP",
-                    "number": 2,
-                    "size": "3993600"
-                  },
-                  {
-                    "label": "ROOT",
-                    "number": 3,
-                    "size": 0
-                  }
-                ]
-              }
-        ],
-        "filesystems": [
-            {
-                "mount": {
-                    "device": "/dev/disk/by-packet-category/boot0-part1",
-                    "format": "vfat",
-                    "point": "/boot/efi",
-                    "create": {
-                        "options": [
-                            "32",
-                            "-n",
-                            "EFI"
-                        ]
-                    }
-                }
-            }
-        ]
-    },
-    "cpr_zfs": {
-        "pools": {
-            "npool": {
-                "pool_properties": {},
-                "vdevs": [
-                    {
-                        "disk": [
-                            "/dev/disk/by-packet-category/storage0",
-                            "/dev/disk/by-packet-category/storage1"
-                        ]
-                    }
-                ]
-            }
-        },
-        "datasets": {
-            "npool/root": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/nix": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/home": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/var": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            }
-        },
-        "mounts": [
-            {
-                "dataset": "npool/root",
-                "point": "/"
-            },
-            {
-                "dataset": "npool/nix",
-                "point": "/nix"
-            },
-            {
-                "dataset": "npool/var",
-                "point": "/var"
-            },
-            {
-                "dataset": "npool/home",
-                "point": "/home"
-            }
-        ]
-    }
-}
-CUSTOMDATA
-
-  # ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
-  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal-prs/pr-82/x86"
+  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
   always_pxe      = false
   tags            = concat(var.tags, ["evaluator", "skip-hydra"])
 
@@ -284,3 +182,4 @@ CUSTOMDATA
     ignore_changes = [user_data]
   }
 }
+
