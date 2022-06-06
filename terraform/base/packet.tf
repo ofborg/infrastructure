@@ -8,11 +8,6 @@ output "deploy_targets" {
         expression  = "{ roles.core.enable = true; }"
         provisioner = "metal"
       },
-      ofborg-evaluator-6 = {
-        ip          = metal_device.evaluator-6.network.0.address
-        expression  = "{ services.ofborg = { builder.enable = true; evaluator.enable = true; }; }"
-        provisioner = "metal"
-      },
     },
     { for e in metal_device.evaluator : e.hostname => {
       ip          = e.network.0.address
@@ -23,10 +18,7 @@ output "deploy_targets" {
 }
 
 variable "evaluators" {
-  default = 6
-  # XXX: we actually have 7, since eval-6 was moved to its own resource, since we were
-  # (un)lucky enough to get an EFI-supporting instance for that one, but almost every
-  # other instance does not EFI boot
+  default = 7
 }
 
 variable "project_id" {
@@ -188,129 +180,5 @@ USERDATA
 
   lifecycle {
     ignore_changes = [user_data]
-  }
-}
-
-resource "metal_device" "evaluator-6" {
-  project_id       = var.project_id
-  hostname         = "ofborg-evaluator-6"
-  billing_cycle    = "hourly"
-  operating_system = "custom_ipxe"
-  plan             = "m3.large.x86"
-  metro            = "dc"
-
-  user_data = <<USERDATA
-#!nix
-${var.bootstrap_expr}
-USERDATA
-
-  custom_data = <<CUSTOMDATA
-{
-    "cpr_storage": {
-        "disks": [
-            {
-                "device": "/dev/disk/by-packet-category/boot0",
-                "wipeTable": true,
-                "partitions": [
-                  {
-                    "label": "BIOS",
-                    "number": 1,
-                    "size": "512M"
-                  },
-                  {
-                    "label": "SWAP",
-                    "number": 2,
-                    "size": "3993600"
-                  },
-                  {
-                    "label": "ROOT",
-                    "number": 3,
-                    "size": 0
-                  }
-                ]
-              }
-        ],
-        "filesystems": [
-            {
-                "mount": {
-                    "device": "/dev/disk/by-packet-category/boot0-part1",
-                    "format": "vfat",
-                    "point": "/boot/efi",
-                    "create": {
-                        "options": [
-                            "32",
-                            "-n",
-                            "EFI"
-                        ]
-                    }
-                }
-            }
-        ]
-    },
-    "cpr_zfs": {
-        "pools": {
-            "npool": {
-                "pool_properties": {},
-                "vdevs": [
-                    {
-                        "disk": [
-                            "/dev/disk/by-packet-category/storage0",
-                            "/dev/disk/by-packet-category/storage1"
-                        ]
-                    }
-                ]
-            }
-        },
-        "datasets": {
-            "npool/root": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/nix": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/home": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/var": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            }
-        },
-        "mounts": [
-            {
-                "dataset": "npool/root",
-                "point": "/"
-            },
-            {
-                "dataset": "npool/nix",
-                "point": "/nix"
-            },
-            {
-                "dataset": "npool/var",
-                "point": "/var"
-            },
-            {
-                "dataset": "npool/home",
-                "point": "/home"
-            }
-        ]
-    }
-}
-CUSTOMDATA
-
-  # ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
-  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal-prs/pr-82/x86"
-  always_pxe      = false
-  tags            = concat(var.tags, ["evaluator", "skip-hydra"])
-
-  lifecycle {
-    ignore_changes = [user_data, custom_data]
   }
 }
