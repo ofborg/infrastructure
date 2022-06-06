@@ -53,7 +53,7 @@
   };
   "ofborg-evaluator-2" = {
     deployment = {
-      targetHost = "147.75.74.213";
+      targetHost = "147.28.145.245";
       targetUser = "root";
       substituteOnDestination = true;
     };
