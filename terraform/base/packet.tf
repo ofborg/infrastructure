@@ -166,113 +166,13 @@ resource "metal_device" "evaluator" {
   hostname         = "ofborg-evaluator-${count.index}"
   billing_cycle    = "hourly"
   operating_system = "custom_ipxe"
-  plan             = "m1.xlarge.x86"
-  facilities       = ["ewr1"]
+  plan             = "m3.large.x86"
+  metro            = "dc"
 
   user_data = <<USERDATA
 #!nix
 ${var.bootstrap_expr}
 USERDATA
-
-  custom_data = <<CUSTOMDATA
-{
-    "cpr_storage": {
-        "disks": [
-            {
-                "device": "/dev/sda",
-                "wipeTable": true,
-                "partitions": [
-                  {
-                    "label": "BIOS",
-                    "number": 1,
-                    "size": 4096
-                  },
-                  {
-                    "label": "SWAPA1",
-                    "number": 2,
-                    "size": "3993600"
-                  },
-                  {
-                    "label": "ROOTA1",
-                    "number": 3,
-                    "size": 0
-                  }
-                ]
-              }
-        ],
-        "filesystems": [
-            {
-                "mount": {
-                    "device": "/dev/sda2",
-                    "format": "swap",
-                    "point": "none",
-                    "create": {
-                        "options": [
-                            "-L",
-                            "SWAP"
-                        ]
-                    }
-                }
-            }
-        ]
-    },
-    "cpr_zfs": {
-        "pools": {
-            "npool": {
-                "pool_properties": {},
-                "vdevs": [
-                    {
-                        "disk": [
-                            "/dev/sda3",
-                            "/dev/sdb"
-                        ]
-                    }
-                ]
-            }
-        },
-        "datasets": {
-            "npool/root": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/nix": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/home": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            },
-            "npool/var": {
-                "properties": {
-                    "mountpoint": "legacy"
-                }
-            }
-        },
-        "mounts": [
-            {
-                "dataset": "npool/root",
-                "point": "/"
-            },
-            {
-                "dataset": "npool/nix",
-                "point": "/nix"
-            },
-            {
-                "dataset": "npool/var",
-                "point": "/var"
-            },
-            {
-                "dataset": "npool/home",
-                "point": "/home"
-            }
-        ]
-    }
-}
-CUSTOMDATA
 
   ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
   always_pxe      = false
@@ -282,4 +182,3 @@ CUSTOMDATA
     ignore_changes = [user_data]
   }
 }
-

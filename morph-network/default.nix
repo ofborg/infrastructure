@@ -29,7 +29,7 @@
   };
   "ofborg-evaluator-0" = {
     deployment = {
-      targetHost = "147.75.198.101";
+      targetHost = "147.28.147.247";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -41,7 +41,7 @@
   };
   "ofborg-evaluator-1" = {
     deployment = {
-      targetHost = "136.144.58.227";
+      targetHost = "86.109.7.63";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -53,7 +53,7 @@
   };
   "ofborg-evaluator-2" = {
     deployment = {
-      targetHost = "147.75.74.213";
+      targetHost = "147.28.145.245";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -65,7 +65,7 @@
   };
   "ofborg-evaluator-3" = {
     deployment = {
-      targetHost = "147.75.193.229";
+      targetHost = "136.144.57.69";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -77,7 +77,7 @@
   };
   "ofborg-evaluator-4" = {
     deployment = {
-      targetHost = "139.178.64.177";
+      targetHost = "147.28.129.189";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -89,7 +89,7 @@
   };
   "ofborg-evaluator-5" = {
     deployment = {
-      targetHost = "136.144.51.213";
+      targetHost = "145.40.89.255";
       targetUser = "root";
       substituteOnDestination = true;
     };
@@ -101,7 +101,7 @@
   };
   "ofborg-evaluator-6" = {
     deployment = {
-      targetHost = "145.40.65.245";
+      targetHost = "147.75.50.137";
       targetUser = "root";
       substituteOnDestination = true;
     };
