@@ -88,6 +88,11 @@ import_machine() (
 
   local name
   name="$(jq -r .key <<<"$machine")"
+
+  # XXX: don't care about eval-1 for now, since it cannot be deployed to
+  # (it is EFI-boot, but the config does not reflect that)
+  [ "$name" = "ofborg-evaluator-1" ] && return
+
   local ip
   ip="$(jq -r .value.ip <<<"$machine")"
   local provisioner
