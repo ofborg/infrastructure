@@ -8,10 +8,7 @@ resource "metal_device" "ofborg-core" {
   plan             = "c3.small.x86"
   facilities       = ["dc13"]
 
-  user_data = <<USERDATA
-#!nix
-${var.bootstrap_expr}
-USERDATA
+  user_data = var.user_data
 
   custom_data = jsonencode({
     cpr_storage = {
@@ -133,15 +130,10 @@ resource "metal_device" "evaluator" {
   operating_system = "custom_ipxe"
   plan             = "m3.large.x86"
   metro            = var.metro
-
-  user_data = <<USERDATA
-#!nix
-${var.bootstrap_expr}
-USERDATA
-
-  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
-  always_pxe      = false
-  tags            = concat(var.tags, ["evaluator", "skip-hydra"])
+  user_data        = var.user_data
+  ipxe_script_url  = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
+  always_pxe       = false
+  tags             = concat(var.tags, ["evaluator", "skip-hydra"])
 
   lifecycle {
     ignore_changes = [user_data]
