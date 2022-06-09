@@ -132,7 +132,7 @@ resource "metal_device" "evaluator" {
   billing_cycle    = "hourly"
   operating_system = "custom_ipxe"
   plan             = "m3.large.x86"
-  metro            = "dc"
+  metro            = var.metro
 
   user_data = <<USERDATA
 #!nix

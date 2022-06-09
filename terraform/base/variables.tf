@@ -20,3 +20,14 @@ variable "tags" {
   type    = list(string)
   default = ["terraform-ofborg"]
 }
+
+variable "user_data" {
+  default = <<USERDATA
+#!nix
+${var.bootstrap_expr}
+USERDATA
+}
+
+variable "metro" {
+  default = "dc"
+}
