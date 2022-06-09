@@ -1,5 +1,3 @@
-provider "metal" {}
-
 resource "metal_device" "ofborg-core" {
   project_id       = var.project_id
   hostname         = "ofborg-core"
