@@ -12,5 +12,10 @@ output "deploy_targets" {
       expression  = "{ services.ofborg = { builder.enable = true; evaluator.enable = true; }; }"
       provisioner = "metal"
     } },
+    { for idx, e in module.evaluators : e.hostname => {
+      ip          = e.public_ipv4
+      expression  = "{ services.ofborg = { builder.enable = true; evaluator.enable = true; }; }"
+      provisioner = "metal"
+    } },
   )
 }
