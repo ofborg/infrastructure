@@ -25,6 +25,7 @@ pkgs.mkShell {
         p.cloudamqp
         p.metal
         p.rabbitmq
+        p.vault
     ]))
   ];
 
