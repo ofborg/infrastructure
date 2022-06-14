@@ -112,7 +112,7 @@ provision_aws_creds "internalservices/aws/creds/ofborg_ofborg_DeployState"
 echo "--> Setting variables: PACKET_AUTH_TOKEN, CLOUDAMQP_APIKEY" >&2
 export PACKET_AUTH_TOKEN=$(vault kv get -field api_key_token ofborg/ofborg/packet/creds/nixos_foundation)
 export CLOUDAMQP_APIKEY=$(vault kv get -field key ofborg/ofborg/kv/cloudamqp.key)
-vault kv get -format=json -field data ofborg/ofborg/kv/rabbitmq.vars.json > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
+vault kv get -field=data ofborg/ofborg/kv/rabbitmq.vars.json > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
 vault kv get -field=expression ofborg/ofborg/kv/local.nix > "$scriptroot/private/local.nix"
 vault kv get -field=key ofborg/ofborg/kv/github.key > "$scriptroot/private/github.key"
 
