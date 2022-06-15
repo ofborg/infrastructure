@@ -26,3 +26,11 @@ USERDATA
 variable "metro" {
   default = "dc"
 }
+
+variable "network" {
+  default = "ofborg"
+}
+
+variable "project_name" {
+  default = "ofborg"
+}
