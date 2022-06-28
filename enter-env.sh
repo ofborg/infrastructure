@@ -116,12 +116,6 @@ vault kv get -field=data ofborg/ofborg/kv/rabbitmq.vars.json > "$scriptroot/terr
 vault kv get -field=expression ofborg/ofborg/kv/local.nix > "$scriptroot/private/local.nix"
 vault kv get -field=key ofborg/ofborg/kv/github.key > "$scriptroot/private/github.key"
 
-# TODO: github vault stuff
-# echo "--> Creating authenticated git remote: vaultpush" >&2
-# git remote rm vaultpush 2>/dev/null || true
-# pushtoken=$(vault write -field token github-ofborg/token repository_ids=122906544 permissions=contents=write)
-# git remote add vaultpush "https://x-access-token:$pushtoken@github.com/ofborg/infrastructure.git"
-
 if [ "${1:-}" == "" ]; then
     cat <<BASH > "$scratch/bashrc"
 vault_prompt() {
