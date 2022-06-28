@@ -4,6 +4,7 @@ steps:
     concurrency_group: ofborg-infrastructure-terraform
     concurrency: 1
     commands:
+      - VAULT_ADDR=https://vault.detsys.dev:8200 vault login -no-print -method=aws role=buildkite
       - ./enter-env.sh ./ci/terraform-plan.sh base ./ci/terraform-base-apply.yml ./ci/terraform-rabbitmq-plan.yml
     agents:
       ofborg-infrastructure: true
