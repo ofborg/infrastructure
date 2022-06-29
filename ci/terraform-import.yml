@@ -8,12 +8,7 @@ steps:
   - label: "Server Intake"
     commands:
       - ./enter-env.sh ./make-targets.sh
-      - |
-        if ! git diff --cached --exit-code; then
-          git commit -m "Automatic update of deploy targets."
-          ./enter-env.sh git push vaultpush HEAD:"$BUILDKITE_BRANCH"
-        else
-          buildkite-agent pipeline upload ./ci/terraform-deploy.yml
-        fi
+      - git diff --cached --exit-code
+      - buildkite-agent pipeline upload ./ci/terraform-deploy.yml
     agents:
       ofborg-infrastructure: true
