@@ -1,4 +1,4 @@
-#!/nix/var/nix/profiles/default/bin/nix-shell
+#!/usr/bin/env nix-shell
 #!nix-shell ./shell.nix -i bash
 # shellcheck shell=bash
 
