@@ -29,6 +29,10 @@ function finish {
 }
 trap finish EXIT
 
+if [ "$BUILDKITE" = "true" ]; then
+    vault login -no-print -method=aws role=buildkite
+fi
+
 assume_role() {
     role=$1
     echo "--> Assuming role: $role" >&2
