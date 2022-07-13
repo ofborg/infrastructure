@@ -30,7 +30,7 @@ function finish {
 trap finish EXIT
 
 if [ "${BUILDKITE:-}" = "true" ]; then
-    vault login -no-print -method=aws role=buildkite
+    vault login -no-print -method=aws role=buildkite_ofborg
 fi
 
 assume_role() {
