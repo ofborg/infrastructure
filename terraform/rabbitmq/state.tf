@@ -1,9 +1,11 @@
 terraform {
   backend "s3" {
-    bucket = "grahamc-nixops-state"
-    key = "ofborg-terraform-rabbitmq"
-    region = "us-east-1"
-    kms_key_id = "166c5cbe-b827-4105-bdf4-a2db9b52efb4"
+    bucket         = "ofborg-ofborg-state20220613164850806600000002"
+    dynamodb_table = "ofborg-ofborg-state"
+    encrypt        = true
+    key            = "ofborg-terraform-rabbitmq"
+    kms_key_id     = "eebecfff-057c-4202-b8b2-5603f07c618e"
+    region         = "us-east-2"
   }
 
   required_providers {
@@ -16,10 +18,12 @@ terraform {
 data "terraform_remote_state" "base" {
   backend = "s3"
   config = {
-    bucket = "grahamc-nixops-state"
-    key    = "ofborg-terraform"
-    region = "us-east-1"
-    kms_key_id = "166c5cbe-b827-4105-bdf4-a2db9b52efb4"
+    bucket         = "ofborg-ofborg-state20220613164850806600000002"
+    dynamodb_table = "ofborg-ofborg-state"
+    encrypt        = true
+    key            = "ofborg-terraform"
+    kms_key_id     = "eebecfff-057c-4202-b8b2-5603f07c618e"
+    region         = "us-east-2"
   }
 }
 
