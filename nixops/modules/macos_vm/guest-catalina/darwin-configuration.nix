@@ -26,14 +26,25 @@ with lib;
 
   services.nix-daemon.enable = true;
 
+  nix.settings = {
+    "extra-experimental-features" = [ "nix-command" "flakes" ];
+  };
+
+  nix.nixPath = [
+    "nixpkgs=channel:nixpkgs-unstable"
+    "darwin=https://github.com/LnL7/nix-darwin/archive/master.tar.gz"
+    "darwin-config=/nix/home/config.nix"
+  ];
+
+  nix.package = pkgs.nix;
   nix.maxJobs = 4;
   nix.buildCores = 1;
   nix.gc.automatic = true;
+  nix.gc.user = "root";
   nix.gc.interval = { Minute = 15; };
   nix.gc.options =
     let gbFree = 50;
-    in
-    "--max-freed $((${
+    in "--max-freed $((${
     toString gbFree
   } * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
 
@@ -41,6 +52,7 @@ with lib;
   nix.extraOptions = ''
     min-free = ${toString (30 * 1024 * 1024 * 1024)}
     max-free = ${toString (50 * 1024 * 1024 * 1024)}
+    extra-platforms = x86_64-darwin
   '';
 
   system.activationScripts.postActivation.text = ''
