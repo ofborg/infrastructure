@@ -18,13 +18,6 @@ in {
       };
     };
 
-    roles.darwin-builder = {
-      enable = mkOption {
-        type = types.bool;
-        default = false;
-      };
-    };
-
     roles.evaluator = {
       enable = mkOption {
         type = types.bool;
@@ -45,9 +38,6 @@ in {
     })
     (mkIf cfg.builder.enable rec {
       services.ofborg.builder.enable = true;
-    })
-    (mkIf cfg.darwin-builder.enable rec {
-      services.ofborg.macos_vm.enable = true;
     })
     (mkIf cfg.evaluator.enable rec {
       services.ofborg.evaluator.enable = true;
