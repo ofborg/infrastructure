@@ -15,6 +15,5 @@
     ./logging.nix
     ./log-viewer.nix
     ./website.nix
-    ./macos_vm
   ];
 }
