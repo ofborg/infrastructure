@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = { url = "github:LnL7/nix-darwin"; inputs.nixpkgs.follows = "nixpkgs"; };
-    ofborg = { url = "github:cole-h/ofborg/flakeify"; inputs.nixpkgs.follows = "nixpkgs"; };
+    ofborg = { url = "github:NixOS/ofborg"; };
   };
 
   outputs =

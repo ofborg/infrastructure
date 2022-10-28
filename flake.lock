@@ -34,22 +34,34 @@
         "type": "github"
       }
     },
-    "ofborg": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "nixpkgs_2": {
       "locked": {
-        "lastModified": 1666971235,
-        "owner": "cole-h",
-        "repo": "ofborg",
-        "rev": "d1770294904094353660e3659f68a02d4fbd9156",
+        "lastModified": 1666867875,
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c132d0837dfb9035701dcd8fc91786c605c855c3",
         "type": "github"
       },
       "original": {
-        "owner": "cole-h",
-        "ref": "flakeify",
+        "owner": "nixos",
+        "ref": "nixos-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "ofborg": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1666976378,
+        "owner": "NixOS",
+        "repo": "ofborg",
+        "rev": "a328bf8aebeabae6df99de8221d787ce41cdb2e7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
         "repo": "ofborg",
         "type": "github"
       }
