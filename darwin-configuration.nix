@@ -3,6 +3,15 @@
 with lib;
 
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      # https://github.com/NixOS/nixpkgs/pull/198306
+      prometheus-node-exporter = prev.prometheus-node-exporter.overrideAttrs (_: {
+        patches = [ ];
+      });
+    })
+  ];
+
   environment.systemPackages = [ config.nix.package ];
 
   programs.zsh.enable = true;
