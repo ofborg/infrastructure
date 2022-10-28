@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = { url = "github:LnL7/nix-darwin"; inputs.nixpkgs.follows = "nixpkgs"; };
+    ofborg = { url = "github:NixOS/ofborg"; };
   };
 
   outputs =
@@ -15,7 +16,7 @@
       darwinConfigurations =
         let
           mac = system: darwin.lib.darwinSystem {
-            inherit system;
+            inherit system inputs;
 
             modules = [
               ./darwin-configuration.nix

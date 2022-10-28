@@ -7,8 +7,8 @@ in {
   options.internalPkgs = pkgs.lib.mkOption { };
   config = {
     internalPkgs = {
-      ofborg = (import ../../repos/ofborg/default.nix {}).ofborg.rs;
-      webhook_api = (import ../../repos/ofborg/default.nix {}).ofborg.php;
+      ofborg = (import ../../repos/ofborg/default.nix).ofborg.rs;
+      webhook_api = (import ../../repos/ofborg/default.nix).ofborg.php;
       logviewer = let
         src = import ../../repos/log-viewer/release.nix { inherit pkgs; };
       in pkgs.runCommand "logviewer-site-only" {} ''

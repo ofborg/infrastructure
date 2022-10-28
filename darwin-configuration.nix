@@ -1,8 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
 
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      # https://github.com/NixOS/nixpkgs/pull/198306
+      prometheus-node-exporter = prev.prometheus-node-exporter.overrideAttrs (_: {
+        patches = [ ];
+      });
+    })
+  ];
+
   environment.systemPackages = [ config.nix.package ];
 
   programs.zsh.enable = true;
@@ -12,11 +21,7 @@ with lib;
 
   #services.activate-system.enable = true;
   services.ofborg.enable = true;
-  services.ofborg.package = (import
-    (builtins.fetchTarball {
-      url = "https://github.com/NixOS/ofborg/archive/released.tar.gz";
-    })
-    { }).ofborg.rs;
+  services.ofborg.package = inputs.ofborg.packages.${pkgs.system}.ofborg.rs;
 
   services.ofborg.configFile = "/var/lib/ofborg/config.json";
   # Manage user for ofborg, this enables creating/deleting users
