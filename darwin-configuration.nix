@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 with lib;
 
@@ -12,11 +12,7 @@ with lib;
 
   #services.activate-system.enable = true;
   services.ofborg.enable = true;
-  services.ofborg.package = (import
-    (builtins.fetchTarball {
-      url = "https://github.com/NixOS/ofborg/archive/released.tar.gz";
-    })
-    { }).ofborg.rs;
+  services.ofborg.package = inputs.ofborg.packages.${pkgs.system}.ofborg.rs;
 
   services.ofborg.configFile = "/var/lib/ofborg/config.json";
   # Manage user for ofborg, this enables creating/deleting users

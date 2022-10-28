@@ -34,10 +34,31 @@
         "type": "github"
       }
     },
+    "ofborg": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1666971235,
+        "owner": "cole-h",
+        "repo": "ofborg",
+        "rev": "d1770294904094353660e3659f68a02d4fbd9156",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cole-h",
+        "ref": "flakeify",
+        "repo": "ofborg",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "darwin": "darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "ofborg": "ofborg"
       }
     }
   },
