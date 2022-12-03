@@ -21,6 +21,7 @@ function finish {
       "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json" \
       "$scriptroot/private/local.nix" \
       "$scriptroot/private/github.key" \
+      "$scriptroot/private/github.key.pem" \
       "$scriptroot/deploy.key" \
       "$scriptroot/deploy.key.pub" \
       "$scriptroot/deploy.key-cert.pub"
@@ -118,7 +119,9 @@ export PACKET_AUTH_TOKEN=$(vault kv get -field api_key_token ofborg/ofborg/packe
 export CLOUDAMQP_APIKEY=$(vault kv get -field key ofborg/ofborg/kv/cloudamqp.key)
 vault kv get -field=data ofborg/ofborg/kv/rabbitmq.vars.json > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
 vault kv get -field=expression ofborg/ofborg/kv/local.nix > "$scriptroot/private/local.nix"
-vault kv get -field=key ofborg/ofborg/kv/github.key > "$scriptroot/private/github.key"
+vault kv get -field=key ofborg/ofborg/kv/github.key > "$scriptroot/private/github.key.pem"
+# hubcaps expects the DER bytes of the key, not the PEM bytes
+openssl rsa -in "$scriptroot/private/github.key.pem" -outform DER -out "$scriptroot/private/github.key"
 
 if [ "${1:-}" == "" ]; then
     cat <<BASH > "$scratch/bashrc"
