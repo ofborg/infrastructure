@@ -57,4 +57,6 @@ in {
     ./builder.nix
     ./evaluator.nix
   ];
+
+  config.nix.package = pkgs.nixVersions.nix_2_11;
 }
