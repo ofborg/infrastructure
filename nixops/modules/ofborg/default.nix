@@ -59,4 +59,5 @@ in {
   ];
 
   config.nix.package = pkgs.nixVersions.nix_2_11;
+  config.system.stateVersion = "23.05";
 }

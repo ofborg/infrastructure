@@ -36,7 +36,7 @@ with lib;
   };
 
   nix.package = pkgs.nix;
-  nix.maxJobs = 4;
+  nix.settings.max-jobs = 4;
   nix.buildCores = 1;
   nix.gc.automatic = true;
   nix.gc.user = "root";

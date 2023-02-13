@@ -80,7 +80,7 @@ in {
     };
 
     nix = {
-      useSandbox = true;
+      settings.sandbox = true;
       nixPath = [
         # Ruin the config so we don't accidentally run
         # nixos-rebuild switch on the host
