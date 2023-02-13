@@ -21,10 +21,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1666753130,
+        "lastModified": 1671728284,
+        "narHash": "sha256-u5Tlz4bl2vb9CB+L/A/Xp8F32062vo3K6yl7J9FBXdc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "f540aeda6f677354f1e7144ab04352f61aaa0118",
+        "rev": "7ba7b4599367c07f2f5d1e26151b68a71a1336b2",
         "type": "github"
       },
       "original": {
@@ -34,12 +35,13 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs-for-php": {
       "locked": {
-        "lastModified": 1666867875,
+        "lastModified": 1670538458,
+        "narHash": "sha256-mvKmBkdlhzsMBtnzYXjYn08EGw9rFBEE9hp4Uqgol1Q=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c132d0837dfb9035701dcd8fc91786c605c855c3",
+        "rev": "99ec06122f481588abafd91f2710d80a5320efe6",
         "type": "github"
       },
       "original": {
@@ -49,15 +51,33 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1670543317,
+        "narHash": "sha256-4mMR56rtxKr+Gwz399jFr4i76SQZxsLWxxyfQlPXRm0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7a6a010c3a1d00f8470a5ca888f2f927f1860a19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "ofborg": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "nixpkgs-for-php": "nixpkgs-for-php"
       },
       "locked": {
-        "lastModified": 1666976378,
+        "lastModified": 1671735808,
+        "narHash": "sha256-p5V0+hkz7wEh10iDo/A1QA98sPMYLMoWIQGQmGOVoJw=",
         "owner": "NixOS",
         "repo": "ofborg",
-        "rev": "a328bf8aebeabae6df99de8221d787ce41cdb2e7",
+        "rev": "6d5ad2f34bad811885dffeaac33d5a3546848123",
         "type": "github"
       },
       "original": {

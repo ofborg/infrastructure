@@ -41,7 +41,7 @@ in {
       swapDevices = [ ];
 
       nix.gc_free_gb = 100;
-      nix.maxJobs = lib.mkDefault 2;
+      nix.settings.max-jobs = lib.mkDefault 2;
       boot.loader.grub.enable = true;
       boot.loader.grub.version = 2;
       boot.loader.grub.device = "/dev/sda";

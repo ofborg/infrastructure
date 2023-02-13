@@ -79,7 +79,7 @@ in {
 
     services.grafana = {
       enable = true;
-      auth.anonymous.enable = true;
+      settings."auth.anonymous".enabled = true;
     };
 
 
