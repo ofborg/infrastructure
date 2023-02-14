@@ -11,7 +11,6 @@ let
 in
 pkgs.mkShell {
   buildInputs = [
-    pkgs.openssl
     pkgs.coreutils
     pkgs.jq
     pkgs.vault
