@@ -3,6 +3,9 @@ steps:
     concurrency_group: ofborg-infrastructure-terraform
     concurrency: 1
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./enter-env.sh ./ci/terraform-plan.sh rabbitmq ./ci/terraform-rabbitmq-apply.yml ./ci/terraform-import.yml
     agents:
       ofborg-infrastructure: true

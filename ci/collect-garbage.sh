@@ -15,6 +15,9 @@ step() {
     concurrency_group: ofborg-infrastructure-gc
     concurrency: $NRHOSTS
     command:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./enter-env.sh morph exec --on="$host" ./morph-network/default.nix nix-collect-garbage
     agents:
       ofborg-infrastructure: true

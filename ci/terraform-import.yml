@@ -7,6 +7,9 @@ env:
 steps:
   - label: "Server Intake"
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./enter-env.sh ./make-targets.sh
       - git diff --cached --exit-code
       - buildkite-agent pipeline upload ./ci/terraform-deploy.yml

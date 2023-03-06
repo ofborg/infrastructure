@@ -7,6 +7,9 @@ steps:
     concurrency: 1
     depends_on: terraform-base-confirm
     command:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./enter-env.sh ./ci/terraform-apply.sh base ./ci/terraform-rabbitmq-plan.yml
     agents:
       ofborg-infrastructure: true

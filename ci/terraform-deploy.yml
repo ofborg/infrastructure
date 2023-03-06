@@ -5,6 +5,9 @@ steps:
     concurrency_group: ofborg-infrastructure-deploy
     concurrency: 1
     command:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./enter-env.sh ./ci/collect-garbage.sh
     agents:
       ofborg-infrastructure: true
@@ -16,6 +19,9 @@ steps:
     concurrency: 1
     key: deploy-dry-activate
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./build/clone.sh
       - ./enter-env.sh morph deploy ./morph-network/default.nix dry-activate
     agents:
@@ -31,6 +37,9 @@ steps:
     depends_on: deploy-confirm-test
     key: deploy-test
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./build/clone.sh
       - ./enter-env.sh morph deploy ./morph-network/default.nix test --upload-secrets
     agents:
@@ -46,6 +55,9 @@ steps:
     depends_on: deploy-confirm-boot
     key: deploy-boot
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./build/clone.sh
       - ./enter-env.sh morph deploy ./morph-network/default.nix boot
     agents:
@@ -61,6 +73,9 @@ steps:
     depends_on: deploy-confirm-reboot
     key: deploy-reboot
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./build/clone.sh
       - ./enter-env.sh morph deploy ./morph-network/default.nix boot --reboot
     agents:
@@ -72,6 +87,9 @@ steps:
     depends_on: deploy-reboot
     key: deploy-post-reboot-upload-secrets
     commands:
+      # Broken in 2.14.x -- users no longer look up root channels
+      - nix-channel --add https://nixos.org/channels/nixpkgs-unstable
+      - nix-channel --update
       - ./build/clone.sh
       - ./enter-env.sh morph upload-secrets ./morph-network/default.nix
     agents:
