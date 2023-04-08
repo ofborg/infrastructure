@@ -17,6 +17,7 @@ in {
       log_api = ../../repos/ofborg/log-api;
     };
 
+    # FIXME: update the domain in local.nix before changing these back
     services.ofborg.website.domain = "ofborg.org";
 
     services.ofborg.log-viewer.domain = "logs.ofborg.org";
