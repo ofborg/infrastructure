@@ -17,15 +17,15 @@ in {
       log_api = ../../repos/ofborg/log-api;
     };
 
-    services.ofborg.website.domain = "nix.ci";
+    services.ofborg.website.domain = "ofborg.org";
 
-    services.ofborg.log-viewer.domain = "logs.nix.ci";
-    services.ofborg.monitoring.domain = "monitoring.nix.ci";
+    services.ofborg.log-viewer.domain = "logs.ofborg.org";
+    services.ofborg.monitoring.domain = "monitoring.ofborg.org";
     services.ofborg.monitoring.extra_nodes = [
       "aarch64.nixos.community"
     ];
 
-    services.ofborg.webhook.domain = "webhook.nix.ci";
+    services.ofborg.webhook.domain = "webhook.ofborg.org";
     services.ofborg.rabbitmq.domain = "devoted-teal-duck.rmq.cloudamqp.com";
 
     services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
