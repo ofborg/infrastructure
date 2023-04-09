@@ -120,6 +120,19 @@ resource "metal_device" "ofborg-core" {
   }
 }
 
+module "evaluators" {
+  # count           = var.evaluators
+  count           = 0
+  source          = "./evaluator"
+  project_id      = var.project_id
+  metro           = var.metro
+  hostname        = "test-ofborg-evaluator-${count.index}"
+  plan            = "m3.large.x86"
+  user_data       = var.user_data
+  ipxe_script_url = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
+  tags            = concat(var.tags, ["evaluator", "skip-hydra"])
+}
+
 resource "metal_device" "evaluator" {
   count            = var.evaluators
   project_id       = var.project_id
