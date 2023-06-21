@@ -23,8 +23,8 @@ pkgs.mkShell {
     pkgs.shellcheck
     (pkgs.terraform_1.withPlugins (p: [
         p.cloudamqp
-        p.metal
         p.rabbitmq
+        p.equinix
     ]))
   ];
 
