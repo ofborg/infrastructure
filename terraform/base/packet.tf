@@ -1,4 +1,4 @@
-resource "metal_device" "ofborg-core" {
+resource "equinix_metal_device" "ofborg-core" {
   project_id       = var.project_id
   hostname         = "ofborg-core"
   billing_cycle    = "hourly"
@@ -116,11 +116,11 @@ resource "metal_device" "ofborg-core" {
   tags            = concat(var.tags, ["core-0", "skip-hydra"])
 
   lifecycle {
-    ignore_changes = [user_data]
+    ignore_changes = [user_data, custom_data]
   }
 }
 
-resource "metal_device" "evaluator" {
+resource "equinix_metal_device" "evaluator" {
   count            = var.evaluators
   project_id       = var.project_id
   hostname         = "ofborg-evaluator-${count.index}"
@@ -129,7 +129,7 @@ resource "metal_device" "evaluator" {
   plan             = "m3.large.x86"
   metro            = var.metro
   user_data        = var.user_data
-  ipxe_script_url  = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/x86"
+  ipxe_script_url  = "http://01ad16e6.packethost.net:3030/dispatch/hydra/01ad16e6.packethost.net/nixos-install-equinix-metal/release/releaseImages.x86_64-linux.x86"
   always_pxe       = false
   tags             = concat(var.tags, ["evaluator", "skip-hydra"])
 
