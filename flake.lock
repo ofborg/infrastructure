@@ -74,11 +74,11 @@
         "nixpkgs-for-php": "nixpkgs-for-php"
       },
       "locked": {
-        "lastModified": 1676408389,
-        "narHash": "sha256-oeT1AONVTIcxSuBpuwXAUB88ULpRA3u/6mJIqLDJ0Y0=",
+        "lastModified": 1694725517,
+        "narHash": "sha256-yrrSwStVfdovG7epKWSfGX2s95OW2Tlu2jg5uTTzny8=",
         "owner": "NixOS",
         "repo": "ofborg",
-        "rev": "cf2c6712bd7342406e799110e7cd465aa250cdca",
+        "rev": "653829c95e2da6d59f80b27dc73d3bd5c7bdd6c3",
         "type": "github"
       },
       "original": {
