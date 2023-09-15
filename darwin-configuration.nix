@@ -37,7 +37,7 @@ with lib;
 
   nix.package = pkgs.nix;
   nix.settings.max-jobs = 4;
-  nix.buildCores = 1;
+  nix.settings.cores = 1;
   nix.gc.automatic = true;
   nix.gc.user = "root";
   nix.gc.interval = { Minute = 15; };
