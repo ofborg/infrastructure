@@ -151,7 +151,7 @@ in {
             }
             {
               alert = "FreeSpace2HrsAway";
-              expr = ''predict_linear(node_filesystem_free{mountpoint="/", instance!="aarch64.nixos.community:9100"}[1h], 2 * 3600) <= 0'';
+              expr = ''predict_linear(node_filesystem_avail_bytes{mountpoint="/", instance!="aarch64.nixos.community:9100"}[1h], 2 * 3600) <= 0'';
               for = "5m";
               labels.severity = "page";
             }
