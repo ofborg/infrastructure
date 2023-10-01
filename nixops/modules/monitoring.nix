@@ -59,6 +59,13 @@ in {
         administration_nodes = targethostIf
           (node: node.config.services.ofborg.administrative.enable)
           nodes;
+        extra_nodes = [
+          "208.83.1.186" # x86_64-darwin from macstadium
+          "208.83.1.175" # x86_64-darwin from macstadium
+          "208.83.1.173" # x86_64-darwin from macstadium
+          "208.83.1.145" # aarch64-darwin from macstadium
+          "208.83.1.181" # aarch64-darwin from macstadium
+        ];
       };
 
 
