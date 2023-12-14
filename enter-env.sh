@@ -6,7 +6,7 @@ set +x # don't leak secrets!
 set -eu
 umask 077
 
-export VAULT_ADDR="https://vault.detsys.dev:8200"
+export VAULT_ADDR="https://vault.detsys.dev"
 scriptroot=$(dirname "$(realpath "$0")")
 scratch=$(mktemp -d -t tmp.XXXXXXXXXX)
 
