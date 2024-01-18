@@ -28,6 +28,11 @@ in
             bin = "mass_rebuilder";
             config_merged = lib.attrsets.recursiveUpdate config.services.ofborg.config_merged { runner.instance = 2; };
           };
+        ofborg-evaluator-3 =
+          helpers.rustborgservice {
+            bin = "mass_rebuilder";
+            config_merged = lib.attrsets.recursiveUpdate config.services.ofborg.config_merged { runner.instance = 3; };
+          };
       };
     };
   };
