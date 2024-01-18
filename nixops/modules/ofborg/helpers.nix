@@ -43,8 +43,8 @@
         export HOME=${config.users.users.ofborg.home};
         export NIX_REMOTE=daemon;
         export NIX_PATH=nixpkgs=/run/current-system/nixpkgs;
-        git config --global user.email "${config.services.ofborg.commit_email}"
-        git config --global user.name "OfBorg"
+        export GIT_AUTHOR_EMAIL="${config.services.ofborg.commit_email}"
+        export GIT_AUTHOR_NAME="OfBorg"
         exec ${config.internalPkgs.ofborg}/bin/${bin} ${config_json}
       '';
     };
