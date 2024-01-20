@@ -50,6 +50,8 @@
 
         };
 
+        "/ofborg" = { device = "/dev/disk/by-id/nvme-Micron_9300_MTFDHAL3T8TDP_213230B5E3E6-part1"; fsType = "ext4"; };
+
       };
 
       boot.loader.grub.devices = [ "/dev/disk/by-id/ata-SSDSCKKB240G8R_PHYH121605SD240J" ];
