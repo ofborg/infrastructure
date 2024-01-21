@@ -150,8 +150,34 @@ in {
               labels.severity = "page";
             }
             {
+              alert = "FreeInodesUrgent";
+              # Less than 10% inodes available
+              # TODO: We can probably get rid of this if we can find some way to get a working
+              # chroot store on the new, big /ofborg disk... But when I tried, I ran into issues
+              # like the per-user profiles thing having wrong permissions (even though they were
+              # right)... Maybe caused by the older Nix they're running... x)
+              # TODO: update nixpkgs (or at least somehow get a newer Nix), patch ofborg to try to
+              # do the whole thing but never actually report prorgess (specifically eval errors) if
+              # stuff breaks
+              expr = ''(node_filesystem_files_free{mountpoint="/",fstype="ext4"} / node_filesystem_files{mountpoint="/",fstype="ext4"} * 100) < 10'';
+              for = "1m";
+              labels.severity = "page";
+            }
+            {
               alert = "FreeSpace2HrsAway";
               expr = ''predict_linear(node_filesystem_avail_bytes{mountpoint="/", instance!="aarch64.nixos.community:9100"}[1h], 2 * 3600) <= 0'';
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "TooManyPendingEvals";
+              expr = ''ofborg_queue_evaluator_waiting > 50'';
+              for = "5m";
+              labels.severity = "page";
+            }
+            {
+              alert = "TooManyPendingX86Builds";
+              expr = ''ofborg_queue_builder_waiting{arch="x86_64-linux"} > 50'';
               for = "5m";
               labels.severity = "page";
             }
