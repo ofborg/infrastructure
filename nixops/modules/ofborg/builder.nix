@@ -19,7 +19,7 @@ in {
     systemd = {
       services = {
         ofborg-builder =
-          helpers.rustborgservice "builder";
+          helpers.rustborgservice {bin="builder";};
       };
     };
 

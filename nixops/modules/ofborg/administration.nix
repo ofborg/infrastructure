@@ -22,16 +22,16 @@ in {
     systemd = {
       services = {
         ofborg-github-comment-filter =
-          helpers.rustborgservice "github_comment_filter";
+          helpers.rustborgservice {bin="github_comment_filter";};
 
         ofborg-github-comment-poster =
-          helpers.rustborgservice "github_comment_poster";
+          helpers.rustborgservice {bin="github_comment_poster";};
 
         ofborg-evaluation-filter =
-          helpers.rustborgservice "evaluation_filter";
+          helpers.rustborgservice {bin="evaluation_filter";};
 
         ofborg-stats =
-          helpers.rustborgservice "stats";
+          helpers.rustborgservice {bin="stats";};
       };
     };
   };

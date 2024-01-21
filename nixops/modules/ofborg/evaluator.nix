@@ -22,7 +22,12 @@ in
     systemd = {
       services = {
         ofborg-evaluator =
-          helpers.rustborgservice "mass_rebuilder";
+          helpers.rustborgservice { bin = "mass_rebuilder"; };
+        ofborg-evaluator-2 =
+          helpers.rustborgservice {
+            bin = "mass_rebuilder";
+            config_merged = lib.attrsets.recursiveUpdate config.services.ofborg.config_merged { runner.instance = 2; };
+          };
       };
     };
   };

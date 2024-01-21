@@ -36,17 +36,6 @@ in {
           stage3 = lib.attrsets.recursiveUpdate stage2 cfg.config_override;
         in stage3;
       };
-
-      config_json = lib.mkOption {
-        default = let
-            unformatted = pkgs.writeText "ofborg.unformatted.json"
-              (builtins.toJSON config.services.ofborg.config_merged);
-          in pkgs.runCommand "ofborg.json"
-            { buildInputs = [ pkgs.jq ]; }
-            ''
-              cat ${unformatted} | jq '.' > $out
-            '';
-      };
     };
   };
 
