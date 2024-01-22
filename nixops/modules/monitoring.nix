@@ -145,7 +145,7 @@ in {
             }
             {
               alert = "FreeInodes4HrsAway";
-              expr = ''predict_linear(node_filesystem_files_free{mountpoint="/", instance!="aarch64.nixos.community:9100"}[1h], 4 * 3600) <= 0'';
+              expr = ''predict_linear(node_filesystem_files_free{mountpoint="/", fsType="ext4", instance!="aarch64.nixos.community:9100"}[1h], 4 * 3600) <= 0'';
               for = "5m";
               labels.severity = "page";
             }
