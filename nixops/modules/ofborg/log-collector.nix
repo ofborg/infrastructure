@@ -53,7 +53,7 @@ in {
         };
 
         "ofborg-log-message-collector" =
-          helpers.rustborgservice "log_message_collector";
+          helpers.rustborgservice {bin = "log_message_collector";};
       };
     };
   };

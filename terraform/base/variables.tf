@@ -1,5 +1,5 @@
 variable "evaluators" {
-  default = 9
+  default = 5
 }
 
 variable "project_id" {
