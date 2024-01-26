@@ -2,6 +2,7 @@ steps:
   - wait
 
   - label: "nix-collect-garbage"
+    key: deploy-gc
     concurrency_group: ofborg-infrastructure-deploy
     concurrency: 1
     command:
@@ -14,9 +15,14 @@ steps:
 
   - wait
 
+  - block: "Confirm Dry Activation"
+    key: deploy-confirm-dry-activate
+    depends_on: deploy-gc
+
   - label: "Dry Activation"
     concurrency_group: ofborg-infrastructure-deploy
     concurrency: 1
+    depends_on: deploy-confirm-dry-activate
     key: deploy-dry-activate
     commands:
       # Broken in 2.14.x -- users no longer look up root channels
