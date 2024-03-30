@@ -5,10 +5,10 @@
         "homepage": null,
         "owner": "DBCDK",
         "repo": "morph",
-        "rev": "2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49",
-        "sha256": "121d2w6kgvznkz2h05paq1sivgk69arfka14j68d9d7hmikfaxya",
+        "rev": "31a48246e9bfa06e3378c599909cf4d6e091c414",
+        "sha256": "0n8s1fmdyn9n04vrv5w456vny3m61ws1jyr9v94m7ydsflpdlrkm",
         "type": "tarball",
-        "url": "https://github.com/DBCDK/morph/archive/2ff90f68d8c8ca0749d3e2d77872c26ae75b0d49.tar.gz",
+        "url": "https://github.com/DBCDK/morph/archive/31a48246e9bfa06e3378c599909cf4d6e091c414.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
