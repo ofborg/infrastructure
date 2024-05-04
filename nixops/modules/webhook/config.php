@@ -5,10 +5,11 @@ use PhpAmqpLib\Connection\AMQPSSLConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 function rabbitmq_conn($timeout = 3) {
+    $password = file_get_contents('@password_file@');
     $host = '@domain@';
     $connection = new AMQPSSLConnection(
         $host, 5671,
-        '@username@', '@password@', '@vhost@',
+        '@username@', $password, '@vhost@',
         array(
             'verify_peer' => true,
             'verify_peer_name' => true,
@@ -24,5 +25,5 @@ function rabbitmq_conn($timeout = 3) {
 }
 
 function gh_secret() {
-    return "@github_shared_secret@";
+    return file_get_contents('@github_shared_secret_file@');
 }

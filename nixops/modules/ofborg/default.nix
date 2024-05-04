@@ -18,6 +18,14 @@ in {
           log_storage.path = "/var/log/ofborg";
           checkout.root = "/ofborg/checkout";
           runner.identity = "${config.networking.hostName}";
+          github_app.app_id = 20500;
+
+          rabbitmq = {
+            host = config.services.ofborg.rabbitmq.domain;
+            ssl = true;
+            username = "ofborgsrvc";
+            virtualhost = "ofborg";
+          };
         };
       };
 
@@ -47,6 +55,33 @@ in {
     ./evaluator.nix
   ];
 
-  config.nix.package = pkgs.nixVersions.nix_2_13;
-  config.system.stateVersion = "23.05";
+  config = {
+    nix.package = pkgs.nixVersions.nix_2_13;
+    system.stateVersion = "23.05";
+
+    age.secrets.rabbitmq_ofborgsrvc_password_file = {
+      file = ../../../secrets/all/rabbitmq_ofborgsrvc_password;
+      mode = "400";
+      owner = "ofborg";
+      group = "ofborg";
+    };
+    age.secrets.github_token_file = {
+      file = ../../../secrets/all/github_token;
+      mode = "400";
+      owner = "ofborg";
+      group = "ofborg";
+    };
+    age.secrets.github_app_key_file = {
+      file = ../../../secrets/all/github_app.key;
+      mode = "400";
+      owner = "ofborg";
+      group = "ofborg";
+    };
+
+    services.ofborg.config_override = {
+      rabbitmq.password_file = config.age.secrets.rabbitmq_ofborgsrvc_password_file.path;
+      github.token_file = config.age.secrets.github_token_file.path;
+      github_app.private_key = config.age.secrets.github_app_key_file.path;
+    };
+  };
 }

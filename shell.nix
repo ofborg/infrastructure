@@ -8,9 +8,13 @@ let
   };
 
   morph = import sources.morph { };
+  agenix-cli = (import sources.agenix-cli).default;
 in
 pkgs.mkShell {
   buildInputs = [
+    agenix-cli
+    morph
+
     pkgs.coreutils
     pkgs.jq
     pkgs.vault
@@ -19,7 +23,6 @@ pkgs.mkShell {
     pkgs.awscli
     pkgs.bashInteractive
     pkgs.git
-    morph
     pkgs.shellcheck
     (pkgs.terraform_1.withPlugins (p: [
         p.cloudamqp

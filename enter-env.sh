@@ -110,15 +110,18 @@ EOF
 }
 
 assume_role "ofborg_ofborg_developer"
+# FIXME: drop this once I deploy the change allowing my personal ssh key to ssh into the boxes
 provision_ssh_key "ofborg/ofborg/ssh_keys/sign/root"
+# FIXME: figure out what to do about this (probably ask Jonas / infra if we can get a sub-account that we can use `aws sso login` to get creds for)
 provision_aws_creds "internalservices/aws/creds/ofborg_ofborg_DeployState"
 
-echo "--> Setting variables: METAL_AUTH_TOKEN, CLOUDAMQP_APIKEY" >&2
-export METAL_AUTH_TOKEN=$(vault kv get -field api_key_token ofborg/ofborg/packet/creds/nixos_foundation)
-export CLOUDAMQP_APIKEY=$(vault kv get -field key ofborg/ofborg/kv/cloudamqp.key)
-vault kv get -field=data ofborg/ofborg/kv/rabbitmq.vars.json > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
-vault kv get -field=expression ofborg/ofborg/kv/local.nix > "$scriptroot/private/local.nix"
-vault kv get -field=key ofborg/ofborg/kv/github.key > "$scriptroot/private/github.key"
+# TODO: make agenix-cli support reading passphrase and id file from env, so we can not need to enter passphrase every time
+# FIXME: agenix-cli should check only the path of the subdir, not the entire path
+# FIXME: agenix-cli should put the "real filename" at the end, so that extensions work as expected
+echo "--> Setting variable: CLOUDAMQP_APIKEY" >&2
+export CLOUDAMQP_APIKEY="$(EDITOR=cat agenix "secrets/cloudamqp.key")"
+echo "--> Decrypting rabbitmq vars for terraform..." >&2
+EDITOR=cat agenix "secrets/rabbitmq-tfvars.json" > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
 
 if [ "${1:-}" == "" ]; then
     cat <<BASH > "$scratch/bashrc"

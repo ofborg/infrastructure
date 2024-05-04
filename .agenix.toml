@@ -1,0 +1,48 @@
+[identities]
+# ofborg admins
+cole-h = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMcTaqUZSwv6YW8lx/JhsAZTdNSSC2fR8Pgk8woeFKh"
+lilyinstarlight = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGKYH3ivyXgnhXL6xgZxZifRclw+2xsxWNdNe1ghjw7A"
+
+# ofborg machines
+core = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhOD4E/FGDnhz1bXlzxtHaBWHgqTX3GX6lcvqpgxxQD"
+eval-0 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH77gEckihr30cImk9a4S2clYxGFfiklx8lDaUdVMIur"
+eval-1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGnfVOtEgy0jbo0KDC1cC/uoiMYA1bQh3nEXm6DMdSBr"
+eval-2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWTt5oppNuy1AmxDi5NKq0lp3L61rAicrHODDwLfCNV"
+eval-3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM0ytMho35ITqadOKnv4u/iOSc6G+Vl3t5HZJRxmEGxv"
+eval-4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHQRPq41SzOIypyJKj6OWc3nrvCQFmI1CsJwRa8q0OZ"
+
+[groups]
+ofborgAdmins = [
+  "cole-h",
+  "lilyinstarlight",
+]
+ofborgMachines = [
+  "core",
+  "eval-0",
+  "eval-1",
+  "eval-2",
+  "eval-3",
+  "eval-4",
+]
+
+[[paths]]
+glob = "secrets/*"
+groups = [
+  "ofborgAdmins",
+]
+
+[[paths]]
+glob = "secrets/core/**"
+groups = [
+  "ofborgAdmins",
+]
+identities = [
+  "core"
+]
+
+[[paths]]
+glob = "secrets/all/**"
+groups = [
+  "ofborgAdmins",
+  "ofborgMachines",
+]
