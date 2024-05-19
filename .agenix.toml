@@ -26,7 +26,7 @@ ofborgMachines = [
 ]
 
 [[paths]]
-glob = "secrets/*"
+glob = "secrets/admins/*"
 groups = [
   "ofborgAdmins",
 ]

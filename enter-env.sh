@@ -119,9 +119,9 @@ provision_aws_creds "internalservices/aws/creds/ofborg_ofborg_DeployState"
 # FIXME: agenix-cli should check only the path of the subdir, not the entire path
 # FIXME: agenix-cli should put the "real filename" at the end, so that extensions work as expected
 echo "--> Setting variable: CLOUDAMQP_APIKEY" >&2
-export CLOUDAMQP_APIKEY="$(EDITOR=cat agenix "secrets/cloudamqp.key")"
+export CLOUDAMQP_APIKEY="$(EDITOR=cat agenix "secrets/admins/cloudamqp.key")"
 echo "--> Decrypting rabbitmq vars for terraform..." >&2
-EDITOR=cat agenix "secrets/rabbitmq-tfvars.json" > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
+EDITOR=cat agenix "secrets/admins/rabbitmq-tfvars.json" > "$scriptroot/terraform/rabbitmq/vars.auto.tfvars.json"
 
 if [ "${1:-}" == "" ]; then
     cat <<BASH > "$scratch/bashrc"
