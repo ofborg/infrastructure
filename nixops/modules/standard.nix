@@ -20,6 +20,11 @@ in {
       pkgs.hello-unfree
     ];
 
+    # FIXME(cole-h): ask Jonas what email should be used here, and also investigate if changing this
+    # could cause any issues
+    security.acme.defaults.email = "graham@grahamc.com";
+    security.acme.acceptTerms = true;
+
     services.openssh.enable = true;
     users.users.root.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMcTaqUZSwv6YW8lx/JhsAZTdNSSC2fR8Pgk8woeFKh vin@scadrial"
