@@ -12,12 +12,13 @@ in {
   config = {
     nixpkgs = {
       overlays = [ (import ../../nix/overlay.nix) ];
-      config = {
-        allowUnfree = true;
-        packageOverrides = pkgs: {
-        };
-      };
     };
+
+    # NOTE(cole-h): newer nixpkgs didn't like setting `nixpkgs.config.allowUnfree` here, so we
+    # include the hello-unfree package to ensure we're properly allowing unfree
+    environment.systemPackages = [
+      pkgs.hello-unfree
+    ];
 
     services.openssh.enable = true;
     users.users.root.openssh.authorizedKeys.keys = [

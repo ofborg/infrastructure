@@ -56,7 +56,7 @@ in {
   ];
 
   config = {
-    nix.package = pkgs.nixVersions.nix_2_13;
+    nix.package = pkgs.nixVersions.nix_2_18;
     system.stateVersion = "23.05";
 
     age.secrets.rabbitmq_ofborgsrvc_password_file = {

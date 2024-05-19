@@ -6,8 +6,6 @@
     }
     )
     ({
-      nixpkgs.config.allowUnfree = true;
-
       boot.initrd.availableKernelModules = [
         "ahci"
         "mpt3sas"
