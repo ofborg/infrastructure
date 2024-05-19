@@ -105,6 +105,9 @@ in {
          "nixpkgs=/run/current-system/nixpkgs"
       ];
 
+      # TODO(cole-h): run a full GC every ~18 hours and then drop buildkite
+      # 18h because I get alerts every once in a while that a node is running out of inodes even
+      # though buildkite runs a full GC every ~24h
       gc = {
         automatic = true;
         dates = "*:0/15";

@@ -1,7 +1,5 @@
 { config, lib, pkgs, inputs, ... }:
-
-with lib;
-
+# FIXME: configure ssh keys in here
 {
   nixpkgs.overlays = [
     (final: prev: {
