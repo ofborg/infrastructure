@@ -1,4 +1,28 @@
 {
+    "agenix": {
+        "branch": "main",
+        "description": "age-encrypted secrets for NixOS and Home manager",
+        "homepage": "https://matrix.to/#/#agenix:nixos.org",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "8d37c5bdeade12b6479c85acd133063ab53187a0",
+        "sha256": "0z26jj4pwliz6v5fdgnwc5fsihjdsy2gz49fcivr4p4178fw4gnr",
+        "type": "tarball",
+        "url": "https://github.com/ryantm/agenix/archive/8d37c5bdeade12b6479c85acd133063ab53187a0.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "agenix-cli": {
+        "branch": "main",
+        "description": "Companion tool to https://github.com/ryantm/agenix",
+        "homepage": "",
+        "owner": "cole-h",
+        "repo": "agenix-cli",
+        "rev": "77fccec4ed922a0f5f55ed964022b0db7d99f07d",
+        "sha256": "1a5wcw8bb8l6cfin3f2wbpsjd619bmhrnyh3hiw63103bdiibr6k",
+        "type": "tarball",
+        "url": "https://github.com/cole-h/agenix-cli/archive/77fccec4ed922a0f5f55ed964022b0db7d99f07d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "morph": {
         "branch": "master",
         "description": "NixOS deployment tool",
@@ -29,10 +53,10 @@
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c90c4025bb6e0c4eaf438128a3b2640314b1c58d",
-        "sha256": "12rrrbfcw9p4ykadjjvbbn38fc9xknf7x96yknxfmjvllhfm1fcl",
+        "rev": "4a6b83b05df1a8bd7d99095ec4b4d271f2956b64",
+        "sha256": "0zmyrxyrq6l2qjiy4fshjvhza6gvjdq1fn82543wb2li21jmpnpq",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/c90c4025bb6e0c4eaf438128a3b2640314b1c58d.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/4a6b83b05df1a8bd7d99095ec4b4d271f2956b64.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

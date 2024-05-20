@@ -1,7 +1,8 @@
 <?php
 
-$queues = json_decode(file_get_contents('https://@user@:@password@@@domain@/api/queues/ofborg'), true);
-$connections = json_decode(file_get_contents('https://@user@:@password@@@domain@/api/connections'), true);
+$password = file_get_contents('@password_file@');
+$queues = json_decode(file_get_contents('https://@user@:' . $password . '@@domain@/api/queues/ofborg'), true);
+$connections = json_decode(file_get_contents('https://@user@:' . $password . '@@domain@/api/connections'), true);
 
 $stats = array_map(
     function($queue) {

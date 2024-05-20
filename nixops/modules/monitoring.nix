@@ -14,11 +14,6 @@ in {
         type = lib.types.str;
       };
 
-      alert_manager_receivers = lib.mkOption {
-        type = lib.types.listOf lib.types.attrs;
-        default = {};
-      };
-
       monitoring_nodes = lib.mkOption {
         type = lib.types.listOf lib.types.str;
       };
@@ -42,6 +37,19 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    age.secrets.pushover_app_token = {
+      file = ../../secrets/core/monitoring/pushover/app_token;
+      mode = "440";
+      owner = "prometheus";
+      group = "keys";
+    };
+    age.secrets.cole-h_key = {
+      file = ../../secrets/core/monitoring/pushover/cole-h;
+      mode = "440";
+      owner = "prometheus";
+      group = "keys";
+    };
+
     services.ofborg.monitoring = let
         targethostIf = f: nodes:
           map (node: node.config.deployment.targetHost)
@@ -89,6 +97,7 @@ in {
       settings."auth.anonymous".enabled = true;
     };
 
+    systemd.services.alertmanager.serviceConfig.SupplementaryGroups = [ "keys" ];
 
     services.prometheus = {
       enable = true;
@@ -110,7 +119,18 @@ in {
             group_by = ["cluster" "alertname"];
           };
 
-          receivers = cfg.alert_manager_receivers;
+          receivers = [
+            {
+              name = "default_receiver";
+              pushover_configs = [
+                {
+                  # cole-h
+                  user_key_file = config.age.secrets.cole-h_key.path;
+                  token_file = config.age.secrets.pushover_app_token.path;
+                }
+              ];
+            }
+          ];
         };
       };
 

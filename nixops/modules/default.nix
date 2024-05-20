@@ -1,6 +1,7 @@
 {
   imports = [
-    ./../../private/local.nix
+    "${(import ../../nix/sources.nix).agenix}/modules/age.nix"
+
     ./site.nix
     ./standard.nix
     ./secrets.nix
