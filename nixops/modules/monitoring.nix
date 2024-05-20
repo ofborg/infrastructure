@@ -39,13 +39,15 @@ in {
   config = lib.mkIf cfg.enable {
     age.secrets.pushover_app_token = {
       file = ../../secrets/core/monitoring/pushover/app_token;
-      mode = "400";
+      mode = "440";
       owner = "prometheus";
+      group = "keys";
     };
     age.secrets.cole-h_key = {
       file = ../../secrets/core/monitoring/pushover/cole-h;
-      mode = "400";
+      mode = "440";
       owner = "prometheus";
+      group = "keys";
     };
 
     services.ofborg.monitoring = let
@@ -95,6 +97,7 @@ in {
       settings."auth.anonymous".enabled = true;
     };
 
+    systemd.services.alertmanager.serviceConfig.SupplementaryGroups = [ "keys" ];
 
     services.prometheus = {
       enable = true;
