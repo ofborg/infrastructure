@@ -28,5 +28,5 @@ fetchrepo() {
 
 mkdir -p repos
 fetchrepo repos/ofborg https://github.com/nixos/ofborg.git released
-fetchrepo repos/log-viewer https://github.com/ofborg/ofborg-viewer.git master
+fetchrepo repos/log-viewer https://github.com/nixos/ofborg-viewer.git master
 
