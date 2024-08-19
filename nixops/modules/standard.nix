@@ -105,9 +105,6 @@ in {
          "nixpkgs=/run/current-system/nixpkgs"
       ];
 
-      # TODO(cole-h): run a full GC every ~18 hours and then drop buildkite
-      # 18h because I get alerts every once in a while that a node is running out of inodes even
-      # though buildkite runs a full GC every ~24h
       gc = {
         automatic = true;
         dates = "*:0/15";
@@ -117,6 +114,28 @@ in {
         '';
       };
     };
+
+    systemd.services.nix-full-gc = {
+      description = "Trigger a full Nix store garbage collection";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${config.nix.package}/bin/nix-collect-garbage";
+        Restart = "on-failure";
+      };
+    };
+
+    systemd.timers.nix-full-gc = {
+      description = "Trigger a full Nix store garbage collection";
+      wantedBy = [ "timers.target" ];
+      after = [ "default.target" ];
+      timerConfig = {
+        Unit = "nix-full-gc.service";
+        OnCalendar = "*-*-* 18:00:00"; # Run every day at 18:00
+        # OnCalendar = "*-*-* 06,18:00:00"; # Run every day at 06:00 and 18:00
+        Persistent = true;
+      };
+    };
+
     system.extraSystemBuilderCmds = ''
       ln -sv ${pkgs.path} $out/nixpkgs
     '';
