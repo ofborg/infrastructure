@@ -1,0 +1,67 @@
+[identities]
+# ofborg admins
+cole-h = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMcTaqUZSwv6YW8lx/JhsAZTdNSSC2fR8Pgk8woeFKh"
+lilyinstarlight = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGKYH3ivyXgnhXL6xgZxZifRclw+2xsxWNdNe1ghjw7A"
+zimbatm = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuiDoBOxgyer8vGcfAIbE6TC4n4jo8lhG9l01iJ0bZz zimbatm"
+hexa-gaia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAWQRR7dspgQ6kCwyFnoVlgmmPR4iWL1+nvq6a5ad2Ug hexa@gaia"
+hexa-helix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFSpdtIxIBFtd7TLrmIPmIu5uemAFJx4sNslRsJXfFxr hexa@helix"
+
+# ofborg machines
+core = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhOD4E/FGDnhz1bXlzxtHaBWHgqTX3GX6lcvqpgxxQD"
+eval-0 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH77gEckihr30cImk9a4S2clYxGFfiklx8lDaUdVMIur"
+eval-1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGnfVOtEgy0jbo0KDC1cC/uoiMYA1bQh3nEXm6DMdSBr"
+eval-2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWTt5oppNuy1AmxDi5NKq0lp3L61rAicrHODDwLfCNV"
+eval-3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM0ytMho35ITqadOKnv4u/iOSc6G+Vl3t5HZJRxmEGxv"
+eval-4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHQRPq41SzOIypyJKj6OWc3nrvCQFmI1CsJwRa8q0OZ"
+
+# macstadium macs
+mac-44911207 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICFDCv348yhWE2Tok+b2MALh8kNlgLGCCZqdaNLYN2U0" # 208.83.1.145
+mac-44911305 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtMZwCu5D/CRTTC8wvZWP+H7xkCCHjQZ//XVM4vmdZU" # 208.83.1.173
+mac-44911362 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHjQFkuDYP5qBgvFZvwbJb0g4CTV8/FcHPCOT7Wmlkmr" # 208.83.1.175
+mac-44911104 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX5EjsuYGcHEoIIX9c3J12xkL+z3Dz/3xby9KnTGpVG" # 208.83.1.181
+mac-44911507 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOMJFJhA4y5w72n3eRlb1RtcZc4gsc4UNHVQkBf6xZY" # 208.83.1.186
+
+[groups]
+ofborgAdmins = [
+  "cole-h",
+  "lilyinstarlight",
+  "zimbatm",
+  "hexa-gaia",
+  "hexa-helix",
+]
+ofborgMachines = [
+  "core",
+  "eval-0",
+  "eval-1",
+  "eval-2",
+  "eval-3",
+  "eval-4",
+  "mac-44911207",
+  "mac-44911305",
+  "mac-44911362",
+  "mac-44911104",
+  "mac-44911507",
+
+]
+
+[[paths]]
+glob = "secrets/admins/**"
+groups = [
+  "ofborgAdmins",
+]
+
+[[paths]]
+glob = "secrets/core/**"
+groups = [
+  "ofborgAdmins",
+]
+identities = [
+  "core"
+]
+
+[[paths]]
+glob = "secrets/all/**"
+groups = [
+  "ofborgAdmins",
+  "ofborgMachines",
+]

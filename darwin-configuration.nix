@@ -1,8 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
-
-with lib;
-
 {
+  imports = [
+    ./nixops/modules/ofborg/module.nix
+  ];
+
   nixpkgs.overlays = [
     (final: prev: {
       # https://github.com/NixOS/nixpkgs/pull/198306
@@ -23,7 +24,18 @@ with lib;
   services.ofborg.enable = true;
   services.ofborg.package = inputs.ofborg.packages.${pkgs.system}.ofborg.rs;
 
-  services.ofborg.configFile = "/var/lib/ofborg/config.json";
+  services.ofborg.configFile =
+    let
+      unformatted = pkgs.writeText "ofborg.unformatted.json"
+        (builtins.toJSON config.services.ofborg.config_merged);
+      config_json = pkgs.runCommand "ofborg.json"
+        { buildInputs = [ pkgs.jq ]; }
+        ''
+          cat ${unformatted} | jq '.' > $out
+        '';
+    in
+      config_json;
+
   # Manage user for ofborg, this enables creating/deleting users
   # depending on what modules are enabled.
   users.knownGroups = [ "ofborg" ];
@@ -69,4 +81,6 @@ with lib;
     serviceConfig.StandardErrorPath = "/var/log/prometheus-node-exporter.log";
     serviceConfig.StandardOutPath = "/var/log/prometheus-node-exporter.log";
   };
+
+  users.users.root.openssh.authorizedKeys.keys = (import ./ssh-keys.nix).infra-build;
 }

@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
-let
-  readJSON = file: builtins.fromJSON
-    (builtins.readFile file);
-  cfg = config;
-in {
+{
   options.internalPkgs = pkgs.lib.mkOption { };
   config = {
     internalPkgs = {
@@ -17,7 +13,6 @@ in {
       log_api = ../../repos/ofborg/log-api;
     };
 
-    # FIXME: update the domain in local.nix before changing these back
     services.ofborg.website.domain = "ofborg.org";
 
     services.ofborg.log-viewer.domain = "logs.ofborg.org";
@@ -27,9 +22,6 @@ in {
     ];
 
     services.ofborg.webhook.domain = "webhook.ofborg.org";
-    services.ofborg.rabbitmq.domain = "devoted-teal-duck.rmq.cloudamqp.com";
-
-    services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
 
     users.mutableUsers = false;
   };

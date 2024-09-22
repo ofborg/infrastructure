@@ -8,18 +8,20 @@ let
   };
 
   morph = import sources.morph { };
+  agenix-cli = (import sources.agenix-cli).default;
 in
 pkgs.mkShell {
   buildInputs = [
+    agenix-cli
+    morph
+
     pkgs.coreutils
     pkgs.jq
-    pkgs.vault
     pkgs.niv
-    pkgs.openssh_gssapi # the buildkite elastic stack supports gssapi or something
-    pkgs.awscli
+    pkgs.openssh
+    pkgs.awscli2
     pkgs.bashInteractive
     pkgs.git
-    morph
     pkgs.shellcheck
     (pkgs.terraform_1.withPlugins (p: [
         p.cloudamqp

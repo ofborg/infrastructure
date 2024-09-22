@@ -1,18 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    width="410.33948mm"
    height="122.84468mm"
    viewBox="0 0 1453.9588 435.27643"
    id="svg2"
-   version="1.1">
+   version="1.1"
+   sodipodi:docname="ofborg.org.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.6312507"
+     inkscape:cx="774.6526"
+     inkscape:cy="232.07895"
+     inkscape:window-width="2556"
+     inkscape:window-height="1390"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer12" />
   <defs
      id="defs4">
+    <rect
+       x="611.48447"
+       y="57.02964"
+       width="901.38514"
+       height="356.43525"
+       id="rect2" />
     <linearGradient
        id="linearGradient5562">
       <stop
@@ -288,7 +317,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -296,44 +325,23 @@
      id="layer12"
      style="display:inline"
      transform="translate(0.14507,-0.08359)">
-    <g
-       id="logotype">
-      <g
-         id="text6638"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:20.85627365px;line-height:1.25;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Light';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
-         transform="scale(1.0428136,0.95894414)"
-         aria-label="Nix">
-        <path
-           id="path898"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:406.30627441px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="M 781.34424,369.58267 V 90.043955 H 749.65235 V 248.5034 c 0,24.37838 0,50.38198 1.21892,80.85495 -11.78288,-27.62883 -29.66036,-56.47657 -44.28738,-80.85495 L 608.66408,90.043955 H 569.25237 V 369.58267 h 31.69189 v -161.7099 c 0,-24.37837 0,-42.25585 -1.21892,-74.76035 15.43964,30.87928 27.22252,50.38198 42.66216,74.76035 l 99.54503,161.7099 z" />
-        <path
-           id="path900"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:406.30627441px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="m 854.1556,104.26467 c -11.37658,0 -20.72162,9.34505 -20.72162,20.72162 0,11.37658 9.34504,20.72162 20.72162,20.72162 11.37658,0 20.72162,-9.34504 20.72162,-20.72162 0,-11.37657 -9.34504,-20.72162 -20.72162,-20.72162 z m -16.65856,265.318 h 33.31712 v -194.2144 h -33.31712 z" />
-        <path
-           id="path902"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:406.30627441px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="m 1001.0988,272.88178 64.1964,-97.51351 h -36.1613 l -45.09995,74.35405 -44.28738,-74.35405 h -38.19279 l 61.35225,97.51351 -62.97748,96.70089 h 36.16126 l 44.28739,-73.13513 44.6937,73.13513 h 38.5991 z" />
-      </g>
-      <g
-         id="text6638-7"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:20.09095383px;line-height:1.25;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, Light';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
-         aria-label=".Ci">
-        <path
-           id="path905"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:391.3968811px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="m 1147.0982,311.44375 c -12.9161,0 -23.4838,10.56771 -23.4838,23.48381 0,12.9161 10.5677,23.48381 23.4838,23.48381 12.9161,0 23.4838,-10.56771 23.4838,-23.48381 0,-12.9161 -10.5677,-23.48381 -23.4838,-23.48381 z" />
-        <path
-           id="path907"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:391.3968811px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="m 1373.1493,314.18353 c -22.701,11.35051 -43.8364,16.04727 -70.8428,16.04727 -52.4472,0 -101.7632,-34.83432 -101.7632,-111.15671 0,-73.19122 52.8386,-109.59113 102.9374,-109.59113 30.1375,0 52.4471,5.47955 73.1912,17.61286 l 2.3484,-29.354768 c -16.4387,-10.176319 -42.2709,-16.438669 -73.5827,-16.438669 -69.6686,0 -140.9028,43.836447 -140.9028,140.511477 0,86.10732 57.1439,136.59751 133.4663,136.59751 28.9634,0 54.4042,-3.91396 77.888,-15.26447 z" />
-        <path
-           id="path909"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:391.3968811px;font-family:Vegur;-inkscape-font-specification:Vegur;text-align:start;text-anchor:start;stroke-width:0.9375"
-           d="m 1433.8525,98.915243 c -10.9591,0 -19.9612,9.002127 -19.9612,19.961237 0,10.95912 9.0021,19.96124 19.9612,19.96124 10.9591,0 19.9613,-9.00212 19.9613,-19.96124 0,-10.95911 -9.0022,-19.961237 -19.9613,-19.961237 z m -16.0472,255.582167 h 32.0945 V 167.4097 h -32.0945 z" />
-      </g>
-    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:37.5px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.9375"
+       x="593.9137"
+       y="38.697407"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="stroke-width:0.9375"></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.93749999,0,0,0.93749999,-17.966832,60.974611)"
+       id="text2"
+       style="font-style:normal;font-weight:normal;font-size:173.333px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="611.48438"
+         y="210.38837"
+         id="tspan2">ofborg.org</tspan></text>
   </g>
   <g
      id="layer1"
