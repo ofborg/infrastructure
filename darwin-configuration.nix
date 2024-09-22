@@ -1,5 +1,9 @@
 { config, lib, pkgs, inputs, ... }:
 {
+  imports = [
+    ./nixops/modules/ofborg/module.nix
+  ];
+
   nixpkgs.overlays = [
     (final: prev: {
       # https://github.com/NixOS/nixpkgs/pull/198306
@@ -20,7 +24,18 @@
   services.ofborg.enable = true;
   services.ofborg.package = inputs.ofborg.packages.${pkgs.system}.ofborg.rs;
 
-  services.ofborg.configFile = "/var/lib/ofborg/config.json";
+  services.ofborg.configFile =
+    let
+      unformatted = pkgs.writeText "ofborg.unformatted.json"
+        (builtins.toJSON config.services.ofborg.config_merged);
+      config_json = pkgs.runCommand "ofborg.json"
+        { buildInputs = [ pkgs.jq ]; }
+        ''
+          cat ${unformatted} | jq '.' > $out
+        '';
+    in
+      config_json;
+
   # Manage user for ofborg, this enables creating/deleting users
   # depending on what modules are enabled.
   users.knownGroups = [ "ofborg" ];

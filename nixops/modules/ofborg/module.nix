@@ -20,7 +20,6 @@ in {
         default = {
           log_storage.path = "/var/log/ofborg";
           checkout.root = if pkgs.stdenv.isDarwin then "/private/var/lib/ofborg/checkout" else "/ofborg/checkout";
-          runner.identity = "${config.networking.hostName}";
           github_app.app_id = 20500;
 
           rabbitmq = {
@@ -29,6 +28,8 @@ in {
             username = "ofborgsrvc";
             virtualhost = "ofborg";
           };
+        } // lib.optionalAttrs (!pkgs.stdenv.isDarwin) {
+          runner.identity = "${config.networking.hostName}";
         };
       };
 
