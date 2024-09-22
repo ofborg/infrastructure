@@ -5,11 +5,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = { url = "github:LnL7/nix-darwin"; inputs.nixpkgs.follows = "nixpkgs"; };
     ofborg = { url = "github:NixOS/ofborg"; };
+    agenix = { url = "github:ryantm/agenix"; inputs.nixpkgs.follows = "nixpkgs"; inputs.darwin.follows = "darwin"; };
   };
 
   outputs =
     { nixpkgs
     , darwin
+    , agenix
     , ...
     }@inputs:
     {
@@ -20,6 +22,7 @@
 
             modules = [
               ./darwin-configuration.nix
+              agenix.darwinModules.default
             ]
             ++ nixpkgs.lib.optionals (system == "aarch64-darwin") [
               {
