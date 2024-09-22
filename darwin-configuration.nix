@@ -1,5 +1,4 @@
 { config, lib, pkgs, inputs, ... }:
-# FIXME: configure ssh keys in here
 {
   nixpkgs.overlays = [
     (final: prev: {
@@ -67,4 +66,6 @@
     serviceConfig.StandardErrorPath = "/var/log/prometheus-node-exporter.log";
     serviceConfig.StandardOutPath = "/var/log/prometheus-node-exporter.log";
   };
+
+  users.users.root.openssh.authorizedKeys.keys = (import ./ssh-keys.nix).infra-build;
 }

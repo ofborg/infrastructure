@@ -20,9 +20,7 @@ in {
       pkgs.hello-unfree
     ];
 
-    # FIXME(cole-h): ask Jonas what email should be used here, and also investigate if changing this
-    # could cause any issues
-    security.acme.defaults.email = "graham@grahamc.com";
+    security.acme.defaults.email = "infra@nixos.org";
     security.acme.acceptTerms = true;
 
     services.openssh.enable = true;
