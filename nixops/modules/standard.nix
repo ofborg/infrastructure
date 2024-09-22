@@ -130,8 +130,7 @@ in {
       after = [ "default.target" ];
       timerConfig = {
         Unit = "nix-full-gc.service";
-        OnCalendar = "*-*-* 18:00:00"; # Run every day at 18:00
-        # OnCalendar = "*-*-* 06,18:00:00"; # Run every day at 06:00 and 18:00
+        OnCalendar = "*-*-* 06,18:00:00"; # Run every day at 06:00 and 18:00
         Persistent = true;
       };
     };
