@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
-let
-  readJSON = file: builtins.fromJSON
-    (builtins.readFile file);
-  cfg = config;
-in {
+{
   options.internalPkgs = pkgs.lib.mkOption { };
   config = {
     internalPkgs = {
@@ -26,9 +22,6 @@ in {
     ];
 
     services.ofborg.webhook.domain = "webhook.ofborg.org";
-    services.ofborg.rabbitmq.domain = "devoted-teal-duck.rmq.cloudamqp.com";
-
-    services.ofborg.config_public = readJSON ../../repos/ofborg/config.public.json;
 
     users.mutableUsers = false;
   };

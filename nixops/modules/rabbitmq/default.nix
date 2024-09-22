@@ -7,10 +7,6 @@ in {
       enable = lib.mkEnableOption {
       };
 
-      domain = lib.mkOption {
-        type = lib.types.str;
-      };
-
       monitoring_domain = lib.mkOption {
         type = lib.types.str;
         default = "events.ofborg.org";
