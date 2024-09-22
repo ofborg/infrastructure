@@ -17,10 +17,9 @@ pkgs.mkShell {
 
     pkgs.coreutils
     pkgs.jq
-    pkgs.vault
     pkgs.niv
-    pkgs.openssh_gssapi # the buildkite elastic stack supports gssapi or something
-    pkgs.awscli
+    pkgs.openssh
+    pkgs.awscli2
     pkgs.bashInteractive
     pkgs.git
     pkgs.shellcheck
