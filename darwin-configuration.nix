@@ -48,6 +48,9 @@
   };
 
   nix.package = pkgs.nix;
+  # bash doesn't export /run/current-system/sw/bin to $PATH,
+  # which we need for nix-store
+  users.users.root.shell = "/bin/zsh";
   nix.settings.max-jobs = 4;
   nix.settings.cores = 1;
   nix.gc.automatic = true;
