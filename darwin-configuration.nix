@@ -42,6 +42,7 @@
   # depending on what modules are enabled.
   users.knownGroups = [ "ofborg" ];
   users.knownUsers = [ "ofborg" ];
+  users.users.ofborg.home = "/private/var/lib/ofborg";
 
   services.nix-daemon.enable = true;
 
