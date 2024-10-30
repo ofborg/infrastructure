@@ -20,7 +20,7 @@
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = false;
   programs.bash.enable = true;
-  programs.bash.enableCompletion = false;
+  programs.bash.completion.enable = false;
 
   #services.activate-system.enable = true;
   services.ofborg.enable = true;
