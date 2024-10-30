@@ -4,6 +4,8 @@
     ./nixops/modules/ofborg/module.nix
   ];
 
+  system.stateVersion = 5;
+
   nixpkgs.overlays = [
     (final: prev: {
       # https://github.com/NixOS/nixpkgs/pull/198306
