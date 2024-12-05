@@ -4,6 +4,8 @@
     ./nixops/modules/ofborg/module.nix
   ];
 
+  system.stateVersion = 5;
+
   nixpkgs.overlays = [
     (final: prev: {
       # https://github.com/NixOS/nixpkgs/pull/198306
@@ -18,7 +20,7 @@
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = false;
   programs.bash.enable = true;
-  programs.bash.enableCompletion = false;
+  programs.bash.completion.enable = false;
 
   #services.activate-system.enable = true;
   services.ofborg.enable = true;
@@ -40,6 +42,7 @@
   # depending on what modules are enabled.
   users.knownGroups = [ "ofborg" ];
   users.knownUsers = [ "ofborg" ];
+  users.users.ofborg.home = "/private/var/lib/ofborg";
 
   services.nix-daemon.enable = true;
 
@@ -48,6 +51,9 @@
   };
 
   nix.package = pkgs.nix;
+  # bash doesn't export /run/current-system/sw/bin to $PATH,
+  # which we need for nix-store
+  users.users.root.shell = "/bin/zsh";
   nix.settings.max-jobs = 4;
   nix.settings.cores = 1;
   nix.gc.automatic = true;
